@@ -93,7 +93,7 @@ Requisitos relacionados: RNF-03, RNF-10.
 - [x] Confirmar a especificação e este roadmap como documentos de referência.
 - [x] Criar o README inicial com problema, público, escopo e stack.
 - [x] Criar os diretórios `backend` e `frontend`.
-- [ ] Definir convenções de branches, commits e pull requests.
+- [x] Definir convenções de branches, commits e pull requests.
 - [ ] Criar `.gitignore` e modelos de variáveis de ambiente.
 - [ ] Definir a estrutura inicial de testes.
 - [ ] Criar um diagrama simples da arquitetura.
