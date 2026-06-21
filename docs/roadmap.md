@@ -95,7 +95,7 @@ Requisitos relacionados: RNF-03, RNF-10.
 - [x] Criar os diretórios `backend` e `frontend`.
 - [x] Definir convenções de branches, commits e pull requests.
 - [x] Criar `.gitignore` e modelos de variáveis de ambiente.
-- [ ] Definir a estrutura inicial de testes.
+- [x] Definir a estrutura inicial de testes.
 - [ ] Criar um diagrama simples da arquitetura.
 - [ ] Registrar decisões arquiteturais curtas para:
   - autenticação por e-mail;
