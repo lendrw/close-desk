@@ -102,7 +102,7 @@ Requisitos relacionados: RNF-03, RNF-10.
   - armazenamento dos tokens;
   - isolamento dos chamados por usuário;
   - exclusão física no MVP.
-- [ ] Relacionar os requisitos aos futuros testes por seus identificadores.
+- [x] Relacionar os requisitos aos futuros testes por seus identificadores.
 
 ### Critério de saída
 
