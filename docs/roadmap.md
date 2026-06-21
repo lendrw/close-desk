@@ -96,7 +96,7 @@ Requisitos relacionados: RNF-03, RNF-10.
 - [x] Definir convenções de branches, commits e pull requests.
 - [x] Criar `.gitignore` e modelos de variáveis de ambiente.
 - [x] Definir a estrutura inicial de testes.
-- [ ] Criar um diagrama simples da arquitetura.
+- [x] Criar um diagrama simples da arquitetura.
 - [ ] Registrar decisões arquiteturais curtas para:
   - autenticação por e-mail;
   - armazenamento dos tokens;
