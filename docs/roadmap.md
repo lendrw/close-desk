@@ -116,7 +116,7 @@ Requisitos relacionados: RF-OPE-01, RF-OPE-02, RNF-01 a RNF-03, RNF-09 e RNF-10.
 
 ### Tarefas
 
-- [ ] Criar o projeto Python e Django.
+- [x] Criar o projeto Python e Django.
 - [ ] Criar os apps necessários, incluindo `accounts` e `tickets`.
 - [ ] Configurar Django REST Framework.
 - [ ] Configurar PostgreSQL.
