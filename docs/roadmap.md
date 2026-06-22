@@ -123,8 +123,8 @@ Requisitos relacionados: RF-OPE-01, RF-OPE-02, RNF-01 a RNF-03, RNF-09 e RNF-10.
 - [ ] Separar configurações de desenvolvimento, teste e produção quando necessário.
 - [ ] Carregar segredos e configurações por variáveis de ambiente.
 - [ ] Configurar CORS apenas para origens permitidas.
-- [ ] Criar um modelo de usuário customizado com e-mail como identificador de login.
-- [ ] Definir o modelo de usuário antes da primeira migração.
+- [x] Criar um modelo de usuário customizado com e-mail como identificador de login.
+- [x] Definir o modelo de usuário antes da primeira migração.
 - [ ] Configurar o ambiente de testes com pytest.
 - [ ] Criar teste de sanidade da API.
 - [ ] Escrever e implementar o health check.
