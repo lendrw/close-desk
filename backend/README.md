@@ -38,6 +38,9 @@ Configurações de execução:
 - `DJANGO_ALLOWED_HOSTS` recebe hosts separados por vírgula.
 - Em produção, `DJANGO_DEBUG` deve ser `False`.
 - Variáveis obrigatórias ausentes interrompem a inicialização com uma mensagem clara.
+- `CORS_ALLOWED_ORIGINS` recebe origens completas separadas por vírgula.
+- Os cabeçalhos CORS são adicionados somente às rotas iniciadas por `/api/`.
+- Origens não listadas não recebem permissão de acesso pelo navegador.
 
 Carregue as variáveis:
 
