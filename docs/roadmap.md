@@ -128,7 +128,7 @@ Requisitos relacionados: RF-OPE-01, RF-OPE-02, RNF-01 a RNF-03, RNF-09 e RNF-10.
 - [x] Configurar o ambiente de testes com pytest.
 - [x] Criar teste de sanidade da API.
 - [x] Escrever e implementar o health check.
-- [ ] Configurar a documentação OpenAPI/Swagger.
+- [x] Configurar a documentação OpenAPI/Swagger.
 - [ ] Definir uma estrutura consistente para erros da API.
 - [ ] Configurar lint e formatação do código Python.
 
@@ -136,7 +136,7 @@ Requisitos relacionados: RF-OPE-01, RF-OPE-02, RNF-01 a RNF-03, RNF-09 e RNF-10.
 
 - [x] A aplicação Django inicia no ambiente de teste.
 - [x] O health check responde com sucesso e não expõe informações sensíveis.
-- [ ] A documentação da API pode ser carregada.
+- [x] A documentação da API pode ser carregada.
 - [ ] Configurações obrigatórias ausentes falham de forma compreensível.
 
 ### Critério de saída
