@@ -5,7 +5,7 @@ API do CloseDesk construída com Python, Django e Django REST Framework.
 ## Requisitos
 
 - Python 3.12
-- PostgreSQL — será configurado em uma etapa futura
+- PostgreSQL 16
 
 ## Ambiente local
 
@@ -17,13 +17,35 @@ source backend/.venv/bin/activate
 python -m pip install -r backend/requirements.txt
 ```
 
-Para verificar o projeto atual:
+Copie o modelo de variáveis:
 
 ```bash
-DJANGO_SECRET_KEY=development-only-key python backend/manage.py check
+cp backend/.env.example backend/.env
 ```
 
-As variáveis previstas estão documentadas em `.env.example`.
+Preencha o arquivo local. Valores sensíveis devem ficar entre aspas simples:
+
+```dotenv
+DJANGO_SECRET_KEY='chave-local'
+POSTGRES_PASSWORD='senha-local'
+```
+
+O arquivo `.env` é ignorado pelo Git.
+
+Carregue as variáveis:
+
+```bash
+set -a
+source backend/.env
+set +a
+```
+
+Prepare o banco:
+
+```bash
+python backend/manage.py migrate
+python backend/manage.py check --database default
+```
 
 ## Estado atual
 
@@ -33,4 +55,4 @@ O projeto possui:
 - App `tickets` preparado para o domínio de chamados.
 - Django REST Framework configurado com autenticação obrigatória por padrão.
 
-Ainda não possui endpoints da API, modelo de chamados ou configuração do PostgreSQL.
+Ainda não possui endpoints da API ou modelo de chamados.
