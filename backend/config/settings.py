@@ -17,16 +17,51 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def get_required_env(name):
+    value = os.environ.get(name)
+
+    if value is None or not value.strip():
+        raise ValueError(f"{name} é uma variável de ambiente obrigatória.")
+
+    return value
+
+
+def get_boolean_env(name, default=False):
+    value = os.environ.get(name)
+
+    if value is None:
+        return default
+
+    normalized_value = value.strip().lower()
+
+    if normalized_value in {"true", "1", "yes"}:
+        return True
+
+    if normalized_value in {"false", "0", "no"}:
+        return False
+
+    raise ValueError(f"{name} deve ser um valor booleano válido.")
+
+
+def get_list_env(name, default=None):
+    value = os.environ.get(name)
+
+    if value is None:
+        return default or []
+
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+SECRET_KEY = get_required_env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = get_boolean_env("DJANGO_DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = get_list_env("DJANGO_ALLOWED_HOSTS")
 
 
 # Application definition
@@ -87,9 +122,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["POSTGRES_DB"],
-        "USER": os.environ["POSTGRES_USER"],
-        "PASSWORD": os.environ["POSTGRES_PASSWORD"],
+        "NAME": get_required_env("POSTGRES_DB"),
+        "USER": get_required_env("POSTGRES_USER"),
+        "PASSWORD": get_required_env("POSTGRES_PASSWORD"),
         "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
         "PORT": os.environ.get("POSTGRES_PORT", "5432"),
         "CONN_MAX_AGE": 60,

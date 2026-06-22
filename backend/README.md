@@ -32,6 +32,13 @@ POSTGRES_PASSWORD='senha-local'
 
 O arquivo `.env` é ignorado pelo Git.
 
+Configurações de execução:
+
+- `DJANGO_DEBUG` aceita `true`, `false`, `1`, `0`, `yes` ou `no`.
+- `DJANGO_ALLOWED_HOSTS` recebe hosts separados por vírgula.
+- Em produção, `DJANGO_DEBUG` deve ser `False`.
+- Variáveis obrigatórias ausentes interrompem a inicialização com uma mensagem clara.
+
 Carregue as variáveis:
 
 ```bash
