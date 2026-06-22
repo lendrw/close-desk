@@ -31,5 +31,6 @@ O projeto possui:
 
 - App `accounts` com usuário customizado e autenticação por e-mail.
 - App `tickets` preparado para o domínio de chamados.
+- Django REST Framework configurado com autenticação obrigatória por padrão.
 
-Ainda não possui API REST, modelo de chamados ou configuração do PostgreSQL.
+Ainda não possui endpoints da API, modelo de chamados ou configuração do PostgreSQL.
