@@ -63,6 +63,9 @@ DEBUG = get_boolean_env("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = get_list_env("DJANGO_ALLOWED_HOSTS")
 
+CORS_ALLOWED_ORIGINS = get_list_env("CORS_ALLOWED_ORIGINS")
+CORS_URLS_REGEX = r"^/api/.*$"
+
 
 # Application definition
 
@@ -75,6 +78,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts.apps.AccountsConfig",
     "tickets.apps.TicketsConfig",
+    "corsheaders",
     "rest_framework",
 ]
 
@@ -89,6 +93,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
