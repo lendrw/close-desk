@@ -14,7 +14,7 @@ A partir da raiz do repositório:
 ```bash
 python3 -m venv backend/.venv
 source backend/.venv/bin/activate
-python -m pip install -r backend/requirements.txt
+python -m pip install -r backend/requirements-dev.txt
 ```
 
 Copie o modelo de variáveis:
@@ -57,6 +57,17 @@ python backend/manage.py migrate
 python backend/manage.py check --database default
 ```
 
+## Testes
+
+Execute a partir da pasta `backend`:
+
+```bash
+cd backend
+python -m pytest
+```
+
+A suíte usa SQLite em memória e não depende do PostgreSQL local.
+
 ## Estado atual
 
 O projeto possui:
@@ -64,5 +75,7 @@ O projeto possui:
 - App `accounts` com usuário customizado e autenticação por e-mail.
 - App `tickets` preparado para o domínio de chamados.
 - Django REST Framework configurado com autenticação obrigatória por padrão.
+- Health check público em `GET /api/health/`.
+- Ambiente de testes com pytest.
 
-Ainda não possui endpoints da API ou modelo de chamados.
+Ainda não possui endpoints de autenticação ou modelo de chamados.

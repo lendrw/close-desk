@@ -19,7 +19,7 @@ O projeto manterá um único módulo `config.settings`, configurado por variáve
 - Valores obrigatórios ausentes produzem mensagens claras.
 - O `.env` local permanece fora do Git.
 - O ambiente de produção fornecerá as variáveis pela plataforma de hospedagem.
-- Uma configuração específica para testes será avaliada durante a adoção do pytest.
+- Os testes utilizam `config.settings_test`, que herda a configuração base e substitui somente o necessário.
 
 ## Consequências
 
@@ -38,7 +38,7 @@ O projeto manterá um único módulo `config.settings`, configurado por variáve
 
 ## Critério de revisão
 
-Esta decisão deverá ser revisada quando os testes ou a produção exigirem configurações que não possam ser expressas claramente apenas por variáveis de ambiente.
+Esta decisão deverá ser revisada quando a produção exigir configurações que não possam ser expressas claramente apenas por variáveis de ambiente.
 
 ## Requisitos relacionados
 
