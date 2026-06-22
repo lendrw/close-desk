@@ -27,6 +27,9 @@ As variáveis previstas estão documentadas em `.env.example`.
 
 ## Estado atual
 
-O projeto possui o app `accounts` e um modelo de usuário customizado com autenticação por e-mail.
+O projeto possui:
 
-Ainda não possui API REST, app de chamados ou configuração do PostgreSQL.
+- App `accounts` com usuário customizado e autenticação por e-mail.
+- App `tickets` preparado para o domínio de chamados.
+
+Ainda não possui API REST, modelo de chamados ou configuração do PostgreSQL.
