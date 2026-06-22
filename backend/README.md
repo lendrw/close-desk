@@ -27,4 +27,6 @@ As variáveis previstas estão documentadas em `.env.example`.
 
 ## Estado atual
 
-O projeto Django foi inicializado, mas ainda não possui apps próprios, API REST ou configuração do PostgreSQL.
+O projeto possui o app `accounts` e um modelo de usuário customizado com autenticação por e-mail.
+
+Ainda não possui API REST, app de chamados ou configuração do PostgreSQL.
