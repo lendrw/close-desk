@@ -120,8 +120,8 @@ Requisitos relacionados: RF-OPE-01, RF-OPE-02, RNF-01 a RNF-03, RNF-09 e RNF-10.
 - [x] Criar os apps necessários, incluindo `accounts` e `tickets`.
 - [x] Configurar Django REST Framework.
 - [x] Configurar PostgreSQL.
-- [ ] Separar configurações de desenvolvimento, teste e produção quando necessário.
-- [ ] Carregar segredos e configurações por variáveis de ambiente.
+- [x] Separar configurações de desenvolvimento, teste e produção quando necessário.
+- [x] Carregar segredos e configurações por variáveis de ambiente.
 - [ ] Configurar CORS apenas para origens permitidas.
 - [x] Criar um modelo de usuário customizado com e-mail como identificador de login.
 - [x] Definir o modelo de usuário antes da primeira migração.
