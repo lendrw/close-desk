@@ -57,6 +57,15 @@ python backend/manage.py migrate
 python backend/manage.py check --database default
 ```
 
+## Documentação da API
+
+Com o servidor em execução:
+
+- Swagger UI: `http://localhost:8000/api/docs/`
+- Schema OpenAPI: `http://localhost:8000/api/schema/`
+
+A documentação e o schema são públicos.
+
 ## Testes
 
 Execute a partir da pasta `backend`:
@@ -77,5 +86,6 @@ O projeto possui:
 - Django REST Framework configurado com autenticação obrigatória por padrão.
 - Health check público em `GET /api/health/`.
 - Ambiente de testes com pytest.
+- Documentação interativa com OpenAPI e Swagger UI.
 
 Ainda não possui endpoints de autenticação ou modelo de chamados.
