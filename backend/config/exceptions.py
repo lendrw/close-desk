@@ -10,7 +10,6 @@ from rest_framework.exceptions import (
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 
-
 ERROR_MESSAGES = {
     "validation_error": "Os dados enviados são inválidos.",
     "authentication_error": "Autenticação necessária.",
@@ -103,10 +102,7 @@ def get_error_details(code, data):
 
 def normalize_error_details(data):
     if isinstance(data, dict):
-        return {
-            key: normalize_error_details(value)
-            for key, value in data.items()
-        }
+        return {key: normalize_error_details(value) for key, value in data.items()}
 
     if isinstance(data, list):
         return [normalize_error_details(item) for item in data]

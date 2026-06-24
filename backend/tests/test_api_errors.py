@@ -1,5 +1,5 @@
-from django.urls import path
 from django.test import override_settings
+from django.urls import path
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import (

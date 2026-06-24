@@ -75,6 +75,21 @@ cd backend
 python -m pytest
 ```
 
+## Qualidade de código
+
+Execute a partir da pasta `backend`:
+
+```bash
+python -m ruff check .
+python -m ruff format --check .
+```
+
+Para aplicar formatação automática:
+
+```bash
+python -m ruff format .
+```
+
 A suíte usa SQLite em memória e não depende do PostgreSQL local.
 
 ## Estado atual
