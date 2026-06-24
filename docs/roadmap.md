@@ -151,30 +151,30 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RNF-01 a RNF-03.
 
 ### Tarefas
 
-- [ ] Testar e implementar cadastro com nome, e-mail e senha.
+- [x] Testar e implementar cadastro com nome, e-mail e senha.
 - [x] Validar nome entre 2 e 100 caracteres.
 - [x] Validar formato do e-mail.
 - [x] Garantir unicidade de e-mail sem diferenciar maiúsculas de minúsculas.
 - [x] Validar senha com no mínimo 8 caracteres.
 - [x] Garantir que a senha seja armazenada pelo mecanismo seguro do Django.
-- [ ] Garantir que a senha nunca apareça nas respostas.
+- [x] Garantir que a senha nunca apareça nas respostas.
 - [ ] Testar e implementar login por e-mail e senha.
 - [ ] Retornar mensagem genérica para credenciais inválidas.
 - [x] Configurar emissão de access token e refresh token.
 - [ ] Testar e implementar renovação do access token.
 - [ ] Testar e implementar o endpoint do usuário atual.
 - [ ] Proteger o endpoint do usuário atual.
-- [ ] Documentar os endpoints e exemplos de erro.
+- [x] Documentar os endpoints e exemplos de erro.
 
 ### Testes mínimos
 
-- [ ] Cadastro válido.
-- [ ] Campos obrigatórios ausentes.
-- [ ] Nome fora dos limites.
-- [ ] E-mail inválido.
-- [ ] E-mail duplicado com variação de maiúsculas.
-- [ ] Senha curta.
-- [ ] Ausência da senha na resposta.
+- [x] Cadastro válido.
+- [x] Campos obrigatórios ausentes.
+- [x] Nome fora dos limites.
+- [x] E-mail inválido.
+- [x] E-mail duplicado com variação de maiúsculas.
+- [x] Senha curta.
+- [x] Ausência da senha na resposta.
 - [ ] Login válido.
 - [ ] Login inválido sem enumeração de usuário.
 - [ ] Renovação válida e inválida.
