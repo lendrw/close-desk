@@ -30,6 +30,7 @@ def test_register_endpoint_creates_user_without_exposing_password():
     assert user.name == "Ada Lovelace"
     assert user.check_password("securepass123")
 
+
 def test_register_endpoint_returns_standard_error_for_missing_fields():
     response = APIClient().post("/api/auth/register/", {}, format="json")
 
