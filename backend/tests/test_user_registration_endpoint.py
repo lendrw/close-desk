@@ -29,3 +29,19 @@ def test_register_endpoint_creates_user_without_exposing_password():
     user = get_user_model().objects.get(email="ada@example.com")
     assert user.name == "Ada Lovelace"
     assert user.check_password("securepass123")
+
+def test_register_endpoint_returns_standard_error_for_missing_fields():
+    response = APIClient().post("/api/auth/register/", {}, format="json")
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json() == {
+        "error": {
+            "code": "validation_error",
+            "message": "Os dados enviados são inválidos.",
+            "details": {
+                "name": ["This field is required."],
+                "email": ["This field is required."],
+                "password": ["This field is required."],
+            },
+        },
+    }
