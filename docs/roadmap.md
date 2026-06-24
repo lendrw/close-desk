@@ -130,7 +130,7 @@ Requisitos relacionados: RF-OPE-01, RF-OPE-02, RNF-01 a RNF-03, RNF-09 e RNF-10.
 - [x] Escrever e implementar o health check.
 - [x] Configurar a documentação OpenAPI/Swagger.
 - [x] Definir uma estrutura consistente para erros da API.
-- [ ] Configurar lint e formatação do código Python.
+- [x] Configurar lint e formatação do código Python.
 
 ### Testes mínimos
 
