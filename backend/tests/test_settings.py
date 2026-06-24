@@ -1,5 +1,4 @@
 import pytest
-
 from config.settings import get_required_env
 
 
