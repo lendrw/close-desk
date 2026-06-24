@@ -160,7 +160,7 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RNF-01 a RNF-03.
 - [ ] Garantir que a senha nunca apareça nas respostas.
 - [ ] Testar e implementar login por e-mail e senha.
 - [ ] Retornar mensagem genérica para credenciais inválidas.
-- [ ] Configurar emissão de access token e refresh token.
+- [x] Configurar emissão de access token e refresh token.
 - [ ] Testar e implementar renovação do access token.
 - [ ] Testar e implementar o endpoint do usuário atual.
 - [ ] Proteger o endpoint do usuário atual.
