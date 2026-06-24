@@ -137,7 +137,7 @@ Requisitos relacionados: RF-OPE-01, RF-OPE-02, RNF-01 a RNF-03, RNF-09 e RNF-10.
 - [x] A aplicação Django inicia no ambiente de teste.
 - [x] O health check responde com sucesso e não expõe informações sensíveis.
 - [x] A documentação da API pode ser carregada.
-- [ ] Configurações obrigatórias ausentes falham de forma compreensível.
+- [x] Configurações obrigatórias ausentes falham de forma compreensível.
 
 ### Critério de saída
 
