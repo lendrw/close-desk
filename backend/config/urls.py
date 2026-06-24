@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from config.views import health_check
 
@@ -25,6 +26,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/health/", health_check, name="health-check"),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/auth/token/", TokenObtainPairView.as_view(), name="token-obtain-pair"),
+    path("api/auth/token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
     path(
         "api/docs/",
         SpectacularSwaggerView.as_view(url_name="schema"),
