@@ -152,11 +152,11 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RNF-01 a RNF-03.
 ### Tarefas
 
 - [ ] Testar e implementar cadastro com nome, e-mail e senha.
-- [ ] Validar nome entre 2 e 100 caracteres.
-- [ ] Validar formato do e-mail.
-- [ ] Garantir unicidade de e-mail sem diferenciar maiúsculas de minúsculas.
-- [ ] Validar senha com no mínimo 8 caracteres.
-- [ ] Garantir que a senha seja armazenada pelo mecanismo seguro do Django.
+- [x] Validar nome entre 2 e 100 caracteres.
+- [x] Validar formato do e-mail.
+- [x] Garantir unicidade de e-mail sem diferenciar maiúsculas de minúsculas.
+- [x] Validar senha com no mínimo 8 caracteres.
+- [x] Garantir que a senha seja armazenada pelo mecanismo seguro do Django.
 - [ ] Garantir que a senha nunca apareça nas respostas.
 - [ ] Testar e implementar login por e-mail e senha.
 - [ ] Retornar mensagem genérica para credenciais inválidas.
