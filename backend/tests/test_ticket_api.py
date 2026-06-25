@@ -103,3 +103,30 @@ def test_create_ticket_endpoint_ignores_automatic_fields_from_client():
     assert ticket.created_by == owner
     assert ticket.created_at.isoformat() != "2000-01-01T00:00:00+00:00"
     assert ticket.updated_at.isoformat() != "2000-01-01T00:00:00+00:00"
+
+    def test_create_ticket_endpoint_returns_standard_error_for_invalid_fields():
+        user = create_user()
+        client = authenticated_client(user)
+
+        response = client.post(
+            "/api/tickets/",
+            {
+                "title": "AB",
+                "description": "Curta",
+                "customer_name": "A",
+                "status": "invalid",
+                "priority": "invalid",
+            },
+            format="json",
+        )
+
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.json()["error"]["code"] == "validation_error"
+        assert response.json()["error"]["message"] == "Os dados enviados são inválidos."
+        assert set(response.json()["error"]["details"]) == {
+            "title",
+            "description",
+            "customer_name",
+            "status",
+            "priority",
+        }
