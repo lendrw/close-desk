@@ -55,3 +55,51 @@ def test_create_ticket_endpoint_creates_ticket_for_authenticated_user():
     assert response.json()["id"] == ticket.id
     assert response.json()["created_by"] == user.id
     assert response.json()["status"] == Ticket.Status.OPEN
+
+
+def test_create_ticket_endpoint_requires_authentication():
+    response = APIClient().post(
+        "/api/tickets/",
+        {
+            "title": "Problema no login",
+            "description": "Cliente não consegue acessar o sistema.",
+            "customer_name": "Cliente Exemplo",
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response.json() == {
+        "error": {
+            "code": "authentication_error",
+            "message": "Autenticação necessária.",
+            "details": {},
+        },
+    }
+
+
+def test_create_ticket_endpoint_ignores_automatic_fields_from_client():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+    client = authenticated_client(owner)
+
+    response = client.post(
+        "/api/tickets/",
+        {
+            "title": "Problema no login",
+            "description": "Cliente não consegue acessar o sistema.",
+            "customer_name": "Cliente Exemplo",
+            "created_by": other_user.id,
+            "created_at": "2000-01-01T00:00:00Z",
+            "updated_at": "2000-01-01T00:00:00Z",
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_201_CREATED
+
+    ticket = Ticket.objects.get()
+
+    assert ticket.created_by == owner
+    assert ticket.created_at.isoformat() != "2000-01-01T00:00:00+00:00"
+    assert ticket.updated_at.isoformat() != "2000-01-01T00:00:00+00:00"
