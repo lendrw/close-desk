@@ -17,7 +17,7 @@ Including another URLconf
 
 from accounts.views import current_user, register_user
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -36,4 +36,5 @@ urlpatterns = [
     ),
     path("api/auth/register/", register_user, name="register-user"),
     path("api/auth/me/", current_user, name="current-user"),
+    path("api/tickets/", include("tickets.urls")),
 ]
