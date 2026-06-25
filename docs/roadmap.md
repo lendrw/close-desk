@@ -228,26 +228,26 @@ Requisitos relacionados: RF-TIC-01 a RF-TIC-06, RN-01, RN-06, RN-07 e RNF-01 a R
 
 ### Tarefas
 
-- [ ] Testar e implementar criação de chamado.
-- [ ] Preencher `created_by` pelo usuário autenticado.
-- [ ] Impedir definição de campos automáticos pelo cliente.
+- [x] Testar e implementar criação de chamado.
+- [x] Preencher `created_by` pelo usuário autenticado.
+- [x] Impedir definição de campos automáticos pelo cliente.
 - [ ] Testar e implementar listagem.
 - [ ] Testar e implementar detalhes.
 - [ ] Testar e implementar edição parcial.
 - [ ] Testar explicitamente a alteração de status.
 - [ ] Testar e implementar exclusão física.
-- [ ] Exigir autenticação em todas as rotas de chamados.
+- [x] Exigir autenticação em todas as rotas de chamados.
 - [ ] Filtrar o conjunto base pelo usuário autenticado.
 - [ ] Retornar resposta equivalente para recurso inexistente ou pertencente a outro usuário.
-- [ ] Aplicar a estrutura padronizada de erros.
-- [ ] Documentar exemplos de requisição e resposta.
+- [x] Aplicar a estrutura padronizada de erros.
+- [x] Documentar exemplos de requisição e resposta.
 
 ### Testes mínimos
 
 - [ ] CRUD completo do próprio chamado.
-- [ ] Rejeição de usuário não autenticado.
-- [ ] Rejeição de campos inválidos.
-- [ ] Imutabilidade de `created_by` e `created_at`.
+- [x] Rejeição de usuário não autenticado.
+- [x] Rejeição de campos inválidos.
+- [x] Imutabilidade de `created_by` e `created_at`.
 - [ ] Atualização automática de `updated_at`.
 - [ ] Bloqueio de leitura, edição e exclusão entre dois usuários.
 - [ ] Ausência de exposição da existência do chamado alheio.
