@@ -192,29 +192,29 @@ Requisitos relacionados: RF-TIC-01, RN-01 a RN-07.
 
 ### Tarefas
 
-- [ ] Escrever os testes do modelo de chamado.
-- [ ] Criar o modelo `Ticket`.
-- [ ] Implementar título, descrição e nome do cliente.
-- [ ] Implementar escolhas de status.
-- [ ] Implementar escolhas de prioridade.
-- [ ] Definir status padrão como `open`.
-- [ ] Definir prioridade padrão como `medium`.
-- [ ] Implementar prazo opcional.
-- [ ] Implementar relacionamento obrigatório com o usuário proprietário.
-- [ ] Implementar datas automáticas de criação e atualização.
-- [ ] Validar tamanhos mínimos e máximos.
-- [ ] Validar prazo na criação e na alteração.
-- [ ] Criar e revisar a migração.
+- [x] Escrever os testes do modelo de chamado.
+- [x] Criar o modelo `Ticket`.
+- [x] Implementar título, descrição e nome do cliente.
+- [x] Implementar escolhas de status.
+- [x] Implementar escolhas de prioridade.
+- [x] Definir status padrão como `open`.
+- [x] Definir prioridade padrão como `medium`.
+- [x] Implementar prazo opcional.
+- [x] Implementar relacionamento obrigatório com o usuário proprietário.
+- [x] Implementar datas automáticas de criação e atualização.
+- [x] Validar tamanhos mínimos e máximos.
+- [x] Validar prazo na criação e na alteração.
+- [x] Criar e revisar a migração.
 
 ### Testes mínimos
 
-- [ ] Campos obrigatórios e opcionais.
-- [ ] Valores padrão.
-- [ ] Status e prioridades permitidos.
-- [ ] Rejeição de escolhas inválidas.
-- [ ] Relacionamento com o proprietário.
-- [ ] Datas automáticas.
-- [ ] Prazo atual, futuro, passado e prazo já vencido não alterado.
+- [x] Campos obrigatórios e opcionais.
+- [x] Valores padrão.
+- [x] Status e prioridades permitidos.
+- [x] Rejeição de escolhas inválidas.
+- [x] Relacionamento com o proprietário.
+- [x] Datas automáticas.
+- [x] Prazo atual, futuro, passado e prazo já vencido não alterado.
 
 ### Critério de saída
 
