@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.db import models
 
 
@@ -15,9 +16,21 @@ class Ticket(models.Model):
         HIGH = "high", "Alta"
         URGENT = "urgent", "Urgente"
 
-    title = models.CharField(max_length=120)
-    description = models.TextField(max_length=2000)
-    customer_name = models.CharField(max_length=120)
+    title = models.CharField(
+        max_length=120,
+        validators=[MinLengthValidator(3)],
+    )
+    description = models.TextField(
+        max_length=2000,
+        validators=[
+            MinLengthValidator(10),
+            MaxLengthValidator(2000),
+        ],
+    )
+    customer_name = models.CharField(
+        max_length=120,
+        validators=[MinLengthValidator(2)],
+    )
 
     status = models.CharField(
         max_length=20,

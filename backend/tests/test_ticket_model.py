@@ -14,6 +14,18 @@ def create_user():
     )
 
 
+def make_ticket(**overrides):
+    data = {
+        "title": "Problema no login",
+        "description": "Cliente não consegue acessar o sistema.",
+        "customer_name": "Cliente Exemplo",
+        "created_by": create_user(),
+    }
+    data.update(overrides)
+
+    return Ticket(**data)
+
+
 def test_ticket_model_creates_ticket_with_required_fields_and_defaults():
     user = create_user()
 
@@ -78,6 +90,48 @@ def test_ticket_model_rejects_invalid_priority():
         priority="invalid",
         created_by=user,
     )
+
+    with pytest.raises(ValidationError):
+        ticket.full_clean()
+
+
+def test_ticket_model_rejects_short_title():
+    ticket = make_ticket(title="AB")
+
+    with pytest.raises(ValidationError):
+        ticket.full_clean()
+
+
+def test_ticket_model_rejects_long_title():
+    ticket = make_ticket(title="A" * 121)
+
+    with pytest.raises(ValidationError):
+        ticket.full_clean()
+
+
+def test_ticket_model_rejects_short_description():
+    ticket = make_ticket(description="Curta")
+
+    with pytest.raises(ValidationError):
+        ticket.full_clean()
+
+
+def test_ticket_model_rejects_long_description():
+    ticket = make_ticket(description="A" * 2001)
+
+    with pytest.raises(ValidationError):
+        ticket.full_clean()
+
+
+def test_ticket_model_rejects_short_customer_name():
+    ticket = make_ticket(customer_name="A")
+
+    with pytest.raises(ValidationError):
+        ticket.full_clean()
+
+
+def test_ticket_model_rejects_long_customer_name():
+    ticket = make_ticket(customer_name="A" * 121)
 
     with pytest.raises(ValidationError):
         ticket.full_clean()
