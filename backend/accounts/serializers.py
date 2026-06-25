@@ -22,3 +22,9 @@ class UserRegistrationSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return get_user_model().objects.create_user(**validated_data)
+
+
+class CurrentUserSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(read_only=True)
+    email = serializers.EmailField(read_only=True)
