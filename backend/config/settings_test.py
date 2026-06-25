@@ -1,6 +1,9 @@
 import os
 
-os.environ.setdefault("DJANGO_SECRET_KEY", "test-secret-key")
+os.environ.setdefault(
+    "DJANGO_SECRET_KEY",
+    "test-secret-key-with-at-least-32-bytes",
+)
 os.environ.setdefault("POSTGRES_DB", "test")
 os.environ.setdefault("POSTGRES_USER", "test")
 os.environ.setdefault("POSTGRES_PASSWORD", "test")

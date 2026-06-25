@@ -1,3 +1,5 @@
+import pytest
+from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -29,5 +31,54 @@ def test_token_refresh_endpoint_rejects_empty_payload():
             "details": {
                 "refresh": ["This field is required."],
             },
+        },
+    }
+
+
+@pytest.mark.django_db
+def test_token_endpoint_returns_tokens_for_valid_credentials():
+    get_user_model().objects.create_user(
+        name="Ada Lovelace",
+        email="ada@example.com",
+        password="securepass123",
+    )
+
+    response = APIClient().post(
+        "/api/auth/token/",
+        {
+            "email": "ada@example.com",
+            "password": "securepass123",
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+    assert "access" in response.json()
+    assert "refresh" in response.json()
+
+
+@pytest.mark.django_db
+def test_token_endpoint_returns_generic_error_for_invalid_credentials():
+    get_user_model().objects.create_user(
+        name="Ada Lovelace",
+        email="ada@example.com",
+        password="securepass123",
+    )
+
+    response = APIClient().post(
+        "/api/auth/token/",
+        {
+            "email": "ada@example.com",
+            "password": "wrong-password",
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response.json() == {
+        "error": {
+            "code": "authentication_error",
+            "message": "Autenticação necessária.",
+            "details": {},
         },
     }
