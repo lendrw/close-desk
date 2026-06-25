@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from accounts.serializers import UserRegistrationSerializer
+from accounts.serializers import CurrentUserSerializer, UserRegistrationSerializer
 
 
 @extend_schema(
@@ -24,3 +24,13 @@ def register_user(request):
         UserRegistrationSerializer(user).data,
         status=status.HTTP_201_CREATED,
     )
+
+
+@extend_schema(
+    responses={status.HTTP_200_OK: CurrentUserSerializer},
+    summary="Consultar usuário atual",
+    tags=["Authentication"],
+)
+@api_view(["GET"])
+def current_user(request):
+    return Response(CurrentUserSerializer(request.user).data)
