@@ -158,8 +158,8 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RNF-01 a RNF-03.
 - [x] Validar senha com no mínimo 8 caracteres.
 - [x] Garantir que a senha seja armazenada pelo mecanismo seguro do Django.
 - [x] Garantir que a senha nunca apareça nas respostas.
-- [ ] Testar e implementar login por e-mail e senha.
-- [ ] Retornar mensagem genérica para credenciais inválidas.
+- [x] Testar e implementar login por e-mail e senha.
+- [x] Retornar mensagem genérica para credenciais inválidas.
 - [x] Configurar emissão de access token e refresh token.
 - [ ] Testar e implementar renovação do access token.
 - [ ] Testar e implementar o endpoint do usuário atual.
@@ -175,8 +175,8 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RNF-01 a RNF-03.
 - [x] E-mail duplicado com variação de maiúsculas.
 - [x] Senha curta.
 - [x] Ausência da senha na resposta.
-- [ ] Login válido.
-- [ ] Login inválido sem enumeração de usuário.
+- [x] Login válido.
+- [x] Login inválido sem enumeração de usuário.
 - [ ] Renovação válida e inválida.
 - [ ] Consulta do usuário atual com e sem token.
 
