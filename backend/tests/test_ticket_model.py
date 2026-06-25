@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from tickets.models import Ticket
 
 pytestmark = pytest.mark.django_db
@@ -32,3 +33,51 @@ def test_ticket_model_creates_ticket_with_required_fields_and_defaults():
     assert ticket.due_date is None
     assert ticket.created_at is not None
     assert ticket.updated_at is not None
+
+
+def test_ticket_model_accepts_allowed_status_and_priority():
+    user = create_user()
+
+    ticket = Ticket(
+        title="Problema no login",
+        description="Cliente não consegue acessar o sistema.",
+        customer_name="Cliente Exemplo",
+        status=Ticket.Status.IN_PROGRESS,
+        priority=Ticket.Priority.URGENT,
+        created_by=user,
+    )
+
+    ticket.full_clean()
+
+    assert ticket.status == Ticket.Status.IN_PROGRESS
+    assert ticket.priority == Ticket.Priority.URGENT
+
+
+def test_ticket_model_rejects_invalid_status():
+    user = create_user()
+
+    ticket = Ticket(
+        title="Problema no login",
+        description="Cliente não consegue acessar o sistema.",
+        customer_name="Cliente Exemplo",
+        status="invalid",
+        created_by=user,
+    )
+
+    with pytest.raises(ValidationError):
+        ticket.full_clean()
+
+
+def test_ticket_model_rejects_invalid_priority():
+    user = create_user()
+
+    ticket = Ticket(
+        title="Problema no login",
+        description="Cliente não consegue acessar o sistema.",
+        customer_name="Cliente Exemplo",
+        priority="invalid",
+        created_by=user,
+    )
+
+    with pytest.raises(ValidationError):
+        ticket.full_clean()
