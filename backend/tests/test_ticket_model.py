@@ -1,6 +1,9 @@
+from datetime import timedelta
+
 import pytest
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 from tickets.models import Ticket
 
 pytestmark = pytest.mark.django_db
@@ -135,3 +138,39 @@ def test_ticket_model_rejects_long_customer_name():
 
     with pytest.raises(ValidationError):
         ticket.full_clean()
+
+
+def test_ticket_model_accepts_current_due_date():
+    ticket = make_ticket(due_date=timezone.localdate())
+
+    ticket.full_clean()
+
+    assert ticket.due_date == timezone.localdate()
+
+
+def test_ticket_model_accepts_future_due_date():
+    future_date = timezone.localdate() + timedelta(days=1)
+    ticket = make_ticket(due_date=future_date)
+
+    ticket.full_clean()
+
+    assert ticket.due_date == future_date
+
+
+def test_ticket_model_rejects_past_due_date_on_creation():
+    past_date = timezone.localdate() - timedelta(days=1)
+    ticket = make_ticket(due_date=past_date)
+
+    with pytest.raises(ValidationError):
+        ticket.full_clean()
+
+
+def test_ticket_model_allows_existing_ticket_to_keep_past_due_date():
+    past_date = timezone.localdate() - timedelta(days=1)
+    ticket = make_ticket(due_date=past_date)
+    ticket.save()
+
+    ticket.title = "Problema no login atualizado"
+    ticket.full_clean()
+
+    assert ticket.due_date == past_date

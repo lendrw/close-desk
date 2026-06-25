@@ -1,6 +1,8 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.db import models
+from django.utils import timezone
 
 
 class Ticket(models.Model):
@@ -55,6 +57,18 @@ class Ticket(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+
+    def clean(self):
+        super().clean()
+
+        if (
+            self._state.adding
+            and self.due_date
+            and self.due_date < timezone.localdate()
+        ):
+            raise ValidationError(
+                {"due_date": "O prazo não pode ser anterior à data atual."}
+            )
 
     def __str__(self):
         return self.title
