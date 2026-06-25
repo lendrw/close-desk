@@ -91,6 +91,7 @@ def test_token_endpoint_returns_generic_error_for_invalid_credentials():
         },
     }
 
+
 @pytest.mark.django_db
 def test_token_refresh_endpoint_returns_new_access_token():
     create_user()
