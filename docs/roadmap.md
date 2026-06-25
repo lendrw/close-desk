@@ -161,7 +161,7 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RNF-01 a RNF-03.
 - [x] Testar e implementar login por e-mail e senha.
 - [x] Retornar mensagem genérica para credenciais inválidas.
 - [x] Configurar emissão de access token e refresh token.
-- [ ] Testar e implementar renovação do access token.
+- [x] Testar e implementar renovação do access token.
 - [ ] Testar e implementar o endpoint do usuário atual.
 - [ ] Proteger o endpoint do usuário atual.
 - [x] Documentar os endpoints e exemplos de erro.
@@ -177,7 +177,7 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RNF-01 a RNF-03.
 - [x] Ausência da senha na resposta.
 - [x] Login válido.
 - [x] Login inválido sem enumeração de usuário.
-- [ ] Renovação válida e inválida.
+- [x] Renovação válida e inválida.
 - [ ] Consulta do usuário atual com e sem token.
 
 ### Critério de saída
