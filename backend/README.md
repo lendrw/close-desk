@@ -136,7 +136,7 @@ A resposta considera somente os chamados do usuário autenticado.
 O projeto possui:
 
 - App `accounts` com usuário customizado e autenticação por e-mail.
-- App `tickets` preparado para o domínio de chamados.
+- App `tickets` com modelo, CRUD, consultas avançadas e dashboard.
 - Django REST Framework configurado com autenticação obrigatória por padrão.
 - Health check público em `GET /api/health/`.
 - Ambiente de testes com pytest.
