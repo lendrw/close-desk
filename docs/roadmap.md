@@ -282,7 +282,7 @@ Requisitos relacionados: RF-TIC-02 e RF-TIC-07 a RF-TIC-10.
 - [x] Cada filtro isolado.
 - [x] Busca por título e cliente.
 - [x] Combinações de parâmetros.
-- [ ] Resultados vazios.
+- [x] Resultados vazios.
 - [ ] Isolamento preservado em todas as consultas.
 
 ### Critério de saída
