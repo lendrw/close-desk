@@ -1,5 +1,8 @@
+from datetime import timedelta
+
 import pytest
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -22,6 +25,16 @@ def authenticated_client(user):
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {access_token}")
 
     return client
+
+
+def set_ticket_created_at(ticket, created_at):
+    Ticket.objects.filter(id=ticket.id).update(
+        created_at=created_at,
+        updated_at=created_at,
+    )
+    ticket.refresh_from_db()
+
+    return ticket
 
 
 def test_create_ticket_endpoint_creates_ticket_for_authenticated_user():
@@ -416,3 +429,90 @@ def test_list_tickets_endpoint_returns_paginated_response_with_10_items():
     assert all(
         ticket["created_by"] == owner.id for ticket in response.json()["results"]
     )
+
+
+def test_list_tickets_endpoint_uses_newest_first_order_by_default():
+    owner = create_user(email="owner@example.com")
+    older_ticket = Ticket.objects.create(
+        title="Chamado antigo",
+        description="Descrição do chamado antigo.",
+        customer_name="Cliente Antigo",
+        created_by=owner,
+    )
+    newer_ticket = Ticket.objects.create(
+        title="Chamado novo",
+        description="Descrição do chamado novo.",
+        customer_name="Cliente Novo",
+        created_by=owner,
+    )
+    now = timezone.now()
+    set_ticket_created_at(older_ticket, now - timedelta(days=1))
+    set_ticket_created_at(newer_ticket, now)
+
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert [ticket["id"] for ticket in response.json()["results"]] == [
+        newer_ticket.id,
+        older_ticket.id,
+    ]
+
+
+def test_list_tickets_endpoint_orders_by_created_at_ascending():
+    owner = create_user(email="owner@example.com")
+    older_ticket = Ticket.objects.create(
+        title="Chamado antigo",
+        description="Descrição do chamado antigo.",
+        customer_name="Cliente Antigo",
+        created_by=owner,
+    )
+    newer_ticket = Ticket.objects.create(
+        title="Chamado novo",
+        description="Descrição do chamado novo.",
+        customer_name="Cliente Novo",
+        created_by=owner,
+    )
+    now = timezone.now()
+    set_ticket_created_at(older_ticket, now - timedelta(days=1))
+    set_ticket_created_at(newer_ticket, now)
+
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/?ordering=created_at")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert [ticket["id"] for ticket in response.json()["results"]] == [
+        older_ticket.id,
+        newer_ticket.id,
+    ]
+
+
+def test_list_tickets_endpoint_orders_by_created_at_descending():
+    owner = create_user(email="owner@example.com")
+    older_ticket = Ticket.objects.create(
+        title="Chamado antigo",
+        description="Descrição do chamado antigo.",
+        customer_name="Cliente Antigo",
+        created_by=owner,
+    )
+    newer_ticket = Ticket.objects.create(
+        title="Chamado novo",
+        description="Descrição do chamado novo.",
+        customer_name="Cliente Novo",
+        created_by=owner,
+    )
+    now = timezone.now()
+    set_ticket_created_at(older_ticket, now - timedelta(days=1))
+    set_ticket_created_at(newer_ticket, now)
+
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/?ordering=-created_at")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert [ticket["id"] for ticket in response.json()["results"]] == [
+        newer_ticket.id,
+        older_ticket.id,
+    ]

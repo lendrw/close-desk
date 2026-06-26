@@ -13,6 +13,19 @@ class TicketPagination(PageNumberPagination):
     page_size = 10
 
 
+ALLOWED_TICKET_ORDERINGS = {
+    "created_at": "created_at",
+    "-created_at": "-created_at",
+}
+
+
+def get_ticket_ordering(request):
+    return ALLOWED_TICKET_ORDERINGS.get(
+        request.query_params.get("ordering"),
+        "-created_at",
+    )
+
+
 @extend_schema(
     request=TicketSerializer,
     responses={
@@ -25,7 +38,9 @@ class TicketPagination(PageNumberPagination):
 @api_view(["GET", "POST"])
 def ticket_list(request):
     if request.method == "GET":
-        tickets = Ticket.objects.filter(created_by=request.user)
+        tickets = Ticket.objects.filter(created_by=request.user).order_by(
+            get_ticket_ordering(request)
+        )
         paginator = TicketPagination()
         page = paginator.paginate_queryset(tickets, request)
 
