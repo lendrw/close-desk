@@ -35,11 +35,14 @@ def ticket_list(request):
 
 @extend_schema(
     request=TicketSerializer,
-    responses={status.HTTP_200_OK: TicketSerializer},
-    summary="Consultar ou editar chamado",
+    responses={
+        status.HTTP_200_OK: TicketSerializer,
+        status.HTTP_204_NO_CONTENT: None,
+    },
+    summary="Consultar, editar ou excluir chamado",
     tags=["Tickets"],
 )
-@api_view(["GET", "PATCH"])
+@api_view(["GET", "PATCH", "DELETE"])
 def ticket_detail(request, ticket_id):
     try:
         ticket = Ticket.objects.get(id=ticket_id, created_by=request.user)
@@ -51,6 +54,8 @@ def ticket_detail(request, ticket_id):
         serializer.is_valid(raise_exception=True)
         ticket = serializer.save()
 
-        return Response(TicketSerializer(ticket).data)
+    if request.method == "DELETE":
+        ticket.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     return Response(TicketSerializer(ticket).data)

@@ -322,3 +322,61 @@ def test_update_ticket_endpoint_ignores_automatic_fields_from_client():
     assert ticket.created_by == owner
     assert ticket.created_at == original_created_at
     assert ticket.title == "Chamado atualizado"
+
+
+def test_delete_ticket_endpoint_deletes_owned_ticket():
+    owner = create_user(email="owner@example.com")
+    ticket = Ticket.objects.create(
+        title="Chamado para excluir",
+        description="Descrição do chamado para excluir.",
+        customer_name="Cliente Exemplo",
+        created_by=owner,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.delete(f"/api/tickets/{ticket.id}/")
+
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+    assert not Ticket.objects.filter(id=ticket.id).exists()
+
+
+def test_delete_ticket_endpoint_hides_ticket_from_another_user():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+    ticket = Ticket.objects.create(
+        title="Chamado do outro usuário",
+        description="Descrição do chamado do outro usuário.",
+        customer_name="Cliente Outro",
+        created_by=other_user,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.delete(f"/api/tickets/{ticket.id}/")
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+    assert response.json() == {
+        "error": {
+            "code": "not_found",
+            "message": "Recurso não encontrado.",
+            "details": {},
+        },
+    }
+    assert Ticket.objects.filter(id=ticket.id).exists()
+
+
+def test_delete_ticket_endpoint_returns_not_found_for_missing_ticket():
+    owner = create_user(email="owner@example.com")
+    client = authenticated_client(owner)
+
+    response = client.delete("/api/tickets/999/")
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+    assert response.json() == {
+        "error": {
+            "code": "not_found",
+            "message": "Recurso não encontrado.",
+            "details": {},
+        },
+    }
