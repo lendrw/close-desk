@@ -228,3 +228,97 @@ def test_retrieve_ticket_endpoint_returns_not_found_for_missing_ticket():
             "details": {},
         },
     }
+
+
+def test_update_ticket_endpoint_partially_updates_owned_ticket():
+    owner = create_user(email="owner@example.com")
+    ticket = Ticket.objects.create(
+        title="Chamado antigo",
+        description="Descrição antiga do chamado.",
+        customer_name="Cliente Antigo",
+        created_by=owner,
+    )
+    original_updated_at = ticket.updated_at
+
+    client = authenticated_client(owner)
+
+    response = client.patch(
+        f"/api/tickets/{ticket.id}/",
+        {
+            "title": "Chamado atualizado",
+            "status": Ticket.Status.IN_PROGRESS,
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+
+    ticket.refresh_from_db()
+
+    assert ticket.title == "Chamado atualizado"
+    assert ticket.description == "Descrição antiga do chamado."
+    assert ticket.status == Ticket.Status.IN_PROGRESS
+    assert ticket.updated_at > original_updated_at
+
+    assert response.json()["title"] == "Chamado atualizado"
+    assert response.json()["status"] == Ticket.Status.IN_PROGRESS
+
+
+def test_update_ticket_endpoint_hides_ticket_from_another_user():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+    ticket = Ticket.objects.create(
+        title="Chamado do outro usuário",
+        description="Descrição do chamado do outro usuário.",
+        customer_name="Cliente Outro",
+        created_by=other_user,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.patch(
+        f"/api/tickets/{ticket.id}/",
+        {"title": "Tentativa de alteração"},
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+    assert response.json() == {
+        "error": {
+            "code": "not_found",
+            "message": "Recurso não encontrado.",
+            "details": {},
+        },
+    }
+
+
+def test_update_ticket_endpoint_ignores_automatic_fields_from_client():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+    ticket = Ticket.objects.create(
+        title="Chamado antigo",
+        description="Descrição antiga do chamado.",
+        customer_name="Cliente Antigo",
+        created_by=owner,
+    )
+    original_created_at = ticket.created_at
+
+    client = authenticated_client(owner)
+
+    response = client.patch(
+        f"/api/tickets/{ticket.id}/",
+        {
+            "created_by": other_user.id,
+            "created_at": "2000-01-01T00:00:00Z",
+            "title": "Chamado atualizado",
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+
+    ticket.refresh_from_db()
+
+    assert ticket.created_by == owner
+    assert ticket.created_at == original_created_at
+    assert ticket.title == "Chamado atualizado"
