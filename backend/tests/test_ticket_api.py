@@ -707,3 +707,27 @@ def test_list_tickets_endpoint_returns_standard_error_for_invalid_page():
             "details": {},
         },
     }
+
+
+def test_list_tickets_endpoint_returns_empty_paginated_response_when_no_results():
+    owner = create_user(email="owner@example.com")
+    Ticket.objects.create(
+        title="Chamado existente",
+        description="Descrição do chamado existente.",
+        customer_name="Cliente Exemplo",
+        status=Ticket.Status.CLOSED,
+        priority=Ticket.Priority.MEDIUM,
+        created_by=owner,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.get(
+        "/api/tickets/?search=inexistente&status=open&priority=urgent"
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["count"] == 0
+    assert response.json()["next"] is None
+    assert response.json()["previous"] is None
+    assert response.json()["results"] == []
