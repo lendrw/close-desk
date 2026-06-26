@@ -731,3 +731,39 @@ def test_list_tickets_endpoint_returns_empty_paginated_response_when_no_results(
     assert response.json()["next"] is None
     assert response.json()["previous"] is None
     assert response.json()["results"] == []
+
+
+def test_list_tickets_endpoint_preserves_isolation_with_all_query_parameters():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+
+    owner_ticket = Ticket.objects.create(
+        title="Erro no login urgente",
+        description="Descrição do chamado do dono.",
+        customer_name="Cliente Alpha",
+        status=Ticket.Status.OPEN,
+        priority=Ticket.Priority.URGENT,
+        created_by=owner,
+    )
+    other_user_ticket = Ticket.objects.create(
+        title="Erro no login urgente",
+        description="Descrição do chamado de outro usuário.",
+        customer_name="Cliente Alpha",
+        status=Ticket.Status.OPEN,
+        priority=Ticket.Priority.URGENT,
+        created_by=other_user,
+    )
+
+    now = timezone.now()
+    set_ticket_created_at(owner_ticket, now - timedelta(days=1))
+    set_ticket_created_at(other_user_ticket, now)
+
+    client = authenticated_client(owner)
+
+    response = client.get(
+        "/api/tickets/?search=login&status=open&priority=urgent&ordering=-created_at&page=1"
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["count"] == 1
+    assert [ticket["id"] for ticket in response.json()["results"]] == [owner_ticket.id]
