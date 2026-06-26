@@ -232,13 +232,13 @@ Requisitos relacionados: RF-TIC-01 a RF-TIC-06, RN-01, RN-06, RN-07 e RNF-01 a R
 - [x] Preencher `created_by` pelo usuário autenticado.
 - [x] Impedir definição de campos automáticos pelo cliente.
 - [x] Testar e implementar listagem.
-- [ ] Testar e implementar detalhes.
+- [x] Testar e implementar detalhes.
 - [ ] Testar e implementar edição parcial.
 - [ ] Testar explicitamente a alteração de status.
 - [ ] Testar e implementar exclusão física.
 - [x] Exigir autenticação em todas as rotas de chamados.
 - [x] Filtrar o conjunto base pelo usuário autenticado.
-- [ ] Retornar resposta equivalente para recurso inexistente ou pertencente a outro usuário.
+- [x] Retornar resposta equivalente para recurso inexistente ou pertencente a outro usuário.
 - [x] Aplicar a estrutura padronizada de erros.
 - [x] Documentar exemplos de requisição e resposta.
 
