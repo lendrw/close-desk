@@ -155,7 +155,10 @@ def test_list_tickets_endpoint_returns_only_authenticated_user_tickets():
     response = client.get("/api/tickets/")
 
     assert response.status_code == status.HTTP_200_OK
-    assert response.json() == [
+    assert response.json()["count"] == 1
+    assert response.json()["next"] is None
+    assert response.json()["previous"] is None
+    assert response.json()["results"] == [
         {
             "id": owner_ticket.id,
             "title": "Chamado do dono",
@@ -165,8 +168,8 @@ def test_list_tickets_endpoint_returns_only_authenticated_user_tickets():
             "priority": Ticket.Priority.MEDIUM,
             "due_date": None,
             "created_by": owner.id,
-            "created_at": response.json()[0]["created_at"],
-            "updated_at": response.json()[0]["updated_at"],
+            "created_at": response.json()["results"][0]["created_at"],
+            "updated_at": response.json()["results"][0]["updated_at"],
         }
     ]
 
@@ -380,3 +383,36 @@ def test_delete_ticket_endpoint_returns_not_found_for_missing_ticket():
             "details": {},
         },
     }
+
+
+def test_list_tickets_endpoint_returns_paginated_response_with_10_items():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+
+    for index in range(12):
+        Ticket.objects.create(
+            title=f"Chamado {index}",
+            description=f"Descrição do chamado {index}.",
+            customer_name="Cliente Exemplo",
+            created_by=owner,
+        )
+
+    Ticket.objects.create(
+        title="Chamado de outro usuário",
+        description="Descrição do chamado de outro usuário.",
+        customer_name="Cliente Outro",
+        created_by=other_user,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["count"] == 12
+    assert response.json()["next"] is not None
+    assert response.json()["previous"] is None
+    assert len(response.json()["results"]) == 10
+    assert all(
+        ticket["created_by"] == owner.id for ticket in response.json()["results"]
+    )
