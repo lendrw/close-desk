@@ -131,3 +131,41 @@ def test_create_ticket_endpoint_returns_standard_error_for_invalid_fields():
         "status",
         "priority",
     }
+
+
+def test_list_tickets_endpoint_returns_only_authenticated_user_tickets():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+
+    owner_ticket = Ticket.objects.create(
+        title="Chamado do dono",
+        description="Descrição do chamado do dono.",
+        customer_name="Cliente Dono",
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Chamado de outro usuário",
+        description="Descrição do chamado de outro usuário.",
+        customer_name="Cliente Outro",
+        created_by=other_user,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json() == [
+        {
+            "id": owner_ticket.id,
+            "title": "Chamado do dono",
+            "description": "Descrição do chamado do dono.",
+            "customer_name": "Cliente Dono",
+            "status": Ticket.Status.OPEN,
+            "priority": Ticket.Priority.MEDIUM,
+            "due_date": None,
+            "created_by": owner.id,
+            "created_at": response.json()[0]["created_at"],
+            "updated_at": response.json()[0]["updated_at"],
+        }
+    ]
