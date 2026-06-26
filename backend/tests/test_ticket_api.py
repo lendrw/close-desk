@@ -568,3 +568,55 @@ def test_list_tickets_endpoint_filters_by_priority():
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["count"] == 1
     assert [ticket["id"] for ticket in response.json()["results"]] == [urgent_ticket.id]
+
+
+def test_list_tickets_endpoint_searches_by_title_case_insensitive():
+    owner = create_user(email="owner@example.com")
+    matching_ticket = Ticket.objects.create(
+        title="Erro no Login",
+        description="Descrição do chamado de login.",
+        customer_name="Cliente Alpha",
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Problema no cadastro",
+        description="Descrição do chamado de cadastro.",
+        customer_name="Cliente Beta",
+        created_by=owner,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/?search=login")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["count"] == 1
+    assert [ticket["id"] for ticket in response.json()["results"]] == [
+        matching_ticket.id
+    ]
+
+
+def test_list_tickets_endpoint_searches_by_customer_name_case_insensitive():
+    owner = create_user(email="owner@example.com")
+    matching_ticket = Ticket.objects.create(
+        title="Erro no pagamento",
+        description="Descrição do chamado de pagamento.",
+        customer_name="Cliente Alpha",
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Problema no cadastro",
+        description="Descrição do chamado de cadastro.",
+        customer_name="Cliente Beta",
+        created_by=owner,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/?search=alpha")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["count"] == 1
+    assert [ticket["id"] for ticket in response.json()["results"]] == [
+        matching_ticket.id
+    ]

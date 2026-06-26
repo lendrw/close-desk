@@ -1,3 +1,4 @@
+from django.db.models import Q
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -29,12 +30,18 @@ def get_ticket_ordering(request):
 def filter_tickets(queryset, request):
     ticket_status = request.query_params.get("status")
     priority = request.query_params.get("priority")
+    search = request.query_params.get("search")
 
     if ticket_status:
         queryset = queryset.filter(status=ticket_status)
 
     if priority:
         queryset = queryset.filter(priority=priority)
+
+    if search:
+        queryset = queryset.filter(
+            Q(title__icontains=search) | Q(customer_name__icontains=search)
+        )
 
     return queryset
 
