@@ -26,6 +26,19 @@ def get_ticket_ordering(request):
     )
 
 
+def filter_tickets(queryset, request):
+    ticket_status = request.query_params.get("status")
+    priority = request.query_params.get("priority")
+
+    if ticket_status:
+        queryset = queryset.filter(status=ticket_status)
+
+    if priority:
+        queryset = queryset.filter(priority=priority)
+
+    return queryset
+
+
 @extend_schema(
     request=TicketSerializer,
     responses={
@@ -38,9 +51,10 @@ def get_ticket_ordering(request):
 @api_view(["GET", "POST"])
 def ticket_list(request):
     if request.method == "GET":
-        tickets = Ticket.objects.filter(created_by=request.user).order_by(
-            get_ticket_ordering(request)
-        )
+        tickets = filter_tickets(
+            Ticket.objects.filter(created_by=request.user),
+            request,
+        ).order_by(get_ticket_ordering(request))
         paginator = TicketPagination()
         page = paginator.paginate_queryset(tickets, request)
 

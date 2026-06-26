@@ -516,3 +516,55 @@ def test_list_tickets_endpoint_orders_by_created_at_descending():
         newer_ticket.id,
         older_ticket.id,
     ]
+
+
+def test_list_tickets_endpoint_filters_by_status():
+    owner = create_user(email="owner@example.com")
+    open_ticket = Ticket.objects.create(
+        title="Chamado aberto",
+        description="Descrição do chamado aberto.",
+        customer_name="Cliente Aberto",
+        status=Ticket.Status.OPEN,
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Chamado fechado",
+        description="Descrição do chamado fechado.",
+        customer_name="Cliente Fechado",
+        status=Ticket.Status.CLOSED,
+        created_by=owner,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/?status=open")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["count"] == 1
+    assert [ticket["id"] for ticket in response.json()["results"]] == [open_ticket.id]
+
+
+def test_list_tickets_endpoint_filters_by_priority():
+    owner = create_user(email="owner@example.com")
+    urgent_ticket = Ticket.objects.create(
+        title="Chamado urgente",
+        description="Descrição do chamado urgente.",
+        customer_name="Cliente Urgente",
+        priority=Ticket.Priority.URGENT,
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Chamado normal",
+        description="Descrição do chamado normal.",
+        customer_name="Cliente Normal",
+        priority=Ticket.Priority.MEDIUM,
+        created_by=owner,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/?priority=urgent")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["count"] == 1
+    assert [ticket["id"] for ticket in response.json()["results"]] == [urgent_ticket.id]
