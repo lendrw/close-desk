@@ -20,6 +20,7 @@ def test_openapi_schema_is_public():
     assert "/api/auth/token/refresh/" in schema["paths"]
     assert "/api/auth/me/" in schema["paths"]
     assert "/api/tickets/" in schema["paths"]
+    assert "/api/tickets/{ticket_id}/" in schema["paths"]
 
 
 def test_swagger_ui_is_public():

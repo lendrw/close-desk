@@ -169,3 +169,62 @@ def test_list_tickets_endpoint_returns_only_authenticated_user_tickets():
             "updated_at": response.json()[0]["updated_at"],
         }
     ]
+
+
+def test_retrieve_ticket_endpoint_returns_owned_ticket():
+    owner = create_user(email="owner@example.com")
+    ticket = Ticket.objects.create(
+        title="Chamado do dono",
+        description="Descrição do chamado do dono.",
+        customer_name="Cliente Dono",
+        created_by=owner,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.get(f"/api/tickets/{ticket.id}/")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == ticket.id
+    assert response.json()["title"] == "Chamado do dono"
+    assert response.json()["created_by"] == owner.id
+
+
+def test_retrieve_ticket_endpoint_hides_ticket_from_another_user():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+    ticket = Ticket.objects.create(
+        title="Chamado do outro usuário",
+        description="Descrição do chamado do outro usuário.",
+        customer_name="Cliente Outro",
+        created_by=other_user,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.get(f"/api/tickets/{ticket.id}/")
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+    assert response.json() == {
+        "error": {
+            "code": "not_found",
+            "message": "Recurso não encontrado.",
+            "details": {},
+        },
+    }
+
+
+def test_retrieve_ticket_endpoint_returns_not_found_for_missing_ticket():
+    owner = create_user(email="owner@example.com")
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/999/")
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+    assert response.json() == {
+        "error": {
+            "code": "not_found",
+            "message": "Recurso não encontrado.",
+            "details": {},
+        },
+    }
