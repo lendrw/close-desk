@@ -104,29 +104,68 @@ def test_create_ticket_endpoint_ignores_automatic_fields_from_client():
     assert ticket.created_at.isoformat() != "2000-01-01T00:00:00+00:00"
     assert ticket.updated_at.isoformat() != "2000-01-01T00:00:00+00:00"
 
-    def test_create_ticket_endpoint_returns_standard_error_for_invalid_fields():
-        user = create_user()
-        client = authenticated_client(user)
 
-        response = client.post(
-            "/api/tickets/",
-            {
-                "title": "AB",
-                "description": "Curta",
-                "customer_name": "A",
-                "status": "invalid",
-                "priority": "invalid",
-            },
-            format="json",
-        )
+def test_create_ticket_endpoint_returns_standard_error_for_invalid_fields():
+    user = create_user()
+    client = authenticated_client(user)
 
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert response.json()["error"]["code"] == "validation_error"
-        assert response.json()["error"]["message"] == "Os dados enviados são inválidos."
-        assert set(response.json()["error"]["details"]) == {
-            "title",
-            "description",
-            "customer_name",
-            "status",
-            "priority",
+    response = client.post(
+        "/api/tickets/",
+        {
+            "title": "AB",
+            "description": "Curta",
+            "customer_name": "A",
+            "status": "invalid",
+            "priority": "invalid",
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json()["error"]["code"] == "validation_error"
+    assert response.json()["error"]["message"] == "Os dados enviados são inválidos."
+    assert set(response.json()["error"]["details"]) == {
+        "title",
+        "description",
+        "customer_name",
+        "status",
+        "priority",
+    }
+
+
+def test_list_tickets_endpoint_returns_only_authenticated_user_tickets():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+
+    owner_ticket = Ticket.objects.create(
+        title="Chamado do dono",
+        description="Descrição do chamado do dono.",
+        customer_name="Cliente Dono",
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Chamado de outro usuário",
+        description="Descrição do chamado de outro usuário.",
+        customer_name="Cliente Outro",
+        created_by=other_user,
+    )
+
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json() == [
+        {
+            "id": owner_ticket.id,
+            "title": "Chamado do dono",
+            "description": "Descrição do chamado do dono.",
+            "customer_name": "Cliente Dono",
+            "status": Ticket.Status.OPEN,
+            "priority": Ticket.Priority.MEDIUM,
+            "due_date": None,
+            "created_by": owner.id,
+            "created_at": response.json()[0]["created_at"],
+            "updated_at": response.json()[0]["updated_at"],
         }
+    ]
