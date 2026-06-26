@@ -620,3 +620,74 @@ def test_list_tickets_endpoint_searches_by_customer_name_case_insensitive():
     assert [ticket["id"] for ticket in response.json()["results"]] == [
         matching_ticket.id
     ]
+
+
+def test_list_tickets_endpoint_combines_search_filters_ordering_and_pagination():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+
+    newest_matching_ticket = Ticket.objects.create(
+        title="Erro no login urgente",
+        description="Descrição do chamado mais novo.",
+        customer_name="Cliente Alpha",
+        status=Ticket.Status.OPEN,
+        priority=Ticket.Priority.URGENT,
+        created_by=owner,
+    )
+    oldest_matching_ticket = Ticket.objects.create(
+        title="Erro no login antigo",
+        description="Descrição do chamado mais antigo.",
+        customer_name="Cliente Alpha",
+        status=Ticket.Status.OPEN,
+        priority=Ticket.Priority.URGENT,
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Erro no cadastro urgente",
+        description="Não deve aparecer por causa da busca.",
+        customer_name="Cliente Alpha",
+        status=Ticket.Status.OPEN,
+        priority=Ticket.Priority.URGENT,
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Erro no login fechado",
+        description="Não deve aparecer por causa do status.",
+        customer_name="Cliente Alpha",
+        status=Ticket.Status.CLOSED,
+        priority=Ticket.Priority.URGENT,
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Erro no login normal",
+        description="Não deve aparecer por causa da prioridade.",
+        customer_name="Cliente Alpha",
+        status=Ticket.Status.OPEN,
+        priority=Ticket.Priority.MEDIUM,
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Erro no login de outro usuário",
+        description="Não deve aparecer por causa do isolamento.",
+        customer_name="Cliente Alpha",
+        status=Ticket.Status.OPEN,
+        priority=Ticket.Priority.URGENT,
+        created_by=other_user,
+    )
+
+    now = timezone.now()
+    set_ticket_created_at(oldest_matching_ticket, now - timedelta(days=1))
+    set_ticket_created_at(newest_matching_ticket, now)
+
+    client = authenticated_client(owner)
+
+    response = client.get(
+        "/api/tickets/?search=login&status=open&priority=urgent&ordering=created_at&page=1"
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["count"] == 2
+    assert [ticket["id"] for ticket in response.json()["results"]] == [
+        oldest_matching_ticket.id,
+        newest_matching_ticket.id,
+    ]
