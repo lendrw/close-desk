@@ -110,6 +110,27 @@ Os parâmetros podem ser combinados, por exemplo:
 /api/tickets/?search=login&status=open&priority=urgent&ordering=-created_at&page=1
 ```
 
+### Dashboard
+
+O endpoint `GET /api/dashboard/summary/` retorna os indicadores consolidados do usuário autenticado.
+
+Exemplo de resposta:
+
+```json
+{
+  "total": 4,
+  "by_status": {
+    "open": 1,
+    "in_progress": 1,
+    "resolved": 1,
+    "closed": 1
+  },
+  "urgent": 2
+}
+```
+
+A resposta considera somente os chamados do usuário autenticado.
+
 ## Estado atual
 
 O projeto possui:
@@ -122,5 +143,6 @@ O projeto possui:
 - Documentação interativa com OpenAPI e Swagger UI.
 - Endpoints de autenticação com JWT.
 - CRUD de chamados com isolamento por usuário.
+- Endpoint de dashboard com indicadores consolidados por usuário.
 
-Ainda não possui frontend integrado ou dashboard.
+Ainda não possui frontend integrado.
