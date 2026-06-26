@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from tickets.dashboard import dashboard_summary
 
 from config.views import health_check
 
@@ -37,4 +38,5 @@ urlpatterns = [
     path("api/auth/register/", register_user, name="register-user"),
     path("api/auth/me/", current_user, name="current-user"),
     path("api/tickets/", include("tickets.urls")),
+    path("api/dashboard/summary/", dashboard_summary, name="dashboard-summary"),
 ]
