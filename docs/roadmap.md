@@ -297,20 +297,20 @@ Requisitos relacionados: RF-DAS-01 e RN-07.
 
 ### Tarefas
 
-- [ ] Testar e implementar total de chamados.
-- [ ] Testar e implementar total por cada status.
-- [ ] Testar e implementar total de urgentes independentemente do status.
-- [ ] Garantir o isolamento pelo usuário autenticado.
-- [ ] Documentar a resposta do endpoint.
+- [x] Testar e implementar total de chamados.
+- [x] Testar e implementar total por cada status.
+- [x] Testar e implementar total de urgentes independentemente do status.
+- [x] Garantir o isolamento pelo usuário autenticado.
+- [x] Documentar a resposta do endpoint.
 
 ### Testes mínimos
 
-- [ ] Indicadores zerados.
-- [ ] Contagem total.
-- [ ] Abertos, em andamento, resolvidos e fechados.
-- [ ] Urgentes em diferentes status.
-- [ ] Atualização após criação, edição e exclusão.
-- [ ] Isolamento entre dois usuários.
+- [x] Indicadores zerados.
+- [x] Contagem total.
+- [x] Abertos, em andamento, resolvidos e fechados.
+- [x] Urgentes em diferentes status.
+- [x] Atualização após criação, edição e exclusão.
+- [x] Isolamento entre dois usuários.
 
 ### Critério de saída
 
