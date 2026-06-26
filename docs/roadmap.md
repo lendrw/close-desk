@@ -266,8 +266,8 @@ Requisitos relacionados: RF-TIC-02 e RF-TIC-07 a RF-TIC-10.
 
 - [x] Configurar paginação com 10 itens por página.
 - [x] Retornar metadados suficientes para navegação.
-- [ ] Configurar ordenação padrão pelos chamados mais recentes.
-- [ ] Implementar ordenação crescente e decrescente por criação.
+- [x] Configurar ordenação padrão pelos chamados mais recentes.
+- [x] Implementar ordenação crescente e decrescente por criação.
 - [ ] Implementar filtro por status.
 - [ ] Implementar filtro por prioridade.
 - [ ] Implementar busca por título ou cliente sem diferenciar maiúsculas.
@@ -278,7 +278,7 @@ Requisitos relacionados: RF-TIC-02 e RF-TIC-07 a RF-TIC-10.
 ### Testes mínimos
 
 - [x] Paginação e metadados.
-- [ ] Ordenação padrão, crescente e decrescente.
+- [x] Ordenação padrão, crescente e decrescente.
 - [ ] Cada filtro isolado.
 - [ ] Busca por título e cliente.
 - [ ] Combinações de parâmetros.
