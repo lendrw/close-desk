@@ -92,6 +92,24 @@ python -m ruff format .
 
 A suíte usa SQLite em memória e não depende do PostgreSQL local.
 
+### Listagem de chamados
+
+O endpoint `GET /api/tickets/` aceita os seguintes parâmetros de consulta:
+
+| Parâmetro | Exemplo | Descrição |
+| --- | --- | --- |
+| `page` | `?page=2` | Seleciona a página da listagem paginada. |
+| `ordering` | `?ordering=created_at` | Ordena por criação em ordem crescente. Use `-created_at` para ordem decrescente. |
+| `status` | `?status=open` | Filtra por status do chamado. |
+| `priority` | `?priority=urgent` | Filtra por prioridade do chamado. |
+| `search` | `?search=login` | Busca por título ou nome do cliente, sem diferenciar maiúsculas. |
+
+Os parâmetros podem ser combinados, por exemplo:
+
+```text
+/api/tickets/?search=login&status=open&priority=urgent&ordering=-created_at&page=1
+```
+
 ## Estado atual
 
 O projeto possui:
@@ -102,5 +120,7 @@ O projeto possui:
 - Health check público em `GET /api/health/`.
 - Ambiente de testes com pytest.
 - Documentação interativa com OpenAPI e Swagger UI.
+- Endpoints de autenticação com JWT.
+- CRUD de chamados com isolamento por usuário.
 
-Ainda não possui endpoints de autenticação ou modelo de chamados.
+Ainda não possui frontend integrado ou dashboard.
