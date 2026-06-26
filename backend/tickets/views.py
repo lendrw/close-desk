@@ -1,6 +1,7 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
 from tickets.models import Ticket
@@ -30,3 +31,18 @@ def ticket_list(request):
         TicketSerializer(ticket).data,
         status=status.HTTP_201_CREATED,
     )
+
+
+@extend_schema(
+    responses={status.HTTP_200_OK: TicketSerializer},
+    summary="Consultar chamado",
+    tags=["Tickets"],
+)
+@api_view(["GET"])
+def ticket_detail(request, ticket_id):
+    try:
+        ticket = Ticket.objects.get(id=ticket_id, created_by=request.user)
+    except Ticket.DoesNotExist as error:
+        raise NotFound("Recurso não encontrado.") from error
+
+    return Response(TicketSerializer(ticket).data)
