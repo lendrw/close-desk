@@ -691,3 +691,19 @@ def test_list_tickets_endpoint_combines_search_filters_ordering_and_pagination()
         oldest_matching_ticket.id,
         newest_matching_ticket.id,
     ]
+
+
+def test_list_tickets_endpoint_returns_standard_error_for_invalid_page():
+    owner = create_user(email="owner@example.com")
+    client = authenticated_client(owner)
+
+    response = client.get("/api/tickets/?page=999")
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+    assert response.json() == {
+        "error": {
+            "code": "not_found",
+            "message": "Recurso não encontrado.",
+            "details": {},
+        },
+    }
