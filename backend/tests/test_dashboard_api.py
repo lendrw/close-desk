@@ -143,3 +143,84 @@ def test_dashboard_summary_endpoint_counts_urgent_tickets_across_statuses():
 
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["urgent"] == 2
+
+
+def test_dashboard_summary_endpoint_updates_after_create_update_and_delete():
+    user = create_user()
+    client = authenticated_client(user)
+
+    ticket = Ticket.objects.create(
+        title="Chamado inicial",
+        description="Descrição do chamado inicial.",
+        customer_name="Cliente Inicial",
+        status=Ticket.Status.OPEN,
+        priority=Ticket.Priority.URGENT,
+        created_by=user,
+    )
+
+    response = client.get("/api/dashboard/summary/")
+    assert response.json()["total"] == 1
+    assert response.json()["by_status"]["open"] == 1
+    assert response.json()["urgent"] == 1
+
+    ticket.status = Ticket.Status.CLOSED
+    ticket.priority = Ticket.Priority.MEDIUM
+    ticket.full_clean()
+    ticket.save()
+
+    response = client.get("/api/dashboard/summary/")
+    assert response.json()["total"] == 1
+    assert response.json()["by_status"]["open"] == 0
+    assert response.json()["by_status"]["closed"] == 1
+    assert response.json()["urgent"] == 0
+
+    ticket.delete()
+
+    response = client.get("/api/dashboard/summary/")
+    assert response.json() == {
+        "total": 0,
+        "by_status": {
+            "open": 0,
+            "in_progress": 0,
+            "resolved": 0,
+            "closed": 0,
+        },
+        "urgent": 0,
+    }
+
+
+def test_dashboard_summary_endpoint_preserves_user_isolation():
+    owner = create_user(email="owner@example.com")
+    other_user = create_user(email="other@example.com")
+    client = authenticated_client(owner)
+
+    Ticket.objects.create(
+        title="Chamado do dono",
+        description="Descrição do chamado do dono.",
+        customer_name="Cliente Dono",
+        status=Ticket.Status.OPEN,
+        priority=Ticket.Priority.URGENT,
+        created_by=owner,
+    )
+    Ticket.objects.create(
+        title="Chamado de outro usuário",
+        description="Descrição do chamado de outro usuário.",
+        customer_name="Cliente Outro",
+        status=Ticket.Status.CLOSED,
+        priority=Ticket.Priority.URGENT,
+        created_by=other_user,
+    )
+
+    response = client.get("/api/dashboard/summary/")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json() == {
+        "total": 1,
+        "by_status": {
+            "open": 1,
+            "in_progress": 0,
+            "resolved": 0,
+            "closed": 0,
+        },
+        "urgent": 1,
+    }
