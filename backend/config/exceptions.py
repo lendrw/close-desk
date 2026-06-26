@@ -57,7 +57,7 @@ def build_error_response(code, status_code, details=None, headers=None):
 
 
 def get_status_code(exc, default_status_code):
-    if isinstance(exc, (AuthenticationFailed, NotAuthenticated)):
+    if isinstance(exc, AuthenticationFailed | NotAuthenticated):
         return status.HTTP_401_UNAUTHORIZED
 
     return default_status_code
@@ -67,7 +67,7 @@ def get_error_code(exc, status_code):
     if isinstance(exc, ValidationError):
         return "validation_error"
 
-    if isinstance(exc, (AuthenticationFailed, NotAuthenticated)):
+    if isinstance(exc, AuthenticationFailed | NotAuthenticated):
         return "authentication_error"
 
     if isinstance(exc, PermissionDenied):
