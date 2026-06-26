@@ -272,7 +272,7 @@ Requisitos relacionados: RF-TIC-02 e RF-TIC-07 a RF-TIC-10.
 - [x] Implementar filtro por prioridade.
 - [x] Implementar busca por título ou cliente sem diferenciar maiúsculas.
 - [x] Permitir combinação entre busca, filtros, ordenação e página.
-- [ ] Tratar página inválida de forma controlada.
+- [x] Tratar página inválida de forma controlada.
 - [ ] Documentar todos os parâmetros.
 
 ### Testes mínimos
