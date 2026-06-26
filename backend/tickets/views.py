@@ -34,15 +34,23 @@ def ticket_list(request):
 
 
 @extend_schema(
+    request=TicketSerializer,
     responses={status.HTTP_200_OK: TicketSerializer},
-    summary="Consultar chamado",
+    summary="Consultar ou editar chamado",
     tags=["Tickets"],
 )
-@api_view(["GET"])
+@api_view(["GET", "PATCH"])
 def ticket_detail(request, ticket_id):
     try:
         ticket = Ticket.objects.get(id=ticket_id, created_by=request.user)
     except Ticket.DoesNotExist as error:
         raise NotFound("Recurso não encontrado.") from error
+
+    if request.method == "PATCH":
+        serializer = TicketSerializer(ticket, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        ticket = serializer.save()
+
+        return Response(TicketSerializer(ticket).data)
 
     return Response(TicketSerializer(ticket).data)

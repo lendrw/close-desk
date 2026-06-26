@@ -228,3 +228,37 @@ def test_retrieve_ticket_endpoint_returns_not_found_for_missing_ticket():
             "details": {},
         },
     }
+
+
+def test_update_ticket_endpoint_partially_updates_owned_ticket():
+    owner = create_user(email="owner@example.com")
+    ticket = Ticket.objects.create(
+        title="Chamado antigo",
+        description="Descrição antiga do chamado.",
+        customer_name="Cliente Antigo",
+        created_by=owner,
+    )
+    original_updated_at = ticket.updated_at
+
+    client = authenticated_client(owner)
+
+    response = client.patch(
+        f"/api/tickets/{ticket.id}/",
+        {
+            "title": "Chamado atualizado",
+            "status": Ticket.Status.IN_PROGRESS,
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+
+    ticket.refresh_from_db()
+
+    assert ticket.title == "Chamado atualizado"
+    assert ticket.description == "Descrição antiga do chamado."
+    assert ticket.status == Ticket.Status.IN_PROGRESS
+    assert ticket.updated_at > original_updated_at
+
+    assert response.json()["title"] == "Chamado atualizado"
+    assert response.json()["status"] == Ticket.Status.IN_PROGRESS
