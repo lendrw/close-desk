@@ -271,7 +271,7 @@ Requisitos relacionados: RF-TIC-02 e RF-TIC-07 a RF-TIC-10.
 - [x] Implementar filtro por status.
 - [x] Implementar filtro por prioridade.
 - [x] Implementar busca por título ou cliente sem diferenciar maiúsculas.
-- [ ] Permitir combinação entre busca, filtros, ordenação e página.
+- [x] Permitir combinação entre busca, filtros, ordenação e página.
 - [ ] Tratar página inválida de forma controlada.
 - [ ] Documentar todos os parâmetros.
 
@@ -281,7 +281,7 @@ Requisitos relacionados: RF-TIC-02 e RF-TIC-07 a RF-TIC-10.
 - [x] Ordenação padrão, crescente e decrescente.
 - [x] Cada filtro isolado.
 - [x] Busca por título e cliente.
-- [ ] Combinações de parâmetros.
+- [x] Combinações de parâmetros.
 - [ ] Resultados vazios.
 - [ ] Isolamento preservado em todas as consultas.
 
