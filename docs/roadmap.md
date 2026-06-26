@@ -233,8 +233,8 @@ Requisitos relacionados: RF-TIC-01 a RF-TIC-06, RN-01, RN-06, RN-07 e RNF-01 a R
 - [x] Impedir definição de campos automáticos pelo cliente.
 - [x] Testar e implementar listagem.
 - [x] Testar e implementar detalhes.
-- [ ] Testar e implementar edição parcial.
-- [ ] Testar explicitamente a alteração de status.
+- [x] Testar e implementar edição parcial.
+- [x] Testar explicitamente a alteração de status.
 - [ ] Testar e implementar exclusão física.
 - [x] Exigir autenticação em todas as rotas de chamados.
 - [x] Filtrar o conjunto base pelo usuário autenticado.
@@ -248,7 +248,7 @@ Requisitos relacionados: RF-TIC-01 a RF-TIC-06, RN-01, RN-06, RN-07 e RNF-01 a R
 - [x] Rejeição de usuário não autenticado.
 - [x] Rejeição de campos inválidos.
 - [x] Imutabilidade de `created_by` e `created_at`.
-- [ ] Atualização automática de `updated_at`.
+- [x] Atualização automática de `updated_at`.
 - [ ] Bloqueio de leitura, edição e exclusão entre dois usuários.
 - [ ] Ausência de exposição da existência do chamado alheio.
 
