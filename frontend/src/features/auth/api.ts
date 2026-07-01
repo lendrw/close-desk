@@ -15,8 +15,21 @@ export type TokenPair = {
   refresh: string
 }
 
+export type RefreshTokenResponse = {
+  access: string
+}
+
 export async function login(credentials: LoginCredentials) {
   const response = await apiClient.post<TokenPair>('/auth/token/', credentials)
+
+  return response.data
+}
+
+export async function refreshAccessToken(refresh: string) {
+  const response = await apiClient.post<RefreshTokenResponse>(
+    '/auth/token/refresh/',
+    { refresh },
+  )
 
   return response.data
 }
