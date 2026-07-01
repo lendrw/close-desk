@@ -335,7 +335,7 @@ Requisitos relacionados: RNF-03 a RNF-06 e RNF-10.
 - [x] Definir tipos para usuário, chamado, paginação, dashboard e erros.
 - [ ] Criar componentes básicos somente quando houver uso real.
 - [x] Criar teste de renderização inicial.
-- [ ] Definir estilos globais, foco visível e comportamento responsivo base.
+- [x] Definir estilos globais, foco visível e comportamento responsivo base.
 
 ### Critério de saída
 
