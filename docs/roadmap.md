@@ -359,7 +359,7 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 - [x] Renovar o acesso quando necessário.
 - [ ] Evitar ciclos infinitos de renovação.
 - [x] Encerrar a sessão quando a renovação falhar.
-- [ ] Consultar e manter os dados do usuário atual.
+- [x] Consultar e manter os dados do usuário atual.
 - [ ] Criar rotas protegidas.
 - [ ] Implementar logout e limpeza das credenciais.
 - [x] Implementar estados de envio, sucesso e erro.
@@ -373,7 +373,7 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 - [x] Restauração de sessão.
 - [x] Falha de renovação.
 - [ ] Redirecionamento de visitante.
-- [ ] Acesso do usuário autenticado.
+- [x] Acesso do usuário autenticado.
 - [ ] Logout.
 
 ### Critério de saída
