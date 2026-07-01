@@ -5,7 +5,9 @@ import { server } from '../../tests/msw/server'
 import {
   clearAuthTokens,
   getAccessToken,
+  getCurrentUser,
   getRefreshToken,
+  loadCurrentUser,
   restoreSession,
   saveAuthTokens,
 } from './session'
@@ -35,6 +37,7 @@ describe('auth session', () => {
     clearAuthTokens()
 
     expect(getAccessToken()).toBeNull()
+    expect(getCurrentUser()).toBeNull()
     expect(getRefreshToken()).toBeNull()
   })
 
@@ -48,15 +51,34 @@ describe('auth session', () => {
         })
       }),
     )
+    server.use(
+      http.get('http://localhost:8000/api/auth/me/', ({ request }) => {
+        expect(request.headers.get('authorization')).toBe(
+          'Bearer new-access-token',
+        )
+
+        return HttpResponse.json({
+          email: 'ada@example.com',
+          id: 1,
+          name: 'Ada Lovelace',
+        })
+      }),
+    )
 
     await expect(restoreSession()).resolves.toBe(true)
     expect(getAccessToken()).toBe('new-access-token')
+    expect(getCurrentUser()).toEqual({
+      email: 'ada@example.com',
+      id: 1,
+      name: 'Ada Lovelace',
+    })
     expect(getRefreshToken()).toBe('refresh-token')
   })
 
   it('does not restore session without a refresh token', async () => {
     await expect(restoreSession()).resolves.toBe(false)
     expect(getAccessToken()).toBeNull()
+    expect(getCurrentUser()).toBeNull()
     expect(getRefreshToken()).toBeNull()
   })
 
@@ -80,6 +102,37 @@ describe('auth session', () => {
 
     await expect(restoreSession()).resolves.toBe(false)
     expect(getAccessToken()).toBeNull()
+    expect(getCurrentUser()).toBeNull()
     expect(getRefreshToken()).toBeNull()
+  })
+
+  it('loads and keeps current user using the access token', async () => {
+    saveAuthTokens({
+      access: 'access-token',
+      refresh: 'refresh-token',
+    })
+
+    server.use(
+      http.get('http://localhost:8000/api/auth/me/', ({ request }) => {
+        expect(request.headers.get('authorization')).toBe('Bearer access-token')
+
+        return HttpResponse.json({
+          email: 'ada@example.com',
+          id: 1,
+          name: 'Ada Lovelace',
+        })
+      }),
+    )
+
+    await expect(loadCurrentUser()).resolves.toEqual({
+      email: 'ada@example.com',
+      id: 1,
+      name: 'Ada Lovelace',
+    })
+    expect(getCurrentUser()).toEqual({
+      email: 'ada@example.com',
+      id: 1,
+      name: 'Ada Lovelace',
+    })
   })
 })
