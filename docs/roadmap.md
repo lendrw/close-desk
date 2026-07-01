@@ -333,7 +333,7 @@ Requisitos relacionados: RNF-03 a RNF-06 e RNF-10.
 - [x] Configurar ESLint e Prettier.
 - [x] Criar uma estrutura inicial por funcionalidades.
 - [x] Definir tipos para usuário, chamado, paginação, dashboard e erros.
-- [ ] Criar componentes básicos somente quando houver uso real.
+- [x] Criar componentes básicos somente quando houver uso real.
 - [x] Criar teste de renderização inicial.
 - [x] Definir estilos globais, foco visível e comportamento responsivo base.
 
@@ -349,9 +349,9 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 
 ### Tarefas
 
-- [ ] Criar a página de cadastro.
-- [ ] Criar a página de login.
-- [ ] Validar campos e apresentar erros associados.
+- [x] Criar a página de cadastro.
+- [x] Criar a página de login.
+- [x] Validar campos e apresentar erros associados.
 - [ ] Integrar cadastro e login à API.
 - [ ] Manter o access token em memória.
 - [ ] Manter o refresh token em `sessionStorage`.
