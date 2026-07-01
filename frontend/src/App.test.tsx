@@ -1,9 +1,16 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import App from './App'
-import { setCurrentUser } from './features/auth/session'
+import {
+  getAccessToken,
+  getCurrentUser,
+  getRefreshToken,
+  saveAuthTokens,
+  setCurrentUser,
+} from './features/auth/session'
 
 describe('App', () => {
   afterEach(() => {
@@ -48,5 +55,31 @@ describe('App', () => {
     expect(
       screen.getByRole('heading', { name: 'Dashboard' }),
     ).toBeInTheDocument()
+  })
+
+  it('logs out and redirects to login', async () => {
+    const user = userEvent.setup()
+    setCurrentUser({
+      email: 'ada@example.com',
+      id: 1,
+      name: 'Ada Lovelace',
+    })
+    saveAuthTokens({
+      access: 'access-token',
+      refresh: 'refresh-token',
+    })
+
+    render(
+      <MemoryRouter initialEntries={['/dashboard']}>
+        <App />
+      </MemoryRouter>,
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Sair' }))
+
+    expect(screen.getByRole('heading', { name: 'Entrar' })).toBeInTheDocument()
+    expect(getAccessToken()).toBeNull()
+    expect(getCurrentUser()).toBeNull()
+    expect(getRefreshToken()).toBeNull()
   })
 })

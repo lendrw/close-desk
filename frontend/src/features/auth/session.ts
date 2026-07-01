@@ -37,6 +37,10 @@ export function clearAuthTokens() {
   sessionStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY)
 }
 
+export function logout() {
+  clearAuthTokens()
+}
+
 export async function loadCurrentUser() {
   currentUser = await fetchCurrentUser()
 
