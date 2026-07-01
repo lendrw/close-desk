@@ -388,14 +388,14 @@ Requisitos relacionados: RF-AUT-04, RF-DAS-01 e RF-UX-01 a RF-UX-04.
 
 ### Tarefas
 
-- [ ] Criar layout autenticado.
-- [ ] Criar header e navegação lateral ou equivalente responsivo.
-- [ ] Exibir o usuário atual.
-- [ ] Disponibilizar links para dashboard, chamados, novo chamado e logout.
+- [x] Criar layout autenticado.
+- [x] Criar header e navegação lateral ou equivalente responsivo.
+- [x] Exibir o usuário atual.
+- [x] Disponibilizar links para dashboard, chamados, novo chamado e logout.
 - [ ] Criar o serviço do dashboard.
 - [ ] Criar os cards de indicadores.
 - [ ] Tratar carregamento, erro e indicadores zerados.
-- [ ] Adaptar a navegação para telas a partir de 360 px.
+- [x] Adaptar a navegação para telas a partir de 360 px.
 
 ### Critério de saída
 
