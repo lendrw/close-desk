@@ -353,8 +353,8 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 - [x] Criar a página de login.
 - [x] Validar campos e apresentar erros associados.
 - [x] Integrar cadastro e login à API.
-- [ ] Manter o access token em memória.
-- [ ] Manter o refresh token em `sessionStorage`.
+- [x] Manter o access token em memória.
+- [x] Manter o refresh token em `sessionStorage`.
 - [ ] Restaurar a sessão por meio do refresh token.
 - [ ] Renovar o acesso quando necessário.
 - [ ] Evitar ciclos infinitos de renovação.
@@ -369,7 +369,7 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 - [x] Renderização e validação dos dois formulários.
 - [x] Cadastro válido e inválido.
 - [x] Login válido e inválido.
-- [ ] Armazenamento somente do refresh token no `sessionStorage`.
+- [x] Armazenamento somente do refresh token no `sessionStorage`.
 - [ ] Restauração de sessão.
 - [ ] Falha de renovação.
 - [ ] Redirecionamento de visitante.
