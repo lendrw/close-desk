@@ -6,6 +6,9 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
+    env: {
+      VITE_API_BASE_URL: "http://localhost:8000/api",
+    },
     environment: "jsdom",
     globals: true,
     setupFiles: "./src/tests/setup.ts",
