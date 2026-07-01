@@ -6,6 +6,7 @@ import type { TokenPair } from './api'
 const REFRESH_TOKEN_STORAGE_KEY = 'closedesk.refreshToken'
 
 let accessToken: string | null = null
+let accessTokenRenewalPromise: Promise<string | null> | null = null
 let currentUser: User | null = null
 
 setAccessTokenProvider(() => accessToken)
@@ -33,6 +34,7 @@ export function getRefreshToken() {
 
 export function clearAuthTokens() {
   accessToken = null
+  accessTokenRenewalPromise = null
   currentUser = null
   sessionStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY)
 }
@@ -48,6 +50,10 @@ export async function loadCurrentUser() {
 }
 
 export async function renewAccessToken() {
+  if (accessTokenRenewalPromise) {
+    return accessTokenRenewalPromise
+  }
+
   const refreshToken = getRefreshToken()
 
   if (!refreshToken) {
@@ -55,10 +61,22 @@ export async function renewAccessToken() {
     return null
   }
 
-  const tokens = await refreshAccessToken(refreshToken)
-  accessToken = tokens.access
+  accessTokenRenewalPromise = refreshAccessToken(refreshToken)
+    .then((tokens) => {
+      accessToken = tokens.access
 
-  return accessToken
+      return accessToken
+    })
+    .catch((error: unknown) => {
+      clearAuthTokens()
+
+      throw error
+    })
+    .finally(() => {
+      accessTokenRenewalPromise = null
+    })
+
+  return accessTokenRenewalPromise
 }
 
 export async function restoreSession() {

@@ -8,6 +8,7 @@ import {
   getCurrentUser,
   getRefreshToken,
   loadCurrentUser,
+  renewAccessToken,
   restoreSession,
   saveAuthTokens,
 } from './session'
@@ -101,6 +102,56 @@ describe('auth session', () => {
     )
 
     await expect(restoreSession()).resolves.toBe(false)
+    expect(getAccessToken()).toBeNull()
+    expect(getCurrentUser()).toBeNull()
+    expect(getRefreshToken()).toBeNull()
+  })
+
+  it('reuses an ongoing access token renewal request', async () => {
+    let refreshRequests = 0
+    sessionStorage.setItem('closedesk.refreshToken', 'refresh-token')
+
+    server.use(
+      http.post('http://localhost:8000/api/auth/token/refresh/', async () => {
+        refreshRequests += 1
+        await new Promise((resolve) => setTimeout(resolve, 20))
+
+        return HttpResponse.json({
+          access: 'new-access-token',
+        })
+      }),
+    )
+
+    await expect(
+      Promise.all([renewAccessToken(), renewAccessToken()]),
+    ).resolves.toEqual(['new-access-token', 'new-access-token'])
+    expect(refreshRequests).toBe(1)
+    expect(getAccessToken()).toBe('new-access-token')
+    expect(getRefreshToken()).toBe('refresh-token')
+  })
+
+  it('clears credentials when access token renewal fails', async () => {
+    saveAuthTokens({
+      access: 'old-access-token',
+      refresh: 'expired-refresh-token',
+    })
+
+    server.use(
+      http.post('http://localhost:8000/api/auth/token/refresh/', async () => {
+        return HttpResponse.json(
+          {
+            error: {
+              code: 'authentication_error',
+              details: {},
+              message: 'Token inválido.',
+            },
+          },
+          { status: 401 },
+        )
+      }),
+    )
+
+    await expect(renewAccessToken()).rejects.toThrow()
     expect(getAccessToken()).toBeNull()
     expect(getCurrentUser()).toBeNull()
     expect(getRefreshToken()).toBeNull()
