@@ -25,6 +25,12 @@ export async function login(credentials: LoginCredentials) {
   return response.data
 }
 
+export async function fetchCurrentUser() {
+  const response = await apiClient.get<User>('/auth/me/')
+
+  return response.data
+}
+
 export async function refreshAccessToken(refresh: string) {
   const response = await apiClient.post<RefreshTokenResponse>(
     '/auth/token/refresh/',

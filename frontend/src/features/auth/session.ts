@@ -1,9 +1,14 @@
-import { refreshAccessToken } from './api'
+import { setAccessTokenProvider } from '../../shared/api/client'
+import type { User } from '../../shared/types/api'
+import { fetchCurrentUser, refreshAccessToken } from './api'
 import type { TokenPair } from './api'
 
 const REFRESH_TOKEN_STORAGE_KEY = 'closedesk.refreshToken'
 
 let accessToken: string | null = null
+let currentUser: User | null = null
+
+setAccessTokenProvider(() => accessToken)
 
 export function saveAuthTokens(tokens: TokenPair) {
   accessToken = tokens.access
@@ -14,13 +19,24 @@ export function getAccessToken() {
   return accessToken
 }
 
+export function getCurrentUser() {
+  return currentUser
+}
+
 export function getRefreshToken() {
   return sessionStorage.getItem(REFRESH_TOKEN_STORAGE_KEY)
 }
 
 export function clearAuthTokens() {
   accessToken = null
+  currentUser = null
   sessionStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY)
+}
+
+export async function loadCurrentUser() {
+  currentUser = await fetchCurrentUser()
+
+  return currentUser
 }
 
 export async function renewAccessToken() {
@@ -39,7 +55,15 @@ export async function renewAccessToken() {
 
 export async function restoreSession() {
   try {
-    return Boolean(await renewAccessToken())
+    const renewedAccessToken = await renewAccessToken()
+
+    if (!renewedAccessToken) {
+      return false
+    }
+
+    await loadCurrentUser()
+
+    return true
   } catch {
     clearAuthTokens()
     return false
