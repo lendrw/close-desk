@@ -355,10 +355,10 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 - [x] Integrar cadastro e login à API.
 - [x] Manter o access token em memória.
 - [x] Manter o refresh token em `sessionStorage`.
-- [ ] Restaurar a sessão por meio do refresh token.
-- [ ] Renovar o acesso quando necessário.
+- [x] Restaurar a sessão por meio do refresh token.
+- [x] Renovar o acesso quando necessário.
 - [ ] Evitar ciclos infinitos de renovação.
-- [ ] Encerrar a sessão quando a renovação falhar.
+- [x] Encerrar a sessão quando a renovação falhar.
 - [ ] Consultar e manter os dados do usuário atual.
 - [ ] Criar rotas protegidas.
 - [ ] Implementar logout e limpeza das credenciais.
@@ -370,8 +370,8 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 - [x] Cadastro válido e inválido.
 - [x] Login válido e inválido.
 - [x] Armazenamento somente do refresh token no `sessionStorage`.
-- [ ] Restauração de sessão.
-- [ ] Falha de renovação.
+- [x] Restauração de sessão.
+- [x] Falha de renovação.
 - [ ] Redirecionamento de visitante.
 - [ ] Acesso do usuário autenticado.
 - [ ] Logout.
