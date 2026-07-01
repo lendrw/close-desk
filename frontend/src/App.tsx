@@ -1,6 +1,7 @@
 import { Link, Route, Routes } from 'react-router'
 
 import { LoginPage } from './features/auth/LoginPage'
+import { ProtectedRoute } from './features/auth/ProtectedRoute'
 import { RegisterPage } from './features/auth/RegisterPage'
 import './App.css'
 
@@ -61,7 +62,9 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<DashboardPage />} />
+      </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
