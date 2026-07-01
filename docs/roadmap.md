@@ -329,7 +329,7 @@ Requisitos relacionados: RNF-03 a RNF-06 e RNF-10.
 - [x] Configurar React Router.
 - [x] Configurar Axios com URL da API por variável de ambiente.
 - [x] Configurar Vitest e Testing Library.
-- [ ] Configurar MSW.
+- [x] Configurar MSW.
 - [ ] Configurar ESLint e Prettier.
 - [ ] Criar uma estrutura inicial por funcionalidades.
 - [ ] Definir tipos para usuário, chamado, paginação, dashboard e erros.
