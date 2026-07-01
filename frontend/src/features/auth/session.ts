@@ -23,6 +23,10 @@ export function getCurrentUser() {
   return currentUser
 }
 
+export function setCurrentUser(user: User | null) {
+  currentUser = user
+}
+
 export function getRefreshToken() {
   return sessionStorage.getItem(REFRESH_TOKEN_STORAGE_KEY)
 }
