@@ -352,7 +352,7 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 - [x] Criar a página de cadastro.
 - [x] Criar a página de login.
 - [x] Validar campos e apresentar erros associados.
-- [ ] Integrar cadastro e login à API.
+- [x] Integrar cadastro e login à API.
 - [ ] Manter o access token em memória.
 - [ ] Manter o refresh token em `sessionStorage`.
 - [ ] Restaurar a sessão por meio do refresh token.
@@ -362,13 +362,13 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 - [ ] Consultar e manter os dados do usuário atual.
 - [ ] Criar rotas protegidas.
 - [ ] Implementar logout e limpeza das credenciais.
-- [ ] Implementar estados de envio, sucesso e erro.
+- [x] Implementar estados de envio, sucesso e erro.
 
 ### Testes mínimos
 
-- [ ] Renderização e validação dos dois formulários.
-- [ ] Cadastro válido e inválido.
-- [ ] Login válido e inválido.
+- [x] Renderização e validação dos dois formulários.
+- [x] Cadastro válido e inválido.
+- [x] Login válido e inválido.
 - [ ] Armazenamento somente do refresh token no `sessionStorage`.
 - [ ] Restauração de sessão.
 - [ ] Falha de renovação.
