@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 
 import { TextField } from '../../shared/components/TextField'
 import { login } from './api'
+import { saveAuthTokens } from './session'
 
 type LoginErrors = {
   email?: string
@@ -47,10 +48,11 @@ export function LoginPage() {
     setIsSubmitting(true)
 
     try {
-      await login({
+      const tokens = await login({
         email: email.trim(),
         password,
       })
+      saveAuthTokens(tokens)
       setSuccessMessage('Login realizado com sucesso.')
     } catch {
       setFormError('Não foi possível entrar com essas credenciais.')
