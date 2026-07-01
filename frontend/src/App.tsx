@@ -1,9 +1,9 @@
-import { Link, Route, Routes, useNavigate } from 'react-router'
+import { Link, Route, Routes } from 'react-router'
 
+import { AuthenticatedLayout } from './app/AuthenticatedLayout'
 import { LoginPage } from './features/auth/LoginPage'
 import { ProtectedRoute } from './features/auth/ProtectedRoute'
 import { RegisterPage } from './features/auth/RegisterPage'
-import { logout } from './features/auth/session'
 import './App.css'
 
 function HomePage() {
@@ -29,33 +29,34 @@ function HomePage() {
 }
 
 function DashboardPage() {
-  const navigate = useNavigate()
-
-  function handleLogout() {
-    logout()
-    navigate('/login', { replace: true })
-  }
-
   return (
-    <main className="app-shell">
-      <section className="app-card">
-        <p className="app-eyebrow">Indicadores</p>
-        <h1 className="app-title">Dashboard</h1>
-        <p className="app-description">Os indicadores serão exibidos aqui.</p>
-        <div className="app-actions">
-          <Link className="app-link app-link-secondary" to="/">
-            Voltar para o início
-          </Link>
-          <button
-            className="app-link auth-submit"
-            onClick={handleLogout}
-            type="button"
-          >
-            Sair
-          </button>
-        </div>
-      </section>
-    </main>
+    <section className="content-card">
+      <p className="app-eyebrow">Indicadores</p>
+      <h1 className="content-title">Dashboard</h1>
+      <p className="app-description">Os indicadores serão exibidos aqui.</p>
+    </section>
+  )
+}
+
+function TicketListPage() {
+  return (
+    <section className="content-card">
+      <p className="app-eyebrow">Chamados</p>
+      <h1 className="content-title">Lista de chamados</h1>
+      <p className="app-description">Os chamados serão exibidos aqui.</p>
+    </section>
+  )
+}
+
+function NewTicketPage() {
+  return (
+    <section className="content-card">
+      <p className="app-eyebrow">Novo chamado</p>
+      <h1 className="content-title">Criar chamado</h1>
+      <p className="app-description">
+        O formulário de chamado será exibido aqui.
+      </p>
+    </section>
   )
 }
 
@@ -80,7 +81,11 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route element={<AuthenticatedLayout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/tickets" element={<TicketListPage />} />
+          <Route path="/tickets/new" element={<NewTicketPage />} />
+        </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

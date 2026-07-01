@@ -55,6 +55,19 @@ describe('App', () => {
     expect(
       screen.getByRole('heading', { name: 'Dashboard' }),
     ).toBeInTheDocument()
+    expect(screen.getByText('Ada Lovelace')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Dashboard' })).toHaveAttribute(
+      'href',
+      '/dashboard',
+    )
+    expect(screen.getByRole('link', { name: 'Chamados' })).toHaveAttribute(
+      'href',
+      '/tickets',
+    )
+    expect(screen.getByRole('link', { name: 'Novo chamado' })).toHaveAttribute(
+      'href',
+      '/tickets/new',
+    )
   })
 
   it('logs out and redirects to login', async () => {
