@@ -1,6 +1,6 @@
-import { Link, Route, Routes } from "react-router";
+import { Link, Route, Routes } from 'react-router'
 
-import "./App.css";
+import './App.css'
 
 function HomePage() {
   return (
@@ -11,7 +11,7 @@ function HomePage() {
         <Link to="/dashboard">Ver dashboard</Link>
       </section>
     </main>
-  );
+  )
 }
 
 function DashboardPage() {
@@ -23,7 +23,7 @@ function DashboardPage() {
         <Link to="/">Voltar para o início</Link>
       </section>
     </main>
-  );
+  )
 }
 
 function NotFoundPage() {
@@ -34,7 +34,7 @@ function NotFoundPage() {
         <Link to="/">Voltar para o início</Link>
       </section>
     </main>
-  );
+  )
 }
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App
