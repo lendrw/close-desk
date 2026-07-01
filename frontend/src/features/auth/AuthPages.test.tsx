@@ -2,10 +2,11 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 import { MemoryRouter } from 'react-router'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
 
 import App from '../../App'
 import { server } from '../../tests/msw/server'
+import { clearAuthTokens, getAccessToken, getRefreshToken } from './session'
 
 function renderRoute(route: string) {
   return render(
@@ -16,6 +17,10 @@ function renderRoute(route: string) {
 }
 
 describe('Auth pages', () => {
+  afterEach(() => {
+    clearAuthTokens()
+  })
+
   it('renders the login form', () => {
     renderRoute('/login')
 
@@ -59,6 +64,9 @@ describe('Auth pages', () => {
     expect(await screen.findByRole('status')).toHaveTextContent(
       'Login realizado com sucesso.',
     )
+    expect(getAccessToken()).toBe('access-token')
+    expect(getRefreshToken()).toBe('refresh-token')
+    expect(sessionStorage.getItem('closedesk.accessToken')).toBeNull()
   })
 
   it('shows an error when login fails', async () => {
