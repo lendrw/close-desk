@@ -327,7 +327,7 @@ Requisitos relacionados: RNF-03 a RNF-06 e RNF-10.
 - [x] Criar o projeto React com Vite e TypeScript.
 - [x] Configurar Tailwind CSS.
 - [x] Configurar React Router.
-- [ ] Configurar Axios com URL da API por variável de ambiente.
+- [x] Configurar Axios com URL da API por variável de ambiente.
 - [ ] Configurar Vitest e Testing Library.
 - [ ] Configurar MSW.
 - [ ] Configurar ESLint e Prettier.
