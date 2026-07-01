@@ -1,5 +1,7 @@
 import { Link, Route, Routes } from 'react-router'
 
+import { LoginPage } from './features/auth/LoginPage'
+import { RegisterPage } from './features/auth/RegisterPage'
 import './App.css'
 
 function HomePage() {
@@ -11,9 +13,14 @@ function HomePage() {
         <p className="app-description">
           Gestão individual de chamados de clientes.
         </p>
-        <Link className="app-link" to="/dashboard">
-          Ver dashboard
-        </Link>
+        <div className="app-actions">
+          <Link className="app-link" to="/login">
+            Entrar
+          </Link>
+          <Link className="app-link app-link-secondary" to="/register">
+            Criar conta
+          </Link>
+        </div>
       </section>
     </main>
   )
@@ -52,6 +59,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
