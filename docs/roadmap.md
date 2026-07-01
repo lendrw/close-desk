@@ -328,13 +328,13 @@ Requisitos relacionados: RNF-03 a RNF-06 e RNF-10.
 - [x] Configurar Tailwind CSS.
 - [x] Configurar React Router.
 - [x] Configurar Axios com URL da API por variável de ambiente.
-- [ ] Configurar Vitest e Testing Library.
+- [x] Configurar Vitest e Testing Library.
 - [ ] Configurar MSW.
 - [ ] Configurar ESLint e Prettier.
 - [ ] Criar uma estrutura inicial por funcionalidades.
 - [ ] Definir tipos para usuário, chamado, paginação, dashboard e erros.
 - [ ] Criar componentes básicos somente quando houver uso real.
-- [ ] Criar teste de renderização inicial.
+- [x] Criar teste de renderização inicial.
 - [ ] Definir estilos globais, foco visível e comportamento responsivo base.
 
 ### Critério de saída
