@@ -324,7 +324,7 @@ Requisitos relacionados: RNF-03 a RNF-06 e RNF-10.
 
 ### Tarefas
 
-- [ ] Criar o projeto React com Vite e TypeScript.
+- [x] Criar o projeto React com Vite e TypeScript.
 - [ ] Configurar Tailwind CSS.
 - [ ] Configurar React Router.
 - [ ] Configurar Axios com URL da API por variável de ambiente.
