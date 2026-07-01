@@ -4,11 +4,16 @@ import './App.css'
 
 function HomePage() {
   return (
-    <main id="center">
-      <section>
-        <h1>CloseDesk</h1>
-        <p>Gestão individual de chamados de clientes.</p>
-        <Link to="/dashboard">Ver dashboard</Link>
+    <main className="app-shell">
+      <section className="app-card">
+        <p className="app-eyebrow">CloseDesk</p>
+        <h1 className="app-title">CloseDesk</h1>
+        <p className="app-description">
+          Gestão individual de chamados de clientes.
+        </p>
+        <Link className="app-link" to="/dashboard">
+          Ver dashboard
+        </Link>
       </section>
     </main>
   )
@@ -16,11 +21,14 @@ function HomePage() {
 
 function DashboardPage() {
   return (
-    <main id="center">
-      <section>
-        <h1>Dashboard</h1>
-        <p>Os indicadores serão exibidos aqui.</p>
-        <Link to="/">Voltar para o início</Link>
+    <main className="app-shell">
+      <section className="app-card">
+        <p className="app-eyebrow">Indicadores</p>
+        <h1 className="app-title">Dashboard</h1>
+        <p className="app-description">Os indicadores serão exibidos aqui.</p>
+        <Link className="app-link" to="/">
+          Voltar para o início
+        </Link>
       </section>
     </main>
   )
@@ -28,10 +36,13 @@ function DashboardPage() {
 
 function NotFoundPage() {
   return (
-    <main id="center">
-      <section>
-        <h1>Página não encontrada</h1>
-        <Link to="/">Voltar para o início</Link>
+    <main className="app-shell">
+      <section className="app-card">
+        <p className="app-eyebrow">Erro 404</p>
+        <h1 className="app-title">Página não encontrada</h1>
+        <Link className="app-link" to="/">
+          Voltar para o início
+        </Link>
       </section>
     </main>
   )
