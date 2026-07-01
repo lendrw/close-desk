@@ -360,7 +360,7 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 - [ ] Evitar ciclos infinitos de renovação.
 - [x] Encerrar a sessão quando a renovação falhar.
 - [x] Consultar e manter os dados do usuário atual.
-- [ ] Criar rotas protegidas.
+- [x] Criar rotas protegidas.
 - [ ] Implementar logout e limpeza das credenciais.
 - [x] Implementar estados de envio, sucesso e erro.
 
@@ -372,7 +372,7 @@ Requisitos relacionados: RF-AUT-01 a RF-AUT-06 e RF-UX-01 a RF-UX-04.
 - [x] Armazenamento somente do refresh token no `sessionStorage`.
 - [x] Restauração de sessão.
 - [x] Falha de renovação.
-- [ ] Redirecionamento de visitante.
+- [x] Redirecionamento de visitante.
 - [x] Acesso do usuário autenticado.
 - [ ] Logout.
 
