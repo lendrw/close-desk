@@ -237,6 +237,38 @@
   line-height: 1;
 }
 
+.dashboard-feedback {
+  margin: 32px 0 0;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.indicator-card {
+  display: grid;
+  gap: 12px;
+  min-height: 132px;
+  border: 1px solid #dbe1ea;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  padding: 20px;
+}
+
+.indicator-label {
+  color: #475569;
+  font-weight: 700;
+}
+
+.indicator-value {
+  color: #0f172a;
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  line-height: 1;
+}
+
 @media (max-width: 640px) {
   .app-shell {
     align-items: stretch;

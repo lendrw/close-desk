@@ -392,9 +392,9 @@ Requisitos relacionados: RF-AUT-04, RF-DAS-01 e RF-UX-01 a RF-UX-04.
 - [x] Criar header e navegação lateral ou equivalente responsivo.
 - [x] Exibir o usuário atual.
 - [x] Disponibilizar links para dashboard, chamados, novo chamado e logout.
-- [ ] Criar o serviço do dashboard.
-- [ ] Criar os cards de indicadores.
-- [ ] Tratar carregamento, erro e indicadores zerados.
+- [x] Criar o serviço do dashboard.
+- [x] Criar os cards de indicadores.
+- [x] Tratar carregamento, erro e indicadores zerados.
 - [x] Adaptar a navegação para telas a partir de 360 px.
 
 ### Critério de saída

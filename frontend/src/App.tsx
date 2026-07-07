@@ -4,6 +4,7 @@ import { AuthenticatedLayout } from './app/AuthenticatedLayout'
 import { LoginPage } from './features/auth/LoginPage'
 import { ProtectedRoute } from './features/auth/ProtectedRoute'
 import { RegisterPage } from './features/auth/RegisterPage'
+import { DashboardPage } from './features/dashboard/DashboardPage'
 import './App.css'
 
 function HomePage() {
@@ -25,16 +26,6 @@ function HomePage() {
         </div>
       </section>
     </main>
-  )
-}
-
-function DashboardPage() {
-  return (
-    <section className="content-card">
-      <p className="app-eyebrow">Indicadores</p>
-      <h1 className="content-title">Dashboard</h1>
-      <p className="app-description">Os indicadores serão exibidos aqui.</p>
-    </section>
   )
 }
 
