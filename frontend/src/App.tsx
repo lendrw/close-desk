@@ -5,6 +5,7 @@ import { LoginPage } from './features/auth/LoginPage'
 import { ProtectedRoute } from './features/auth/ProtectedRoute'
 import { RegisterPage } from './features/auth/RegisterPage'
 import { DashboardPage } from './features/dashboard/DashboardPage'
+import { TicketListPage } from './features/tickets/TicketListPage'
 import './App.css'
 
 function HomePage() {
@@ -26,16 +27,6 @@ function HomePage() {
         </div>
       </section>
     </main>
-  )
-}
-
-function TicketListPage() {
-  return (
-    <section className="content-card">
-      <p className="app-eyebrow">Chamados</p>
-      <h1 className="content-title">Lista de chamados</h1>
-      <p className="app-description">Os chamados serão exibidos aqui.</p>
-    </section>
   )
 }
 
