@@ -269,6 +269,76 @@
   line-height: 1;
 }
 
+.ticket-list-feedback {
+  margin: 32px 0 0;
+}
+
+.ticket-list-wrapper {
+  display: grid;
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.ticket-list-count {
+  margin: 0;
+  color: #475569;
+  font-weight: 700;
+}
+
+.ticket-list {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ticket-card {
+  display: grid;
+  gap: 20px;
+  border: 1px solid #dbe1ea;
+  border-radius: 18px;
+  background: #ffffff;
+  padding: 20px;
+}
+
+.ticket-card-title {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.25rem;
+}
+
+.ticket-card-description {
+  margin: 8px 0 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.ticket-card-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin: 0;
+}
+
+.ticket-card-meta div {
+  display: grid;
+  gap: 4px;
+}
+
+.ticket-card-meta dt {
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.ticket-card-meta dd {
+  margin: 0;
+  color: #0f172a;
+  font-weight: 700;
+}
+
 @media (max-width: 640px) {
   .app-shell {
     align-items: stretch;
