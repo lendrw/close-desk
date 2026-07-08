@@ -339,6 +339,16 @@
   font-weight: 700;
 }
 
+.ticket-list-empty {
+  margin: 0;
+  border: 1px dashed #cbd5e1;
+  border-radius: 18px;
+  background: #f8fafc;
+  color: #475569;
+  padding: 24px;
+  text-align: center;
+}
+
 @media (max-width: 640px) {
   .app-shell {
     align-items: stretch;

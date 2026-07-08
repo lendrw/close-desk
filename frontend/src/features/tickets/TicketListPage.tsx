@@ -88,41 +88,47 @@ export function TicketListPage() {
             {ticketsResponse.count === 1 ? '' : 's'}.
           </p>
 
-          <ul className="ticket-list" aria-label="Lista de chamados">
-            {ticketsResponse.results.map((ticket) => (
-              <li className="ticket-card" key={ticket.id}>
-                <div>
-                  <h2 className="ticket-card-title">{ticket.title}</h2>
-                  <p className="ticket-card-description">
-                    {ticket.description}
-                  </p>
-                </div>
+          {ticketsResponse.results.length === 0 ? (
+            <p className="ticket-list-empty">
+              Nenhum chamado encontrado com os critérios atuais.
+            </p>
+          ) : (
+            <ul className="ticket-list" aria-label="Lista de chamados">
+              {ticketsResponse.results.map((ticket) => (
+                <li className="ticket-card" key={ticket.id}>
+                  <div>
+                    <h2 className="ticket-card-title">{ticket.title}</h2>
+                    <p className="ticket-card-description">
+                      {ticket.description}
+                    </p>
+                  </div>
 
-                <dl className="ticket-card-meta">
-                  <div>
-                    <dt>Cliente</dt>
-                    <dd>{ticket.customer_name}</dd>
-                  </div>
-                  <div>
-                    <dt>Status</dt>
-                    <dd>{statusLabels[ticket.status]}</dd>
-                  </div>
-                  <div>
-                    <dt>Prioridade</dt>
-                    <dd>{priorityLabels[ticket.priority]}</dd>
-                  </div>
-                  <div>
-                    <dt>Criado em</dt>
-                    <dd>{formatDate(ticket.created_at)}</dd>
-                  </div>
-                  <div>
-                    <dt>Atualizado em</dt>
-                    <dd>{formatDate(ticket.updated_at)}</dd>
-                  </div>
-                </dl>
-              </li>
-            ))}
-          </ul>
+                  <dl className="ticket-card-meta">
+                    <div>
+                      <dt>Cliente</dt>
+                      <dd>{ticket.customer_name}</dd>
+                    </div>
+                    <div>
+                      <dt>Status</dt>
+                      <dd>{statusLabels[ticket.status]}</dd>
+                    </div>
+                    <div>
+                      <dt>Prioridade</dt>
+                      <dd>{priorityLabels[ticket.priority]}</dd>
+                    </div>
+                    <div>
+                      <dt>Criado em</dt>
+                      <dd>{formatDate(ticket.created_at)}</dd>
+                    </div>
+                    <div>
+                      <dt>Atualizado em</dt>
+                      <dd>{formatDate(ticket.updated_at)}</dd>
+                    </div>
+                  </dl>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       ) : null}
     </section>
