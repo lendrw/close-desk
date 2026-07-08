@@ -59,60 +59,64 @@ describe('TicketListPage', () => {
     expect(screen.getByText('Criado em')).toBeInTheDocument()
     expect(screen.getByText('Atualizado em')).toBeInTheDocument()
   })
-})
 
-it('shows a loading state while fetching tickets', async () => {
-  server.use(
-    http.get('http://localhost:8000/api/tickets/', async () => {
-      await delay(50)
+  it('shows a loading state while fetching tickets', async () => {
+    server.use(
+      http.get('http://localhost:8000/api/tickets/', async () => {
+        await delay(50)
 
-      return HttpResponse.json({
-        count: tickets.length,
-        next: null,
-        previous: null,
-        results: tickets,
-      })
-    }),
-  )
+        return HttpResponse.json({
+          count: tickets.length,
+          next: null,
+          previous: null,
+          results: tickets,
+        })
+      }),
+    )
 
-  render(<TicketListPage />)
+    render(<TicketListPage />)
 
-  expect(screen.getByRole('status')).toHaveTextContent('Carregando chamados...')
-  expect(
-    await screen.findByRole('list', { name: 'Lista de chamados' }),
-  ).toBeInTheDocument()
-})
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Carregando chamados...',
+    )
+    expect(
+      await screen.findByRole('list', { name: 'Lista de chamados' }),
+    ).toBeInTheDocument()
+  })
 
-it('shows an error when tickets fail to load', async () => {
-  server.use(
-    http.get('http://localhost:8000/api/tickets/', () => {
-      return HttpResponse.json(
-        {
-          error: {
-            code: 'server_error',
-            details: {},
-            message: 'Erro interno.',
+  it('shows an error when tickets fail to load', async () => {
+    server.use(
+      http.get('http://localhost:8000/api/tickets/', () => {
+        return HttpResponse.json(
+          {
+            error: {
+              code: 'server_error',
+              details: {},
+              message: 'Erro interno.',
+            },
           },
-        },
-        { status: 500 },
-      )
-    }),
-  )
+          { status: 500 },
+        )
+      }),
+    )
 
-  render(<TicketListPage />)
+    render(<TicketListPage />)
 
-  expect(await screen.findByRole('alert')).toHaveTextContent(
-    'Não foi possível carregar os chamados.',
-  )
-})
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar os chamados.',
+    )
+  })
 
-it('shows an empty state when no tickets are returned', async () => {
-  mockTicketsResponse([])
+  it('shows an empty state when no tickets are returned', async () => {
+    mockTicketsResponse([])
 
-  render(<TicketListPage />)
+    render(<TicketListPage />)
 
-  expect(await screen.findByText('0 chamados encontrados.')).toBeInTheDocument()
-  expect(
-    screen.getByText('Nenhum chamado encontrado com os critérios atuais.'),
-  ).toBeInTheDocument()
+    expect(
+      await screen.findByText('0 chamados encontrados.'),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('Nenhum chamado encontrado com os critérios atuais.'),
+    ).toBeInTheDocument()
+  })
 })
