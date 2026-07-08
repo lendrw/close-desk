@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { http, HttpResponse } from 'msw'
+import { delay, http, HttpResponse } from 'msw'
 import { describe, expect, it } from 'vitest'
 
 import type { PaginatedResponse, Ticket } from '../../shared/types/api'
@@ -59,4 +59,60 @@ describe('TicketListPage', () => {
     expect(screen.getByText('Criado em')).toBeInTheDocument()
     expect(screen.getByText('Atualizado em')).toBeInTheDocument()
   })
+})
+
+it('shows a loading state while fetching tickets', async () => {
+  server.use(
+    http.get('http://localhost:8000/api/tickets/', async () => {
+      await delay(50)
+
+      return HttpResponse.json({
+        count: tickets.length,
+        next: null,
+        previous: null,
+        results: tickets,
+      })
+    }),
+  )
+
+  render(<TicketListPage />)
+
+  expect(screen.getByRole('status')).toHaveTextContent('Carregando chamados...')
+  expect(
+    await screen.findByRole('list', { name: 'Lista de chamados' }),
+  ).toBeInTheDocument()
+})
+
+it('shows an error when tickets fail to load', async () => {
+  server.use(
+    http.get('http://localhost:8000/api/tickets/', () => {
+      return HttpResponse.json(
+        {
+          error: {
+            code: 'server_error',
+            details: {},
+            message: 'Erro interno.',
+          },
+        },
+        { status: 500 },
+      )
+    }),
+  )
+
+  render(<TicketListPage />)
+
+  expect(await screen.findByRole('alert')).toHaveTextContent(
+    'Não foi possível carregar os chamados.',
+  )
+})
+
+it('shows an empty state when no tickets are returned', async () => {
+  mockTicketsResponse([])
+
+  render(<TicketListPage />)
+
+  expect(await screen.findByText('0 chamados encontrados.')).toBeInTheDocument()
+  expect(
+    screen.getByText('Nenhum chamado encontrado com os critérios atuais.'),
+  ).toBeInTheDocument()
 })
