@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { delay, http, HttpResponse } from 'msw'
+import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
 
 import type { PaginatedResponse, Ticket } from '../../shared/types/api'
 import { server } from '../../tests/msw/server'
 import { TicketListPage } from './TicketListPage'
-import { MemoryRouter } from 'react-router'
 
 const tickets: Ticket[] = [
   {
@@ -67,6 +68,48 @@ describe('TicketListPage', () => {
     expect(screen.getByText('Urgente')).toBeInTheDocument()
     expect(screen.getByText('Criado em')).toBeInTheDocument()
     expect(screen.getByText('Atualizado em')).toBeInTheDocument()
+  })
+
+  it('searches tickets using the search query parameter', async () => {
+    const user = userEvent.setup()
+    const requestedSearches: Array<string | null> = []
+
+    server.use(
+      http.get('http://localhost:8000/api/tickets/', ({ request }) => {
+        const url = new URL(request.url)
+        const search = url.searchParams.get('search')
+
+        requestedSearches.push(search)
+
+        if (search === 'login') {
+          return HttpResponse.json({
+            count: tickets.length,
+            next: null,
+            previous: null,
+            results: tickets,
+          })
+        }
+
+        return HttpResponse.json({
+          count: 0,
+          next: null,
+          previous: null,
+          results: [],
+        })
+      }),
+    )
+
+    renderTicketListPage()
+
+    expect(
+      await screen.findByText('0 chamados encontrados.'),
+    ).toBeInTheDocument()
+
+    await user.type(screen.getByLabelText('Buscar chamados'), 'login')
+    await user.click(screen.getByRole('button', { name: 'Buscar' }))
+
+    expect(await screen.findByText('Problema no login')).toBeInTheDocument()
+    expect(requestedSearches).toContain('login')
   })
 
   it('shows a loading state while fetching tickets', async () => {
