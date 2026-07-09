@@ -413,7 +413,7 @@ Requisitos relacionados: RF-TIC-02, RF-TIC-07 a RF-TIC-10 e RF-UX-01 a RF-UX-04.
 - [x] Criar a página de listagem.
 - [x] Exibir status, prioridade, cliente e datas de forma compreensível.
 - [x] Implementar busca.
-- [ ] Implementar filtros de status e prioridade.
+- [x] Implementar filtros de status e prioridade.
 - [ ] Implementar ordenação por criação.
 - [ ] Implementar paginação.
 - [ ] Preservar busca, filtros e ordenação ao trocar de página.
