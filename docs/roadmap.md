@@ -418,13 +418,13 @@ Requisitos relacionados: RF-TIC-02, RF-TIC-07 a RF-TIC-10 e RF-UX-01 a RF-UX-04.
 - [ ] Implementar paginação.
 - [ ] Preservar busca, filtros e ordenação ao trocar de página.
 - [ ] Preferir a URL como fonte dos parâmetros de consulta.
-- [ ] Tratar carregamento, erro e lista vazia.
+- [x] Tratar carregamento, erro e lista vazia.
 - [ ] Garantir uso por teclado e comportamento responsivo.
 
 ### Testes mínimos
 
 - [x] Renderização da lista.
-- [ ] Carregamento, erro e estado vazio.
+- [x] Carregamento, erro e estado vazio.
 - [ ] Busca e filtros isolados.
 - [ ] Combinação de parâmetros.
 - [ ] Ordenação.
