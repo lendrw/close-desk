@@ -376,6 +376,28 @@
   margin-top: 0;
 }
 
+.ticket-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ticket-pagination-button {
+  margin-top: 0;
+}
+
+.ticket-pagination-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+.ticket-pagination-current {
+  color: #475569;
+  font-weight: 700;
+}
+
 @media (max-width: 640px) {
   .app-shell {
     align-items: stretch;
@@ -433,5 +455,18 @@
 
   .ticket-search-submit {
     width: 100%;
+  }
+
+  .ticket-pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ticket-pagination-button {
+    width: 100%;
+  }
+
+  .ticket-pagination-current {
+    text-align: center;
   }
 }

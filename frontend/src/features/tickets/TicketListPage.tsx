@@ -56,6 +56,8 @@ export function TicketListPage() {
   const priority = searchParams.get('priority') as TicketPriority | null
   const ordering =
     (searchParams.get('ordering') as TicketOrdering | null) ?? '-created_at'
+  const page = Number(searchParams.get('page') ?? '1')
+  const currentPage = Number.isNaN(page) || page < 1 ? 1 : page
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [ticketsResponse, setTicketsResponse] =
@@ -71,6 +73,7 @@ export function TicketListPage() {
       try {
         const response = await listTickets({
           ordering,
+          page: currentPage,
           priority: priority || undefined,
           search: search || undefined,
           status: status || undefined,
@@ -95,7 +98,7 @@ export function TicketListPage() {
     return () => {
       isActive = false
     }
-  }, [ordering, priority, search, status])
+  }, [currentPage, ordering, priority, search, status])
 
   function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -127,6 +130,18 @@ export function TicketListPage() {
     }
 
     nextSearchParams.delete('page')
+    setSearchParams(nextSearchParams)
+  }
+
+  function handlePageChange(nextPage: number) {
+    const nextSearchParams = new URLSearchParams(searchParams)
+
+    if (nextPage > 1) {
+      nextSearchParams.set('page', String(nextPage))
+    } else {
+      nextSearchParams.delete('page')
+    }
+
     setSearchParams(nextSearchParams)
   }
 
@@ -282,6 +297,33 @@ export function TicketListPage() {
               ))}
             </ul>
           )}
+          <nav className="ticket-pagination" aria-label="Paginação de chamados">
+            <button
+              className="app-link app-link-secondary ticket-pagination-button"
+              disabled={!ticketsResponse.previous}
+              onClick={() => {
+                handlePageChange(currentPage - 1)
+              }}
+              type="button"
+            >
+              Anterior
+            </button>
+
+            <span className="ticket-pagination-current">
+              Página {currentPage}
+            </span>
+
+            <button
+              className="app-link app-link-secondary ticket-pagination-button"
+              disabled={!ticketsResponse.next}
+              onClick={() => {
+                handlePageChange(currentPage + 1)
+              }}
+              type="button"
+            >
+              Próxima
+            </button>
+          </nav>
         </div>
       ) : null}
     </section>
