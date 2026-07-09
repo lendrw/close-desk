@@ -110,6 +110,15 @@
   border-color: #dc2626;
 }
 
+.app-link:focus-visible,
+.form-input:focus-visible,
+.nav-link:focus-visible,
+.nav-link-button:focus-visible,
+.ticket-pagination-button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
 .form-error {
   margin: 0;
   color: #b91c1c;
@@ -437,15 +446,6 @@
   .nav-link {
     flex: 0 0 auto;
     white-space: nowrap;
-  }
-
-  .ticket-search-row {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .ticket-search-submit {
-    width: 100%;
   }
 
   .ticket-search-row {
