@@ -7,7 +7,7 @@ import type {
   TicketPriority,
   TicketStatus,
 } from '../../shared/types/api'
-import { listTickets } from './api'
+import { listTickets, type TicketOrdering } from './api'
 
 const statusLabels: Record<Ticket['status'], string> = {
   closed: 'Fechado',
@@ -37,6 +37,11 @@ const priorityFilterOptions: Array<{ label: string; value: TicketPriority }> = [
   { label: 'Urgente', value: 'urgent' },
 ]
 
+const orderingOptions: Array<{ label: string; value: TicketOrdering }> = [
+  { label: 'Mais recentes primeiro', value: '-created_at' },
+  { label: 'Mais antigos primeiro', value: 'created_at' },
+]
+
 function formatDate(value: string) {
   return new Intl.DateTimeFormat('pt-BR', {
     dateStyle: 'short',
@@ -49,6 +54,8 @@ export function TicketListPage() {
   const search = searchParams.get('search')?.trim() ?? ''
   const status = searchParams.get('status') as TicketStatus | null
   const priority = searchParams.get('priority') as TicketPriority | null
+  const ordering =
+    (searchParams.get('ordering') as TicketOrdering | null) ?? '-created_at'
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [ticketsResponse, setTicketsResponse] =
@@ -87,7 +94,7 @@ export function TicketListPage() {
     return () => {
       isActive = false
     }
-  }, [priority, search, status])
+  }, [ordering, priority, search, status])
 
   function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -106,10 +113,13 @@ export function TicketListPage() {
     setSearchParams(nextSearchParams)
   }
 
-  function handleFilterChange(name: 'status' | 'priority', value: string) {
+  function handleFilterChange(
+    name: 'status' | 'priority' | 'ordering',
+    value: string,
+  ) {
     const nextSearchParams = new URLSearchParams(searchParams)
 
-    if (value) {
+    if (value && !(name === 'ordering' && value === '-created_at')) {
       nextSearchParams.set(name, value)
     } else {
       nextSearchParams.delete(name)
@@ -185,6 +195,23 @@ export function TicketListPage() {
           >
             <option value="">Todas</option>
             {priorityFilterOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="form-field">
+          <span className="form-label">Ordenação</span>
+          <select
+            className="form-input"
+            onChange={(event) => {
+              handleFilterChange('ordering', event.target.value)
+            }}
+            value={ordering}
+          >
+            {orderingOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
