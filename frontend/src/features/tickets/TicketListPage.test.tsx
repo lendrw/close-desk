@@ -257,4 +257,54 @@ describe('TicketListPage', () => {
       expect(requestedOrderings).toContain('created_at')
     })
   })
+
+    it('paginates tickets preserving current query parameters', async () => {
+      const user = userEvent.setup()
+      const requestedQueries: Array<{
+        ordering: string | null
+        page: string | null
+        priority: string | null
+        search: string | null
+        status: string | null
+      }> = []
+
+      server.use(
+        http.get('http://localhost:8000/api/tickets/', ({ request }) => {
+          const url = new URL(request.url)
+
+          requestedQueries.push({
+            ordering: url.searchParams.get('ordering'),
+            page: url.searchParams.get('page'),
+            priority: url.searchParams.get('priority'),
+            search: url.searchParams.get('search'),
+            status: url.searchParams.get('status'),
+          })
+
+          return HttpResponse.json({
+            count: 12,
+            next: 'http://localhost:8000/api/tickets/?search=login&status=open&priority=urgent&ordering=created_at&page=2',
+            previous: null,
+            results: tickets,
+          })
+        }),
+      )
+
+      renderTicketListPage(
+        '/tickets?search=login&status=open&priority=urgent&ordering=created_at',
+      )
+
+      expect(await screen.findByText('Problema no login')).toBeInTheDocument()
+
+      await user.click(screen.getByRole('button', { name: 'Próxima' }))
+
+      await waitFor(() => {
+        expect(requestedQueries).toContainEqual({
+          ordering: 'created_at',
+          page: '2',
+          priority: 'urgent',
+          search: 'login',
+          status: 'open',
+        })
+      })
+    })
 })
