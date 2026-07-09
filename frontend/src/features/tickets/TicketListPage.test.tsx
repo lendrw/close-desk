@@ -118,6 +118,55 @@ describe('TicketListPage', () => {
     expect(requestedSearches).toContain('login')
   })
 
+  it('filters tickets by status and priority query parameters', async () => {
+    const user = userEvent.setup()
+    const requestedFilters: Array<{
+      priority: string | null
+      status: string | null
+    }> = []
+
+    server.use(
+      http.get('http://localhost:8000/api/tickets/', ({ request }) => {
+        const url = new URL(request.url)
+        const status = url.searchParams.get('status')
+        const priority = url.searchParams.get('priority')
+
+        requestedFilters.push({ priority, status })
+
+        if (status === 'open' && priority === 'urgent') {
+          return HttpResponse.json({
+            count: tickets.length,
+            next: null,
+            previous: null,
+            results: tickets,
+          })
+        }
+
+        return HttpResponse.json({
+          count: 0,
+          next: null,
+          previous: null,
+          results: [],
+        })
+      }),
+    )
+
+    renderTicketListPage()
+
+    expect(
+      await screen.findByText('0 chamados encontrados.'),
+    ).toBeInTheDocument()
+
+    await user.selectOptions(screen.getByLabelText('Status'), 'open')
+    await user.selectOptions(screen.getByLabelText('Prioridade'), 'urgent')
+
+    expect(await screen.findByText('Problema no login')).toBeInTheDocument()
+    expect(requestedFilters).toContainEqual({
+      priority: 'urgent',
+      status: 'open',
+    })
+  })
+
   it('shows a loading state while fetching tickets', async () => {
     server.use(
       http.get('http://localhost:8000/api/tickets/', async () => {
