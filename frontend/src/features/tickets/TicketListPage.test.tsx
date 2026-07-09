@@ -258,53 +258,98 @@ describe('TicketListPage', () => {
     })
   })
 
-    it('paginates tickets preserving current query parameters', async () => {
-      const user = userEvent.setup()
-      const requestedQueries: Array<{
-        ordering: string | null
-        page: string | null
-        priority: string | null
-        search: string | null
-        status: string | null
-      }> = []
+  it('paginates tickets preserving current query parameters', async () => {
+    const user = userEvent.setup()
+    const requestedQueries: Array<{
+      ordering: string | null
+      page: string | null
+      priority: string | null
+      search: string | null
+      status: string | null
+    }> = []
 
-      server.use(
-        http.get('http://localhost:8000/api/tickets/', ({ request }) => {
-          const url = new URL(request.url)
+    server.use(
+      http.get('http://localhost:8000/api/tickets/', ({ request }) => {
+        const url = new URL(request.url)
 
-          requestedQueries.push({
-            ordering: url.searchParams.get('ordering'),
-            page: url.searchParams.get('page'),
-            priority: url.searchParams.get('priority'),
-            search: url.searchParams.get('search'),
-            status: url.searchParams.get('status'),
-          })
+        requestedQueries.push({
+          ordering: url.searchParams.get('ordering'),
+          page: url.searchParams.get('page'),
+          priority: url.searchParams.get('priority'),
+          search: url.searchParams.get('search'),
+          status: url.searchParams.get('status'),
+        })
 
+        return HttpResponse.json({
+          count: 12,
+          next: 'http://localhost:8000/api/tickets/?search=login&status=open&priority=urgent&ordering=created_at&page=2',
+          previous: null,
+          results: tickets,
+        })
+      }),
+    )
+
+    renderTicketListPage(
+      '/tickets?search=login&status=open&priority=urgent&ordering=created_at',
+    )
+
+    expect(await screen.findByText('Problema no login')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Próxima' }))
+
+    await waitFor(() => {
+      expect(requestedQueries).toContainEqual({
+        ordering: 'created_at',
+        page: '2',
+        priority: 'urgent',
+        search: 'login',
+        status: 'open',
+      })
+    })
+  })
+
+  it('supports keyboard search submission', async () => {
+    const user = userEvent.setup()
+    const requestedSearches: Array<string | null> = []
+
+    server.use(
+      http.get('http://localhost:8000/api/tickets/', ({ request }) => {
+        const url = new URL(request.url)
+        const search = url.searchParams.get('search')
+
+        requestedSearches.push(search)
+
+        if (search === 'login') {
           return HttpResponse.json({
-            count: 12,
-            next: 'http://localhost:8000/api/tickets/?search=login&status=open&priority=urgent&ordering=created_at&page=2',
+            count: tickets.length,
+            next: null,
             previous: null,
             results: tickets,
           })
-        }),
-      )
+        }
 
-      renderTicketListPage(
-        '/tickets?search=login&status=open&priority=urgent&ordering=created_at',
-      )
-
-      expect(await screen.findByText('Problema no login')).toBeInTheDocument()
-
-      await user.click(screen.getByRole('button', { name: 'Próxima' }))
-
-      await waitFor(() => {
-        expect(requestedQueries).toContainEqual({
-          ordering: 'created_at',
-          page: '2',
-          priority: 'urgent',
-          search: 'login',
-          status: 'open',
+        return HttpResponse.json({
+          count: 0,
+          next: null,
+          previous: null,
+          results: [],
         })
-      })
-    })
+      }),
+    )
+
+    renderTicketListPage()
+
+    expect(
+      await screen.findByText('0 chamados encontrados.'),
+    ).toBeInTheDocument()
+
+    await user.tab()
+    expect(screen.getByLabelText('Buscar chamados')).toHaveFocus()
+
+    await user.keyboard('login')
+    await user.keyboard('{Enter}')
+
+    expect(await screen.findByText('Problema no login')).toBeInTheDocument()
+    expect(requestedSearches).toContain('login')
+  })
 })
