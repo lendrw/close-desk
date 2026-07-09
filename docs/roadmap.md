@@ -414,7 +414,7 @@ Requisitos relacionados: RF-TIC-02, RF-TIC-07 a RF-TIC-10 e RF-UX-01 a RF-UX-04.
 - [x] Exibir status, prioridade, cliente e datas de forma compreensível.
 - [x] Implementar busca.
 - [x] Implementar filtros de status e prioridade.
-- [ ] Implementar ordenação por criação.
+- [x] Implementar ordenação por criação.
 - [ ] Implementar paginação.
 - [ ] Preservar busca, filtros e ordenação ao trocar de página.
 - [ ] Preferir a URL como fonte dos parâmetros de consulta.
@@ -427,7 +427,7 @@ Requisitos relacionados: RF-TIC-02, RF-TIC-07 a RF-TIC-10 e RF-UX-01 a RF-UX-04.
 - [x] Carregamento, erro e estado vazio.
 - [x] Busca e filtros isolados.
 - [ ] Combinação de parâmetros.
-- [ ] Ordenação.
+- [x] Ordenação.
 - [ ] Paginação com preservação dos critérios.
 
 ### Critério de saída
