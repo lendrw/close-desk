@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { delay, http, HttpResponse } from 'msw'
 import { MemoryRouter } from 'react-router'
@@ -225,5 +225,36 @@ describe('TicketListPage', () => {
     expect(
       screen.getByText('Nenhum chamado encontrado com os critérios atuais.'),
     ).toBeInTheDocument()
+  })
+
+  it('orders tickets by creation date query parameter', async () => {
+    const user = userEvent.setup()
+    const requestedOrderings: Array<string | null> = []
+
+    server.use(
+      http.get('http://localhost:8000/api/tickets/', ({ request }) => {
+        const url = new URL(request.url)
+        const ordering = url.searchParams.get('ordering')
+
+        requestedOrderings.push(ordering)
+
+        return HttpResponse.json({
+          count: tickets.length,
+          next: null,
+          previous: null,
+          results: tickets,
+        })
+      }),
+    )
+
+    renderTicketListPage()
+
+    expect(await screen.findByText('Problema no login')).toBeInTheDocument()
+
+    await user.selectOptions(screen.getByLabelText('Ordenação'), 'created_at')
+
+    await waitFor(() => {
+      expect(requestedOrderings).toContain('created_at')
+    })
   })
 })
