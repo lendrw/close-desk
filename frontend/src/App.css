@@ -349,6 +349,26 @@
   text-align: center;
 }
 
+.ticket-list-toolbar {
+  display: grid;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.ticket-search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ticket-search-row .form-input {
+  flex: 1;
+}
+
+.ticket-search-submit {
+  margin-top: 0;
+}
+
 @media (max-width: 640px) {
   .app-shell {
     align-items: stretch;
@@ -388,5 +408,23 @@
   .nav-link {
     flex: 0 0 auto;
     white-space: nowrap;
+  }
+
+  .ticket-search-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ticket-search-submit {
+    width: 100%;
+  }
+
+  .ticket-search-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ticket-search-submit {
+    width: 100%;
   }
 }

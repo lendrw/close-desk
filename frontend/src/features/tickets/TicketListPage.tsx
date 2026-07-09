@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { type FormEvent, useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router'
 
 import type { PaginatedResponse, Ticket } from '../../shared/types/api'
 import { listTickets } from './api'
@@ -25,6 +26,8 @@ function formatDate(value: string) {
 }
 
 export function TicketListPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const search = searchParams.get('search')?.trim() ?? ''
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [ticketsResponse, setTicketsResponse] =
@@ -34,12 +37,16 @@ export function TicketListPage() {
     let isActive = true
 
     async function loadTickets() {
+      setErrorMessage('')
+      setIsLoading(true)
+
       try {
-        const response = await listTickets()
+        const response = await listTickets({
+          search: search || undefined,
+        })
 
         if (isActive) {
           setTicketsResponse(response)
-          setErrorMessage('')
         }
       } catch {
         if (isActive) {
@@ -57,7 +64,24 @@ export function TicketListPage() {
     return () => {
       isActive = false
     }
-  }, [])
+  }, [search])
+
+  function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+    const nextSearch = String(formData.get('search') ?? '').trim()
+    const nextSearchParams = new URLSearchParams(searchParams)
+
+    if (nextSearch) {
+      nextSearchParams.set('search', nextSearch)
+    } else {
+      nextSearchParams.delete('search')
+    }
+
+    nextSearchParams.delete('page')
+    setSearchParams(nextSearchParams)
+  }
 
   return (
     <section className="content-card">
@@ -67,6 +91,33 @@ export function TicketListPage() {
         Consulte os chamados cadastrados, acompanhe status e priorize o
         atendimento aos clientes.
       </p>
+
+      <form
+        className="ticket-list-toolbar"
+        onSubmit={handleSearchSubmit}
+        role="search"
+      >
+        <label className="form-label" htmlFor="ticket-search">
+          Buscar chamados
+        </label>
+        <div className="ticket-search-row">
+          <input
+            className="form-input"
+            defaultValue={search}
+            id="ticket-search"
+            key={search}
+            name="search"
+            placeholder="Busque por título ou cliente"
+            type="search"
+          />
+          <button
+            className="app-link auth-submit ticket-search-submit"
+            type="submit"
+          >
+            Buscar
+          </button>
+        </div>
+      </form>
 
       {isLoading ? (
         <p className="ticket-list-feedback" role="status">

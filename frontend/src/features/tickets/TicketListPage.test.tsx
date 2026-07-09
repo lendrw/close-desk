@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest'
 import type { PaginatedResponse, Ticket } from '../../shared/types/api'
 import { server } from '../../tests/msw/server'
 import { TicketListPage } from './TicketListPage'
+import { MemoryRouter } from 'react-router'
 
 const tickets: Ticket[] = [
   {
@@ -36,11 +37,19 @@ function mockTicketsResponse(results: Ticket[] = tickets) {
   )
 }
 
+function renderTicketListPage(route = '/tickets') {
+  return render(
+    <MemoryRouter initialEntries={[route]}>
+      <TicketListPage />
+    </MemoryRouter>,
+  )
+}
+
 describe('TicketListPage', () => {
   it('renders tickets returned by the API', async () => {
     mockTicketsResponse()
 
-    render(<TicketListPage />)
+    renderTicketListPage()
 
     expect(
       screen.getByRole('heading', { name: 'Lista de chamados' }),
@@ -74,7 +83,7 @@ describe('TicketListPage', () => {
       }),
     )
 
-    render(<TicketListPage />)
+    renderTicketListPage()
 
     expect(screen.getByRole('status')).toHaveTextContent(
       'Carregando chamados...',
@@ -100,7 +109,7 @@ describe('TicketListPage', () => {
       }),
     )
 
-    render(<TicketListPage />)
+    renderTicketListPage()
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Não foi possível carregar os chamados.',
@@ -110,7 +119,7 @@ describe('TicketListPage', () => {
   it('shows an empty state when no tickets are returned', async () => {
     mockTicketsResponse([])
 
-    render(<TicketListPage />)
+    renderTicketListPage()
 
     expect(
       await screen.findByText('0 chamados encontrados.'),
