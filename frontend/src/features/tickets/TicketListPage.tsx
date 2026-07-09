@@ -70,6 +70,7 @@ export function TicketListPage() {
 
       try {
         const response = await listTickets({
+          ordering,
           priority: priority || undefined,
           search: search || undefined,
           status: status || undefined,
