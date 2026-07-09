@@ -365,6 +365,13 @@
   flex: 1;
 }
 
+.ticket-filter-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
 .ticket-search-submit {
   margin-top: 0;
 }

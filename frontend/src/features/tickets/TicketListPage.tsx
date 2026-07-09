@@ -1,7 +1,12 @@
 import { type FormEvent, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
-import type { PaginatedResponse, Ticket } from '../../shared/types/api'
+import type {
+  PaginatedResponse,
+  Ticket,
+  TicketPriority,
+  TicketStatus,
+} from '../../shared/types/api'
 import { listTickets } from './api'
 
 const statusLabels: Record<Ticket['status'], string> = {
@@ -18,6 +23,20 @@ const priorityLabels: Record<Ticket['priority'], string> = {
   urgent: 'Urgente',
 }
 
+const statusFilterOptions: Array<{ label: string; value: TicketStatus }> = [
+  { label: 'Aberto', value: 'open' },
+  { label: 'Em andamento', value: 'in_progress' },
+  { label: 'Resolvido', value: 'resolved' },
+  { label: 'Fechado', value: 'closed' },
+]
+
+const priorityFilterOptions: Array<{ label: string; value: TicketPriority }> = [
+  { label: 'Baixa', value: 'low' },
+  { label: 'Média', value: 'medium' },
+  { label: 'Alta', value: 'high' },
+  { label: 'Urgente', value: 'urgent' },
+]
+
 function formatDate(value: string) {
   return new Intl.DateTimeFormat('pt-BR', {
     dateStyle: 'short',
@@ -28,6 +47,8 @@ function formatDate(value: string) {
 export function TicketListPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const search = searchParams.get('search')?.trim() ?? ''
+  const status = searchParams.get('status') as TicketStatus | null
+  const priority = searchParams.get('priority') as TicketPriority | null
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [ticketsResponse, setTicketsResponse] =
@@ -42,7 +63,9 @@ export function TicketListPage() {
 
       try {
         const response = await listTickets({
+          priority: priority || undefined,
           search: search || undefined,
+          status: status || undefined,
         })
 
         if (isActive) {
@@ -64,7 +87,7 @@ export function TicketListPage() {
     return () => {
       isActive = false
     }
-  }, [search])
+  }, [priority, search, status])
 
   function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -77,6 +100,19 @@ export function TicketListPage() {
       nextSearchParams.set('search', nextSearch)
     } else {
       nextSearchParams.delete('search')
+    }
+
+    nextSearchParams.delete('page')
+    setSearchParams(nextSearchParams)
+  }
+
+  function handleFilterChange(name: 'status' | 'priority', value: string) {
+    const nextSearchParams = new URLSearchParams(searchParams)
+
+    if (value) {
+      nextSearchParams.set(name, value)
+    } else {
+      nextSearchParams.delete(name)
     }
 
     nextSearchParams.delete('page')
@@ -118,6 +154,44 @@ export function TicketListPage() {
           </button>
         </div>
       </form>
+
+      <div className="ticket-filter-row" aria-label="Filtros de chamados">
+        <label className="form-field">
+          <span className="form-label">Status</span>
+          <select
+            className="form-input"
+            onChange={(event) => {
+              handleFilterChange('status', event.target.value)
+            }}
+            value={status ?? ''}
+          >
+            <option value="">Todos</option>
+            {statusFilterOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="form-field">
+          <span className="form-label">Prioridade</span>
+          <select
+            className="form-input"
+            onChange={(event) => {
+              handleFilterChange('priority', event.target.value)
+            }}
+            value={priority ?? ''}
+          >
+            <option value="">Todas</option>
+            {priorityFilterOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
 
       {isLoading ? (
         <p className="ticket-list-feedback" role="status">

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { delay, http, HttpResponse } from 'msw'
 import { MemoryRouter } from 'react-router'
@@ -55,19 +55,25 @@ describe('TicketListPage', () => {
     expect(
       screen.getByRole('heading', { name: 'Lista de chamados' }),
     ).toBeInTheDocument()
-    expect(
-      await screen.findByRole('list', { name: 'Lista de chamados' }),
-    ).toBeInTheDocument()
+
+    const ticketList = await screen.findByRole('list', {
+      name: 'Lista de chamados',
+    })
+    const ticketCard = within(ticketList).getByRole('listitem')
+
+    expect(ticketList).toBeInTheDocument()
     expect(screen.getByText('1 chamado encontrado.')).toBeInTheDocument()
-    expect(screen.getByText('Problema no login')).toBeInTheDocument()
     expect(
-      screen.getByText('Cliente não consegue acessar o sistema.'),
+      within(ticketCard).getByText('Problema no login'),
     ).toBeInTheDocument()
-    expect(screen.getByText('Cliente Exemplo')).toBeInTheDocument()
-    expect(screen.getByText('Aberto')).toBeInTheDocument()
-    expect(screen.getByText('Urgente')).toBeInTheDocument()
-    expect(screen.getByText('Criado em')).toBeInTheDocument()
-    expect(screen.getByText('Atualizado em')).toBeInTheDocument()
+    expect(
+      within(ticketCard).getByText('Cliente não consegue acessar o sistema.'),
+    ).toBeInTheDocument()
+    expect(within(ticketCard).getByText('Cliente Exemplo')).toBeInTheDocument()
+    expect(within(ticketCard).getByText('Aberto')).toBeInTheDocument()
+    expect(within(ticketCard).getByText('Urgente')).toBeInTheDocument()
+    expect(within(ticketCard).getByText('Criado em')).toBeInTheDocument()
+    expect(within(ticketCard).getByText('Atualizado em')).toBeInTheDocument()
   })
 
   it('searches tickets using the search query parameter', async () => {
