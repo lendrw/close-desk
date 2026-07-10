@@ -410,25 +410,25 @@ Requisitos relacionados: RF-TIC-02, RF-TIC-07 a RF-TIC-10 e RF-UX-01 a RF-UX-04.
 ### Tarefas
 
 - [x] Criar o serviço de chamados.
-- [ ] Criar a página de listagem.
-- [ ] Exibir status, prioridade, cliente e datas de forma compreensível.
-- [ ] Implementar busca.
-- [ ] Implementar filtros de status e prioridade.
-- [ ] Implementar ordenação por criação.
-- [ ] Implementar paginação.
-- [ ] Preservar busca, filtros e ordenação ao trocar de página.
-- [ ] Preferir a URL como fonte dos parâmetros de consulta.
-- [ ] Tratar carregamento, erro e lista vazia.
-- [ ] Garantir uso por teclado e comportamento responsivo.
+- [x] Criar a página de listagem.
+- [x] Exibir status, prioridade, cliente e datas de forma compreensível.
+- [x] Implementar busca.
+- [x] Implementar filtros de status e prioridade.
+- [x] Implementar ordenação por criação.
+- [x] Implementar paginação.
+- [x] Preservar busca, filtros e ordenação ao trocar de página.
+- [x] Preferir a URL como fonte dos parâmetros de consulta.
+- [x] Tratar carregamento, erro e lista vazia.
+- [x] Garantir uso por teclado e comportamento responsivo.
 
 ### Testes mínimos
 
-- [ ] Renderização da lista.
-- [ ] Carregamento, erro e estado vazio.
-- [ ] Busca e filtros isolados.
-- [ ] Combinação de parâmetros.
-- [ ] Ordenação.
-- [ ] Paginação com preservação dos critérios.
+- [x] Renderização da lista.
+- [x] Carregamento, erro e estado vazio.
+- [x] Busca e filtros isolados.
+- [x] Combinação de parâmetros.
+- [x] Ordenação.
+- [x] Paginação com preservação dos critérios.
 
 ### Critério de saída
 
