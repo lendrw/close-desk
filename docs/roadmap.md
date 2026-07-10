@@ -442,10 +442,10 @@ Requisitos relacionados: RF-TIC-01 e RF-TIC-03 a RF-TIC-06, RF-UX-01 a RF-UX-04.
 
 ### Tarefas
 
-- [ ] Criar um formulário reutilizável de chamado.
+- [x] Criar um formulário reutilizável de chamado.
 - [ ] Criar a página de novo chamado.
-- [ ] Validar título, descrição, cliente, status, prioridade e prazo.
-- [ ] Apresentar erros sem apagar dados válidos.
+- [x] Validar título, descrição, cliente, status, prioridade e prazo.
+- [x] Apresentar erros sem apagar dados válidos.
 - [ ] Redirecionar após criação bem-sucedida.
 - [ ] Criar a página de detalhes.
 - [ ] Criar a página de edição com dados atuais.
@@ -458,7 +458,7 @@ Requisitos relacionados: RF-TIC-01 e RF-TIC-03 a RF-TIC-06, RF-UX-01 a RF-UX-04.
 
 ### Testes mínimos
 
-- [ ] Renderização e validação do formulário.
+- [x] Renderização e validação do formulário.
 - [ ] Criação válida e inválida.
 - [ ] Detalhes por identificador.
 - [ ] Carregamento dos dados na edição.
