@@ -65,6 +65,10 @@ function getErrorId(field: keyof TicketFormData) {
   return `ticket-${field}-error`
 }
 
+function getFieldId(field: keyof TicketFormData) {
+  return `ticket-${field}`
+}
+
 export function TicketForm({
   defaultValues,
   isSubmitting = false,
@@ -110,12 +114,15 @@ export function TicketForm({
 
   return (
     <form className="ticket-form" onSubmit={handleSubmit}>
-      <label className="form-field">
-        <span className="form-label">Título</span>
+      <div className="form-field">
+        <label className="form-label" htmlFor={getFieldId('title')}>
+          Título
+        </label>
         <input
           aria-describedby={errors.title ? getErrorId('title') : undefined}
           aria-invalid={Boolean(errors.title)}
           className="form-input"
+          id={getFieldId('title')}
           onChange={(event) => {
             updateValue('title', event.target.value)
           }}
@@ -127,16 +134,19 @@ export function TicketForm({
             {errors.title}
           </span>
         ) : null}
-      </label>
+      </div>
 
-      <label className="form-field">
-        <span className="form-label">Descrição</span>
+      <div className="form-field">
+        <label className="form-label" htmlFor={getFieldId('description')}>
+          Descrição
+        </label>
         <textarea
           aria-describedby={
             errors.description ? getErrorId('description') : undefined
           }
           aria-invalid={Boolean(errors.description)}
           className="form-input ticket-form-textarea"
+          id={getFieldId('description')}
           onChange={(event) => {
             updateValue('description', event.target.value)
           }}
@@ -147,16 +157,19 @@ export function TicketForm({
             {errors.description}
           </span>
         ) : null}
-      </label>
+      </div>
 
-      <label className="form-field">
-        <span className="form-label">Cliente</span>
+      <div className="form-field">
+        <label className="form-label" htmlFor={getFieldId('customer_name')}>
+          Cliente
+        </label>
         <input
           aria-describedby={
             errors.customer_name ? getErrorId('customer_name') : undefined
           }
           aria-invalid={Boolean(errors.customer_name)}
           className="form-input"
+          id={getFieldId('customer_name')}
           onChange={(event) => {
             updateValue('customer_name', event.target.value)
           }}
@@ -168,70 +181,77 @@ export function TicketForm({
             {errors.customer_name}
           </span>
         ) : null}
-      </label>
+      </div>
 
-      <div className="ticket-form-grid">
-        <label className="form-field">
-          <span className="form-label">Status</span>
-          <select
-            aria-describedby={errors.status ? getErrorId('status') : undefined}
-            aria-invalid={Boolean(errors.status)}
-            className="form-input"
-            onChange={(event) => {
-              updateValue('status', event.target.value as TicketStatus)
-            }}
-            value={values.status}
-          >
-            {statusOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          {errors.status ? (
-            <span className="form-error" id={getErrorId('status')}>
-              {errors.status}
-            </span>
-          ) : null}
+      <div className="form-field">
+        <label className="form-label" htmlFor={getFieldId('status')}>
+          Status
         </label>
+        <select
+          aria-describedby={errors.status ? getErrorId('status') : undefined}
+          aria-invalid={Boolean(errors.status)}
+          className="form-input"
+          id={getFieldId('status')}
+          onChange={(event) => {
+            updateValue('status', event.target.value as TicketStatus)
+          }}
+          value={values.status}
+        >
+          {statusOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {errors.status ? (
+          <span className="form-error" id={getErrorId('status')}>
+            {errors.status}
+          </span>
+        ) : null}
+      </div>
 
-        <label className="form-field">
-          <span className="form-label">Prioridade</span>
-          <select
-            aria-describedby={
-              errors.priority ? getErrorId('priority') : undefined
-            }
-            aria-invalid={Boolean(errors.priority)}
-            className="form-input"
-            onChange={(event) => {
-              updateValue('priority', event.target.value as TicketPriority)
-            }}
-            value={values.priority}
-          >
-            {priorityOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          {errors.priority ? (
-            <span className="form-error" id={getErrorId('priority')}>
-              {errors.priority}
-            </span>
-          ) : null}
+      <div className="form-field">
+        <label className="form-label" htmlFor={getFieldId('priority')}>
+          Prioridade
         </label>
+        <select
+          aria-describedby={
+            errors.priority ? getErrorId('priority') : undefined
+          }
+          aria-invalid={Boolean(errors.priority)}
+          className="form-input"
+          id={getFieldId('priority')}
+          onChange={(event) => {
+            updateValue('priority', event.target.value as TicketPriority)
+          }}
+          value={values.priority}
+        >
+          {priorityOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {errors.priority ? (
+          <span className="form-error" id={getErrorId('priority')}>
+            {errors.priority}
+          </span>
+        ) : null}
+      </div>
 
-        <label className="form-field">
-          <span className="form-label">Prazo</span>
-          <input
-            className="form-input"
-            onChange={(event) => {
-              updateValue('due_date', event.target.value || null)
-            }}
-            type="date"
-            value={values.due_date ?? ''}
-          />
+      <div className="form-field">
+        <label className="form-label" htmlFor={getFieldId('due_date')}>
+          Prazo
         </label>
+        <input
+          className="form-input"
+          id={getFieldId('due_date')}
+          onChange={(event) => {
+            updateValue('due_date', event.target.value || null)
+          }}
+          type="date"
+          value={values.due_date ?? ''}
+        />
       </div>
 
       <button
