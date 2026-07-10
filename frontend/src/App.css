@@ -407,6 +407,23 @@
   font-weight: 700;
 }
 
+.ticket-form {
+  display: grid;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.ticket-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.ticket-form-textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
 @media (max-width: 640px) {
   .app-shell {
     align-items: stretch;
