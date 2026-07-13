@@ -446,7 +446,7 @@ Requisitos relacionados: RF-TIC-01 e RF-TIC-03 a RF-TIC-06, RF-UX-01 a RF-UX-04.
 - [x] Criar a página de novo chamado.
 - [x] Validar título, descrição, cliente, status, prioridade e prazo.
 - [x] Apresentar erros sem apagar dados válidos.
-- [ ] Redirecionar após criação bem-sucedida.
+- [x] Redirecionar após criação bem-sucedida.
 - [ ] Criar a página de detalhes.
 - [ ] Criar a página de edição com dados atuais.
 - [ ] Salvar alterações e refletir o novo estado.
