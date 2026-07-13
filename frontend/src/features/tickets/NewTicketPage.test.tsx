@@ -1,3 +1,4 @@
+import { MemoryRouter, Route, Routes } from 'react-router'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
@@ -15,6 +16,17 @@ async function fillValidTicketForm(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText('Cliente'), 'Cliente Exemplo')
   await user.selectOptions(screen.getByLabelText('Prioridade'), 'urgent')
   await user.type(screen.getByLabelText('Prazo'), '2026-07-20')
+}
+
+function renderNewTicketPage() {
+  return render(
+    <MemoryRouter initialEntries={['/tickets/new']}>
+      <Routes>
+        <Route path="/tickets/new" element={<NewTicketPage />} />
+        <Route path="/tickets" element={<h1>Lista de chamados</h1>} />
+      </Routes>
+    </MemoryRouter>,
+  )
 }
 
 describe('NewTicketPage', () => {
@@ -41,14 +53,14 @@ describe('NewTicketPage', () => {
       }),
     )
 
-    render(<NewTicketPage />)
+    renderNewTicketPage()
 
     await fillValidTicketForm(user)
     await user.click(screen.getByRole('button', { name: 'Criar chamado' }))
 
-    expect(await screen.findByRole('status')).toHaveTextContent(
-      'Chamado criado com sucesso.',
-    )
+    expect(
+      await screen.findByRole('heading', { name: 'Lista de chamados' }),
+    ).toBeInTheDocument()
     expect(requestBody).toEqual({
       customer_name: 'Cliente Exemplo',
       description: 'Cliente não consegue acessar o sistema.',
@@ -77,7 +89,7 @@ describe('NewTicketPage', () => {
       }),
     )
 
-    render(<NewTicketPage />)
+    renderNewTicketPage()
 
     await fillValidTicketForm(user)
     await user.click(screen.getByRole('button', { name: 'Criar chamado' }))
