@@ -9,6 +9,7 @@ import { TicketListPage } from './features/tickets/TicketListPage'
 import './App.css'
 import { NewTicketPage } from './features/tickets/NewTicketPage'
 import { TicketDetailPage } from './features/tickets/TicketDetailPage'
+import { EditTicketPage } from './features/tickets/EditTicketPage'
 
 function HomePage() {
   return (
@@ -58,6 +59,7 @@ function App() {
           <Route path="/tickets" element={<TicketListPage />} />
           <Route path="/tickets/:ticketId" element={<TicketDetailPage />} />
           <Route path="/tickets/new" element={<NewTicketPage />} />
+          <Route path="/tickets/:ticketId/edit" element={<EditTicketPage />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />
