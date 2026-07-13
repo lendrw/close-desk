@@ -38,3 +38,9 @@ export async function createTicket(data: TicketFormData) {
 
   return response.data
 }
+
+export async function getTicket(ticketId: number) {
+  const response = await apiClient.get<Ticket>(`/tickets/${ticketId}/`)
+
+  return response.data
+}
