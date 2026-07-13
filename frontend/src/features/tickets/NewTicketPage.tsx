@@ -1,21 +1,21 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 
 import { createTicket, type TicketFormData } from './api'
 import { TicketForm } from './TicketForm'
 
 export function NewTicketPage() {
+  const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [successMessage, setSuccessMessage] = useState('')
 
   async function handleSubmit(data: TicketFormData) {
     setErrorMessage('')
-    setSuccessMessage('')
     setIsSubmitting(true)
 
     try {
       await createTicket(data)
-      setSuccessMessage('Chamado criado com sucesso.')
+      navigate('/tickets')
     } catch {
       setErrorMessage('Não foi possível criar o chamado.')
     } finally {
@@ -30,12 +30,6 @@ export function NewTicketPage() {
       <p className="app-description">
         Preencha os dados principais para registrar um novo atendimento.
       </p>
-
-      {successMessage ? (
-        <p className="form-success" role="status">
-          {successMessage}
-        </p>
-      ) : null}
 
       {errorMessage ? (
         <p className="auth-feedback form-error" role="alert">
