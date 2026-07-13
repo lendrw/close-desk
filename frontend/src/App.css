@@ -424,6 +424,35 @@
   resize: vertical;
 }
 
+.ticket-detail-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 32px 0 0;
+}
+
+.ticket-detail-meta div {
+  display: grid;
+  gap: 4px;
+  border: 1px solid #dbe1ea;
+  border-radius: 16px;
+  background: #f8fafc;
+  padding: 16px;
+}
+
+.ticket-detail-meta dt {
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.ticket-detail-meta dd {
+  margin: 0;
+  color: #0f172a;
+  font-weight: 700;
+}
+
 @media (max-width: 640px) {
   .app-shell {
     align-items: stretch;

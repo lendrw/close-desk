@@ -8,6 +8,7 @@ import { DashboardPage } from './features/dashboard/DashboardPage'
 import { TicketListPage } from './features/tickets/TicketListPage'
 import './App.css'
 import { NewTicketPage } from './features/tickets/NewTicketPage'
+import { TicketDetailPage } from './features/tickets/TicketDetailPage'
 
 function HomePage() {
   return (
@@ -55,6 +56,7 @@ function App() {
         <Route element={<AuthenticatedLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/tickets" element={<TicketListPage />} />
+          <Route path="/tickets/:ticketId" element={<TicketDetailPage />} />
           <Route path="/tickets/new" element={<NewTicketPage />} />
         </Route>
       </Route>
