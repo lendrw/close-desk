@@ -44,3 +44,9 @@ export async function getTicket(ticketId: number) {
 
   return response.data
 }
+
+export async function updateTicket(ticketId: number, data: TicketFormData) {
+  const response = await apiClient.patch<Ticket>(`/tickets/${ticketId}/`, data)
+
+  return response.data
+}
