@@ -26,6 +26,7 @@ function renderTicketDetailPage(route = '/tickets/1') {
     <MemoryRouter initialEntries={[route]}>
       <Routes>
         <Route path="/tickets/:ticketId" element={<TicketDetailPage />} />
+        <Route path="/tickets" element={<h1>Lista de chamados</h1>} />
       </Routes>
     </MemoryRouter>,
   )
@@ -152,5 +153,103 @@ describe('TicketDetailPage', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Não foi possível carregar o chamado.',
     )
+  })
+
+  it('opens and cancels ticket deletion confirmation', async () => {
+    const user = userEvent.setup()
+
+    server.use(
+      http.get('http://localhost:8000/api/tickets/1/', () => {
+        return HttpResponse.json(ticket)
+      }),
+    )
+
+    renderTicketDetailPage()
+
+    expect(
+      await screen.findByRole('heading', { name: 'Problema no login' }),
+    ).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Excluir chamado' }))
+
+    expect(
+      screen.getByRole('alertdialog', { name: 'Excluir chamado?' }),
+    ).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Cancelar' }))
+
+    expect(
+      screen.queryByRole('alertdialog', { name: 'Excluir chamado?' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('deletes ticket and redirects to ticket list', async () => {
+    const user = userEvent.setup()
+    let wasDeleted = false
+
+    server.use(
+      http.get('http://localhost:8000/api/tickets/1/', () => {
+        return HttpResponse.json(ticket)
+      }),
+      http.delete('http://localhost:8000/api/tickets/1/', () => {
+        wasDeleted = true
+        return new HttpResponse(null, { status: 204 })
+      }),
+    )
+
+    renderTicketDetailPage()
+
+    expect(
+      await screen.findByRole('heading', { name: 'Problema no login' }),
+    ).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Excluir chamado' }))
+    await user.click(screen.getByRole('button', { name: 'Confirmar exclusão' }))
+
+    await waitFor(() => {
+      expect(wasDeleted).toBe(true)
+    })
+
+    expect(
+      await screen.findByRole('heading', { name: 'Lista de chamados' }),
+    ).toBeInTheDocument()
+  })
+
+  it('shows an error when ticket deletion fails', async () => {
+    const user = userEvent.setup()
+
+    server.use(
+      http.get('http://localhost:8000/api/tickets/1/', () => {
+        return HttpResponse.json(ticket)
+      }),
+      http.delete('http://localhost:8000/api/tickets/1/', () => {
+        return HttpResponse.json(
+          {
+            error: {
+              code: 'server_error',
+              details: {},
+              message: 'Erro interno.',
+            },
+          },
+          { status: 500 },
+        )
+      }),
+    )
+
+    renderTicketDetailPage()
+
+    expect(
+      await screen.findByRole('heading', { name: 'Problema no login' }),
+    ).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Excluir chamado' }))
+    await user.click(screen.getByRole('button', { name: 'Confirmar exclusão' }))
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível excluir o chamado.',
+    )
+    expect(
+      screen.getByRole('alertdialog', { name: 'Excluir chamado?' }),
+    ).toBeInTheDocument()
   })
 })
