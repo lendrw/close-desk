@@ -12,7 +12,11 @@ import {
   saveAuthTokens,
   setCurrentUser,
 } from './features/auth/session'
-import type { DashboardSummary } from './shared/types/api'
+import type {
+  DashboardSummary,
+  PaginatedResponse,
+  Ticket,
+} from './shared/types/api'
 import { server } from './tests/msw/server'
 
 const dashboardSummary: DashboardSummary = {
@@ -45,6 +49,37 @@ function mockDashboardSummary(summary: DashboardSummary = dashboardSummary) {
   )
 }
 
+const createdTicket: Ticket = {
+  created_at: '2026-07-01T10:00:00Z',
+  created_by: 1,
+  customer_name: 'Cliente Exemplo',
+  description: 'Cliente não consegue acessar o sistema.',
+  due_date: '2026-07-20',
+  id: 1,
+  priority: 'urgent',
+  status: 'open',
+  title: 'Problema no login',
+  updated_at: '2026-07-01T10:00:00Z',
+}
+
+const ticketListAfterCreation: PaginatedResponse<Ticket> = {
+  count: 1,
+  next: null,
+  previous: null,
+  results: [createdTicket],
+}
+
+const dashboardAfterCreation: DashboardSummary = {
+  by_status: {
+    closed: 0,
+    in_progress: 0,
+    open: 1,
+    resolved: 0,
+  },
+  total: 1,
+  urgent: 1,
+}
+
 function authenticateUser() {
   setCurrentUser({
     email: 'ada@example.com',
@@ -59,6 +94,19 @@ function renderDashboard() {
       <App />
     </MemoryRouter>,
   )
+}
+
+async function fillTicketCreationForm(
+  user: ReturnType<typeof userEvent.setup>,
+) {
+  await user.type(screen.getByLabelText('Título'), 'Problema no login')
+  await user.type(
+    screen.getByLabelText('Descrição'),
+    'Cliente não consegue acessar o sistema.',
+  )
+  await user.type(screen.getByLabelText('Cliente'), 'Cliente Exemplo')
+  await user.selectOptions(screen.getByLabelText('Prioridade'), 'urgent')
+  await user.type(screen.getByLabelText('Prazo'), '2026-07-20')
 }
 
 describe('App', () => {
@@ -209,5 +257,51 @@ describe('App', () => {
     expect(getAccessToken()).toBeNull()
     expect(getCurrentUser()).toBeNull()
     expect(getRefreshToken()).toBeNull()
+  })
+
+  it('refreshes ticket list and dashboard after creating a ticket', async () => {
+    const user = userEvent.setup()
+    let listRequests = 0
+    let dashboardRequests = 0
+
+    authenticateUser()
+
+    server.use(
+      http.post('http://localhost:8000/api/tickets/', () => {
+        return HttpResponse.json(createdTicket, { status: 201 })
+      }),
+      http.get('http://localhost:8000/api/tickets/', () => {
+        listRequests += 1
+
+        return HttpResponse.json(ticketListAfterCreation)
+      }),
+      http.get('http://localhost:8000/api/dashboard/summary/', () => {
+        dashboardRequests += 1
+
+        return HttpResponse.json(dashboardAfterCreation)
+      }),
+    )
+
+    render(
+      <MemoryRouter initialEntries={['/tickets/new']}>
+        <App />
+      </MemoryRouter>,
+    )
+
+    await fillTicketCreationForm(user)
+    await user.click(screen.getByRole('button', { name: 'Criar chamado' }))
+
+    expect(await screen.findByText('Problema no login')).toBeInTheDocument()
+    expect(screen.getByText('1 chamado encontrado.')).toBeInTheDocument()
+    expect(listRequests).toBeGreaterThan(0)
+
+    await user.click(screen.getByRole('link', { name: 'Dashboard' }))
+
+    expect(await screen.findByLabelText('Total de chamados')).toHaveTextContent(
+      '1',
+    )
+    expect(screen.getByLabelText('Chamados abertos')).toHaveTextContent('1')
+    expect(screen.getByLabelText('Chamados urgentes')).toHaveTextContent('1')
+    expect(dashboardRequests).toBeGreaterThan(0)
   })
 })
