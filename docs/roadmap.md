@@ -453,7 +453,7 @@ Requisitos relacionados: RF-TIC-01 e RF-TIC-03 a RF-TIC-06, RF-UX-01 a RF-UX-04.
 - [x] Implementar alteração de status.
 - [x] Criar confirmação acessível de exclusão.
 - [x] Tratar confirmação e cancelamento.
-- [ ] Atualizar lista e dashboard após mutações.
+- [x] Atualizar lista e dashboard após mutações.
 - [x] Tratar recurso ausente e falhas da API.
 
 ### Testes mínimos
