@@ -442,30 +442,30 @@ Requisitos relacionados: RF-TIC-01 e RF-TIC-03 a RF-TIC-06, RF-UX-01 a RF-UX-04.
 
 ### Tarefas
 
-- [ ] Criar um formulário reutilizável de chamado.
-- [ ] Criar a página de novo chamado.
-- [ ] Validar título, descrição, cliente, status, prioridade e prazo.
-- [ ] Apresentar erros sem apagar dados válidos.
-- [ ] Redirecionar após criação bem-sucedida.
-- [ ] Criar a página de detalhes.
-- [ ] Criar a página de edição com dados atuais.
-- [ ] Salvar alterações e refletir o novo estado.
-- [ ] Implementar alteração de status.
-- [ ] Criar confirmação acessível de exclusão.
-- [ ] Tratar confirmação e cancelamento.
-- [ ] Atualizar lista e dashboard após mutações.
-- [ ] Tratar recurso ausente e falhas da API.
+- [x] Criar um formulário reutilizável de chamado.
+- [x] Criar a página de novo chamado.
+- [x] Validar título, descrição, cliente, status, prioridade e prazo.
+- [x] Apresentar erros sem apagar dados válidos.
+- [x] Redirecionar após criação bem-sucedida.
+- [x] Criar a página de detalhes.
+- [x] Criar a página de edição com dados atuais.
+- [x] Salvar alterações e refletir o novo estado.
+- [x] Implementar alteração de status.
+- [x] Criar confirmação acessível de exclusão.
+- [x] Tratar confirmação e cancelamento.
+- [x] Atualizar lista e dashboard após mutações.
+- [x] Tratar recurso ausente e falhas da API.
 
 ### Testes mínimos
 
-- [ ] Renderização e validação do formulário.
-- [ ] Criação válida e inválida.
-- [ ] Detalhes por identificador.
-- [ ] Carregamento dos dados na edição.
-- [ ] Atualização válida e inválida.
-- [ ] Alteração de status.
-- [ ] Confirmação, cancelamento e conclusão da exclusão.
-- [ ] Tratamento de recurso não encontrado.
+- [x] Renderização e validação do formulário.
+- [x] Criação válida e inválida.
+- [x] Detalhes por identificador.
+- [x] Carregamento dos dados na edição.
+- [x] Atualização válida e inválida.
+- [x] Alteração de status.
+- [x] Confirmação, cancelamento e conclusão da exclusão.
+- [x] Tratamento de recurso não encontrado.
 
 ### Critério de saída
 
