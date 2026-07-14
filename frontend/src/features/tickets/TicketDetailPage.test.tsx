@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it } from 'vitest'
+import userEvent from '@testing-library/user-event'
 
 import type { Ticket } from '../../shared/types/api'
 import { server } from '../../tests/msw/server'
@@ -53,6 +54,56 @@ describe('TicketDetailPage', () => {
     expect(
       screen.getByRole('link', { name: 'Voltar para chamados' }),
     ).toHaveAttribute('href', '/tickets')
+  })
+
+  it('updates ticket status from the detail actions', async () => {
+    const user = userEvent.setup()
+    let requestBody: Record<string, unknown> | null = null
+
+    server.use(
+      http.get('http://localhost:8000/api/tickets/1/', () => {
+        return HttpResponse.json(ticket)
+      }),
+      http.patch(
+        'http://localhost:8000/api/tickets/1/',
+        async ({ request }) => {
+          requestBody = (await request.json()) as Record<string, unknown>
+
+          return HttpResponse.json({
+            ...ticket,
+            ...requestBody,
+            status: 'resolved',
+            updated_at: '2026-07-01T12:00:00Z',
+          })
+        },
+      ),
+    )
+
+    renderTicketDetailPage()
+
+    expect(
+      await screen.findByRole('heading', { name: 'Problema no login' }),
+    ).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Marcar resolvido' }))
+
+    await waitFor(() => {
+      expect(requestBody).toEqual({
+        title: 'Problema no login',
+        description: 'Cliente não consegue acessar o sistema.',
+        customer_name: 'Cliente Exemplo',
+        due_date: '2026-07-20',
+        priority: 'urgent',
+        status: 'resolved',
+      })
+    })
+
+    expect(
+      within(screen.getByLabelText('Dados do chamado')).getByText('Resolvido'),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: 'Marcar resolvido' }),
+    ).not.toBeInTheDocument()
   })
 
   it('shows loading state while fetching ticket details', async () => {
