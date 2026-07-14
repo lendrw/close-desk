@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router'
+import { Link, useNavigate, useParams } from 'react-router'
 
 import type { Ticket, TicketStatus } from '../../shared/types/api'
-import { getTicket, updateTicket } from './api'
+import { deleteTicket, getTicket, updateTicket } from './api'
 
 const statusLabels: Record<Ticket['status'], string> = {
   closed: 'Fechado',
@@ -34,11 +34,16 @@ function formatDate(value: string) {
 
 export function TicketDetailPage() {
   const { ticketId } = useParams()
+  const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [ticket, setTicket] = useState<Ticket | null>(null)
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false)
   const [statusErrorMessage, setStatusErrorMessage] = useState('')
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
+    useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [deleteErrorMessage, setDeleteErrorMessage] = useState('')
 
   useEffect(() => {
     let isActive = true
@@ -54,6 +59,8 @@ export function TicketDetailPage() {
       setErrorMessage('')
       setStatusErrorMessage('')
       setIsLoading(true)
+      setDeleteErrorMessage('')
+      setIsDeleteConfirmationOpen(false)
 
       try {
         const response = await getTicket(parsedTicketId)
@@ -102,6 +109,24 @@ export function TicketDetailPage() {
       setStatusErrorMessage('Não foi possível atualizar o status do chamado.')
     } finally {
       setIsUpdatingStatus(false)
+    }
+  }
+
+  async function handleDeleteTicket() {
+    if (!ticket) {
+      return
+    }
+
+    setDeleteErrorMessage('')
+    setIsDeleting(true)
+
+    try {
+      await deleteTicket(ticket.id)
+      navigate('/tickets')
+    } catch {
+      setDeleteErrorMessage('Não foi possível excluir o chamado.')
+    } finally {
+      setIsDeleting(false)
     }
   }
 
@@ -159,6 +184,48 @@ export function TicketDetailPage() {
             </p>
           ) : null}
 
+          {deleteErrorMessage ? (
+            <p className="ticket-list-feedback form-error" role="alert">
+              {deleteErrorMessage}
+            </p>
+          ) : null}
+
+          {isDeleteConfirmationOpen ? (
+            <section
+              aria-labelledby="delete-ticket-title"
+              className="ticket-delete-confirmation"
+              role="alertdialog"
+            >
+              <h2 id="delete-ticket-title">Excluir chamado?</h2>
+              <p>
+                Esta ação remove o chamado permanentemente e não poderá ser
+                desfeita.
+              </p>
+
+              <div className="app-actions">
+                <button
+                  className="app-link ticket-danger-button"
+                  disabled={isDeleting}
+                  onClick={() => void handleDeleteTicket()}
+                  type="button"
+                >
+                  {isDeleting ? 'Excluindo...' : 'Confirmar exclusão'}
+                </button>
+                <button
+                  className="app-link app-link-secondary ticket-status-button"
+                  disabled={isDeleting}
+                  onClick={() => {
+                    setDeleteErrorMessage('')
+                    setIsDeleteConfirmationOpen(false)
+                  }}
+                  type="button"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </section>
+          ) : null}
+
           <div className="app-actions ticket-detail-actions">
             <Link className="app-link" to={`/tickets/${ticket.id}/edit`}>
               Editar chamado
@@ -177,6 +244,18 @@ export function TicketDetailPage() {
                   {isUpdatingStatus ? 'Atualizando...' : statusAction.label}
                 </button>
               ))}
+
+            <button
+              className="app-link app-link-secondary ticket-danger-link"
+              disabled={isDeleting}
+              onClick={() => {
+                setDeleteErrorMessage('')
+                setIsDeleteConfirmationOpen(true)
+              }}
+              type="button"
+            >
+              Excluir chamado
+            </button>
 
             <Link className="app-link app-link-secondary" to="/tickets">
               Voltar para chamados
