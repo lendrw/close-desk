@@ -50,3 +50,7 @@ export async function updateTicket(ticketId: number, data: TicketFormData) {
 
   return response.data
 }
+
+export async function deleteTicket(ticketId: number) {
+  await apiClient.delete(`/tickets/${ticketId}/`)
+}
