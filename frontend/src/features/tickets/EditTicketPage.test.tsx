@@ -141,4 +141,41 @@ describe('EditTicketPage', () => {
     )
     expect(screen.getByLabelText('Título')).toHaveValue('Problema no acesso')
   })
+
+  it('shows not found feedback when the ticket identifier is invalid', async () => {
+    renderEditTicketPage('/tickets/invalido/edit')
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Chamado não encontrado.',
+    )
+    expect(
+      screen.queryByRole('button', { name: 'Atualizar chamado' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('shows an error when ticket data fails to load', async () => {
+    server.use(
+      http.get('http://localhost:8000/api/tickets/1/', () => {
+        return HttpResponse.json(
+          {
+            error: {
+              code: 'not_found',
+              details: {},
+              message: 'Recurso não encontrado.',
+            },
+          },
+          { status: 404 },
+        )
+      }),
+    )
+
+    renderEditTicketPage()
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar o chamado.',
+    )
+    expect(
+      screen.queryByRole('button', { name: 'Atualizar chamado' }),
+    ).not.toBeInTheDocument()
+  })
 })
