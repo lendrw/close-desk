@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 
-import type { Ticket } from '../../shared/types/api'
-import { getTicket } from './api'
+import type { Ticket, TicketStatus } from '../../shared/types/api'
+import { getTicket, updateTicket } from './api'
 
 const statusLabels: Record<Ticket['status'], string> = {
   closed: 'Fechado',
@@ -18,6 +18,13 @@ const priorityLabels: Record<Ticket['priority'], string> = {
   urgent: 'Urgente',
 }
 
+const statusActions: Array<{ label: string; value: TicketStatus }> = [
+  { label: 'Reabrir chamado', value: 'open' },
+  { label: 'Marcar em andamento', value: 'in_progress' },
+  { label: 'Marcar resolvido', value: 'resolved' },
+  { label: 'Fechar chamado', value: 'closed' },
+]
+
 function formatDate(value: string) {
   return new Intl.DateTimeFormat('pt-BR', {
     dateStyle: 'short',
@@ -30,6 +37,8 @@ export function TicketDetailPage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [ticket, setTicket] = useState<Ticket | null>(null)
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false)
+  const [statusErrorMessage, setStatusErrorMessage] = useState('')
 
   useEffect(() => {
     let isActive = true
@@ -43,6 +52,7 @@ export function TicketDetailPage() {
       }
 
       setErrorMessage('')
+      setStatusErrorMessage('')
       setIsLoading(true)
 
       try {
@@ -69,6 +79,32 @@ export function TicketDetailPage() {
     }
   }, [ticketId])
 
+  async function handleStatusChange(nextStatus: TicketStatus) {
+    if (!ticket || ticket.status === nextStatus) {
+      return
+    }
+
+    setStatusErrorMessage('')
+    setIsUpdatingStatus(true)
+
+    try {
+      const updatedTicket = await updateTicket(ticket.id, {
+        title: ticket.title,
+        description: ticket.description,
+        customer_name: ticket.customer_name,
+        due_date: ticket.due_date,
+        priority: ticket.priority,
+        status: nextStatus,
+      })
+
+      setTicket(updatedTicket)
+    } catch {
+      setStatusErrorMessage('Não foi possível atualizar o status do chamado.')
+    } finally {
+      setIsUpdatingStatus(false)
+    }
+  }
+
   return (
     <section className="content-card">
       <p className="app-eyebrow">Chamado</p>
@@ -90,7 +126,7 @@ export function TicketDetailPage() {
           <h1 className="content-title">{ticket.title}</h1>
           <p className="app-description">{ticket.description}</p>
 
-          <dl className="ticket-detail-meta">
+          <dl aria-label="Dados do chamado" className="ticket-detail-meta">
             <div>
               <dt>Cliente</dt>
               <dd>{ticket.customer_name}</dd>
@@ -117,7 +153,31 @@ export function TicketDetailPage() {
             </div>
           </dl>
 
-          <div className="app-actions">
+          {statusErrorMessage ? (
+            <p className="ticket-list-feedback form-error" role="alert">
+              {statusErrorMessage}
+            </p>
+          ) : null}
+
+          <div className="app-actions ticket-detail-actions">
+            <Link className="app-link" to={`/tickets/${ticket.id}/edit`}>
+              Editar chamado
+            </Link>
+
+            {statusActions
+              .filter((statusAction) => statusAction.value !== ticket.status)
+              .map((statusAction) => (
+                <button
+                  className="app-link ticket-status-button"
+                  disabled={isUpdatingStatus}
+                  key={statusAction.value}
+                  onClick={() => void handleStatusChange(statusAction.value)}
+                  type="button"
+                >
+                  {isUpdatingStatus ? 'Atualizando...' : statusAction.label}
+                </button>
+              ))}
+
             <Link className="app-link app-link-secondary" to="/tickets">
               Voltar para chamados
             </Link>
