@@ -448,8 +448,8 @@ Requisitos relacionados: RF-TIC-01 e RF-TIC-03 a RF-TIC-06, RF-UX-01 a RF-UX-04.
 - [x] Apresentar erros sem apagar dados válidos.
 - [x] Redirecionar após criação bem-sucedida.
 - [x] Criar a página de detalhes.
-- [ ] Criar a página de edição com dados atuais.
-- [ ] Salvar alterações e refletir o novo estado.
+- [x] Criar a página de edição com dados atuais.
+- [x] Salvar alterações e refletir o novo estado.
 - [ ] Implementar alteração de status.
 - [ ] Criar confirmação acessível de exclusão.
 - [ ] Tratar confirmação e cancelamento.
@@ -461,8 +461,8 @@ Requisitos relacionados: RF-TIC-01 e RF-TIC-03 a RF-TIC-06, RF-UX-01 a RF-UX-04.
 - [x] Renderização e validação do formulário.
 - [x] Criação válida e inválida.
 - [x] Detalhes por identificador.
-- [ ] Carregamento dos dados na edição.
-- [ ] Atualização válida e inválida.
+- [x] Carregamento dos dados na edição.
+- [x] Atualização válida e inválida.
 - [ ] Alteração de status.
 - [ ] Confirmação, cancelamento e conclusão da exclusão.
 - [x] Tratamento de recurso não encontrado.
