@@ -450,7 +450,7 @@ Requisitos relacionados: RF-TIC-01 e RF-TIC-03 a RF-TIC-06, RF-UX-01 a RF-UX-04.
 - [x] Criar a página de detalhes.
 - [x] Criar a página de edição com dados atuais.
 - [x] Salvar alterações e refletir o novo estado.
-- [ ] Implementar alteração de status.
+- [x] Implementar alteração de status.
 - [ ] Criar confirmação acessível de exclusão.
 - [ ] Tratar confirmação e cancelamento.
 - [ ] Atualizar lista e dashboard após mutações.
@@ -463,7 +463,7 @@ Requisitos relacionados: RF-TIC-01 e RF-TIC-03 a RF-TIC-06, RF-UX-01 a RF-UX-04.
 - [x] Detalhes por identificador.
 - [x] Carregamento dos dados na edição.
 - [x] Atualização válida e inválida.
-- [ ] Alteração de status.
+- [x] Alteração de status.
 - [ ] Confirmação, cancelamento e conclusão da exclusão.
 - [x] Tratamento de recurso não encontrado.
 
