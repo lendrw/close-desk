@@ -481,7 +481,7 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 
 - [x] Executar o fluxo de primeiro acesso.
 - [x] Executar o fluxo completo de gestão de chamado.
-- [ ] Executar busca, filtros, ordenação e paginação combinados.
+- [x] Executar busca, filtros, ordenação e paginação combinados.
 - [ ] Criar dois usuários e comprovar isolamento completo.
 - [ ] Tentar acessar diretamente um chamado alheio.
 - [ ] Validar renovação, expiração e encerramento da sessão.
