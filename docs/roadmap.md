@@ -498,7 +498,7 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 
 ### Entrega SHOULD
 
-- [ ] Automatizar ao menos um fluxo crítico de ponta a ponta no navegador.
+- [x] Automatizar ao menos um fluxo crítico de ponta a ponta no navegador.
 
 ### Critério de saída
 
