@@ -1,7 +1,7 @@
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { delay, http, HttpResponse } from 'msw'
-import { MemoryRouter } from 'react-router'
+import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it } from 'vitest'
 
 import type { PaginatedResponse, Ticket } from '../../shared/types/api'
@@ -41,7 +41,13 @@ function mockTicketsResponse(results: Ticket[] = tickets) {
 function renderTicketListPage(route = '/tickets') {
   return render(
     <MemoryRouter initialEntries={[route]}>
-      <TicketListPage />
+      <Routes>
+        <Route path="/tickets" element={<TicketListPage />} />
+        <Route
+          path="/tickets/:ticketId"
+          element={<h1>Detalhes do chamado</h1>}
+        />
+      </Routes>
     </MemoryRouter>,
   )
 }
@@ -74,6 +80,22 @@ describe('TicketListPage', () => {
     expect(within(ticketCard).getByText('Urgente')).toBeInTheDocument()
     expect(within(ticketCard).getByText('Criado em')).toBeInTheDocument()
     expect(within(ticketCard).getByText('Atualizado em')).toBeInTheDocument()
+  })
+
+  it('navigates to ticket details from the ticket title', async () => {
+    const user = userEvent.setup()
+
+    mockTicketsResponse()
+
+    renderTicketListPage()
+
+    await user.click(
+      await screen.findByRole('link', { name: 'Problema no login' }),
+    )
+
+    expect(
+      await screen.findByRole('heading', { name: 'Detalhes do chamado' }),
+    ).toBeInTheDocument()
   })
 
   it('searches tickets using the search query parameter', async () => {
