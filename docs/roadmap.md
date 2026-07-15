@@ -488,10 +488,10 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 - [ ] Validar mensagens e estrutura de erros.
 - [ ] Revisar ausência de senhas, tokens e segredos em respostas e logs.
 - [ ] Revisar CORS, hosts permitidos e variáveis de ambiente.
-- [ ] Revisar tipagem, lint e formatação.
+- [x] Revisar tipagem, lint e formatação.
 - [ ] Revisar responsividade a partir de 360 px.
 - [ ] Revisar navegação por teclado, foco, rótulos e semântica.
-- [ ] Executar todas as suítes automatizadas.
+- [x] Executar todas as suítes automatizadas.
 - [ ] Configurar integração contínua para backend e frontend.
 - [ ] Remover código morto e logs de depuração.
 - [ ] Atualizar OpenAPI, README e decisões técnicas.
