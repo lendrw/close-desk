@@ -17,22 +17,24 @@ Objetivo: validar que uma pessoa usuária consegue iniciar o uso do sistema sem 
 
 Checklist:
 
-- [ ] Acessar a aplicação sem sessão ativa.
-- [ ] Confirmar redirecionamento para login ao acessar área protegida.
-- [ ] Criar uma nova conta com nome, e-mail e senha válidos.
-- [ ] Confirmar que a senha não aparece em respostas ou telas.
-- [ ] Entrar com a conta criada.
-- [ ] Confirmar acesso ao dashboard autenticado.
-- [ ] Confirmar exibição do nome da pessoa usuária autenticada.
+- [x] Acessar a aplicação sem sessão ativa.
+- [x] Confirmar redirecionamento para login ao acessar área protegida.
+- [x] Criar uma nova conta com nome, e-mail e senha válidos.
+- [x] Confirmar que a senha não aparece em respostas ou telas.
+- [x] Entrar com a conta criada.
+- [x] Confirmar acesso ao dashboard autenticado.
+- [x] Confirmar exibição do nome da pessoa usuária autenticada.
 
 Resultado:
 
-- [ ] Aprovado
+- [x] Aprovado
 - [ ] Reprovado
 
 Observações:
 
--
+- Fluxo validado localmente com backend Django em `127.0.0.1:8000` e frontend Vite em `localhost:5173`.
+- Criado `frontend/.env` local com `VITE_API_BASE_URL=http://localhost:8000/api` para integração com a API.
+- Durante a validação, foi corrigido o redirecionamento após login bem-sucedido.
 
 ## 2. Gestão completa de chamado
 
