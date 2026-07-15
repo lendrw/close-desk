@@ -144,4 +144,12 @@ Observações:
 
 Registre aqui comandos, prints, URLs locais, observações ou problemas encontrados durante a validação.
 
--
+- Validação automatizada local executada com sucesso:
+  - Backend: `python -m ruff check .`
+  - Backend: `python -m ruff format --check .`
+  - Backend: `python manage.py check --settings=config.settings_test`
+  - Backend: `python -m pytest -q`
+  - Frontend: `npm run build`
+  - Frontend: `npm run lint`
+  - Frontend: `npm run test`
+  - Frontend: `npm run format:check`
