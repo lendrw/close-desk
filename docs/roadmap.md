@@ -480,7 +480,7 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 ### Tarefas
 
 - [x] Executar o fluxo de primeiro acesso.
-- [ ] Executar o fluxo completo de gestão de chamado.
+- [x] Executar o fluxo completo de gestão de chamado.
 - [ ] Executar busca, filtros, ordenação e paginação combinados.
 - [ ] Criar dois usuários e comprovar isolamento completo.
 - [ ] Tentar acessar diretamente um chamado alheio.
