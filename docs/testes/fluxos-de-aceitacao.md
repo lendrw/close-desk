@@ -155,3 +155,7 @@ Registre aqui comandos, prints, URLs locais, observações ou problemas encontra
   - Frontend: `npm run lint`
   - Frontend: `npm run test`
   - Frontend: `npm run format:check`
+  - Fluxo crítico automatizado com Playwright:
+  - `npm run e2e`
+  - Smoke test da home.
+  - Fluxo de primeiro acesso com cadastro, login e acesso ao dashboard.
