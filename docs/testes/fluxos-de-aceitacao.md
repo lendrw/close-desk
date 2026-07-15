@@ -42,22 +42,22 @@ Objetivo: validar criação, consulta, edição, alteração de status e exclus�
 
 Checklist:
 
-- [ ] Criar um chamado com título, descrição, cliente, prioridade e prazo.
-- [ ] Confirmar redirecionamento para a lista de chamados.
-- [ ] Confirmar que o chamado aparece na lista.
-- [ ] Abrir os detalhes do chamado.
-- [ ] Editar os dados do chamado.
-- [ ] Confirmar que os detalhes refletem os dados editados.
-- [ ] Alterar o status do chamado.
-- [ ] Confirmar que o novo status aparece nos detalhes.
-- [ ] Excluir o chamado.
-- [ ] Confirmar a exclusão.
-- [ ] Confirmar retorno para a lista.
-- [ ] Confirmar que o chamado excluído não aparece mais.
+- [x] Criar um chamado com título, descrição, cliente, prioridade e prazo.
+- [x] Confirmar redirecionamento para a lista de chamados.
+- [x] Confirmar que o chamado aparece na lista.
+- [x] Abrir os detalhes do chamado.
+- [x] Editar os dados do chamado.
+- [x] Confirmar que os detalhes refletem os dados editados.
+- [x] Alterar o status do chamado.
+- [x] Confirmar que o novo status aparece nos detalhes.
+- [x] Excluir o chamado.
+- [x] Confirmar a exclusão.
+- [x] Confirmar retorno para a lista.
+- [x] Confirmar que o chamado excluído não aparece mais.
 
 Resultado:
 
-- [ ] Aprovado
+- [x] Aprovado
 - [ ] Reprovado
 
 Observações:
