@@ -70,25 +70,26 @@ Objetivo: validar busca, filtros, ordenação e paginação em conjunto.
 
 Checklist:
 
-- [ ] Criar chamados suficientes para haver paginação.
-- [ ] Buscar por termo presente no título.
-- [ ] Buscar por termo presente no nome do cliente.
-- [ ] Filtrar por status.
-- [ ] Filtrar por prioridade.
-- [ ] Ordenar por data de criação crescente.
-- [ ] Ordenar por data de criação decrescente.
-- [ ] Navegar para a próxima página mantendo busca, filtros e ordenação.
-- [ ] Voltar para a página anterior mantendo busca, filtros e ordenação.
-- [ ] Confirmar estado vazio quando nenhum chamado corresponde aos critérios.
+- [x] Criar chamados suficientes para haver paginação.
+- [x] Buscar por termo presente no título.
+- [x] Buscar por termo presente no nome do cliente.
+- [x] Filtrar por status.
+- [x] Filtrar por prioridade.
+- [x] Ordenar por data de criação crescente.
+- [x] Ordenar por data de criação decrescente.
+- [x] Navegar para a próxima página mantendo busca, filtros e ordenação.
+- [x] Voltar para a página anterior mantendo busca, filtros e ordenação.
+- [x] Confirmar estado vazio quando nenhum chamado corresponde aos critérios.
 
 Resultado:
 
-- [ ] Aprovado
+- [x] Aprovado
 - [ ] Reprovado
 
 Observações:
 
--
+- Fluxo validado localmente com massa de chamados suficiente para paginação.
+- Busca, filtros, ordenação, paginação e estado vazio funcionaram conforme esperado.
 
 ## 4. Isolamento entre usuários
 
