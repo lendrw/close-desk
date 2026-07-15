@@ -1,5 +1,5 @@
 import { type FormEvent, useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 
 import type {
   PaginatedResponse,
@@ -265,7 +265,14 @@ export function TicketListPage() {
               {ticketsResponse.results.map((ticket) => (
                 <li className="ticket-card" key={ticket.id}>
                   <div>
-                    <h2 className="ticket-card-title">{ticket.title}</h2>
+                    <h2 className="ticket-card-title">
+                      <Link
+                        className="ticket-card-title-link"
+                        to={`/tickets/${ticket.id}`}
+                      >
+                        {ticket.title}
+                      </Link>
+                    </h2>
                     <p className="ticket-card-description">
                       {ticket.description}
                     </p>
