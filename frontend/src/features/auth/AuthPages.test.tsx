@@ -53,6 +53,25 @@ describe('Auth pages', () => {
           refresh: 'refresh-token',
         })
       }),
+      http.get('http://localhost:8000/api/auth/me/', () => {
+        return HttpResponse.json({
+          email: 'ada@example.com',
+          id: 1,
+          name: 'Ada Lovelace',
+        })
+      }),
+      http.get('http://localhost:8000/api/dashboard/summary/', () => {
+        return HttpResponse.json({
+          by_status: {
+            closed: 0,
+            in_progress: 0,
+            open: 0,
+            resolved: 0,
+          },
+          total: 0,
+          urgent: 0,
+        })
+      }),
     )
 
     renderRoute('/login')
@@ -61,9 +80,10 @@ describe('Auth pages', () => {
     await user.type(screen.getByLabelText('Senha'), 'securepass123')
     await user.click(screen.getByRole('button', { name: 'Entrar' }))
 
-    expect(await screen.findByRole('status')).toHaveTextContent(
-      'Login realizado com sucesso.',
-    )
+    expect(
+      await screen.findByRole('heading', { name: 'Dashboard' }),
+    ).toBeInTheDocument()
+    expect(screen.getByText('Ada Lovelace')).toBeInTheDocument()
     expect(getAccessToken()).toBe('access-token')
     expect(getRefreshToken()).toBe('refresh-token')
     expect(sessionStorage.getItem('closedesk.accessToken')).toBeNull()
