@@ -97,20 +97,20 @@ Objetivo: validar que uma pessoa usuária não acessa dados de outra.
 
 Checklist:
 
-- [ ] Criar usuário A.
-- [ ] Criar usuário B.
-- [ ] Entrar como usuário A.
-- [ ] Criar chamado do usuário A.
-- [ ] Sair.
-- [ ] Entrar como usuário B.
-- [ ] Confirmar que o chamado do usuário A não aparece na lista do usuário B.
-- [ ] Tentar acessar diretamente a URL do chamado do usuário A.
-- [ ] Confirmar resposta de recurso não encontrado ou acesso negado.
-- [ ] Confirmar que dashboard do usuário B não contabiliza chamados do usuário A.
+- [x] Criar usuário A.
+- [x] Criar usuário B.
+- [x] Entrar como usuário A.
+- [x] Criar chamado do usuário A.
+- [x] Sair.
+- [x] Entrar como usuário B.
+- [x] Confirmar que o chamado do usuário A não aparece na lista do usuário B.
+- [x] Tentar acessar diretamente a URL do chamado do usuário A.
+- [x] Confirmar resposta de recurso não encontrado ou acesso negado.
+- [x] Confirmar que dashboard do usuário B não contabiliza chamados do usuário A.
 
 Resultado:
 
-- [ ] Aprovado
+- [x] Aprovado
 - [ ] Reprovado
 
 Observações:
