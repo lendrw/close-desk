@@ -123,12 +123,12 @@ Objetivo: validar comportamento de autenticação, sessão e mensagens seguras.
 
 Checklist:
 
-- [ ] Entrar com credenciais válidas.
-- [ ] Confirmar armazenamento da sessão no frontend.
-- [ ] Sair da aplicação.
-- [ ] Confirmar remoção da sessão local.
-- [ ] Tentar acessar rota protegida sem sessão.
-- [ ] Confirmar redirecionamento para login.
+- [x] Entrar com credenciais válidas.
+- [x] Confirmar armazenamento da sessão no frontend.
+- [x] Sair da aplicação.
+- [x] Confirmar remoção da sessão local.
+- [x] Tentar acessar rota protegida sem sessão.
+- [x] Confirmar redirecionamento para login.
 - [ ] Entrar com credenciais inválidas.
 - [ ] Confirmar mensagem genérica sem enumeração de usuário.
 - [ ] Confirmar que tokens não aparecem na interface.
@@ -141,7 +141,9 @@ Resultado:
 
 Observações:
 
--
+- Encerramento de sessão validado localmente pela interface.
+- Restauração de sessão validada após recarregar rota protegida.
+- Falha de renovação/expiração coberta pela suíte automatizada de sessão.
 
 ## Evidências
 
@@ -156,7 +158,8 @@ Registre aqui comandos, prints, URLs locais, observações ou problemas encontra
   - Frontend: `npm run lint`
   - Frontend: `npm run test`
   - Frontend: `npm run format:check`
-  - Fluxo crítico automatizado com Playwright:
+
+- Fluxo crítico automatizado com Playwright:
   - `npm run e2e`
   - Smoke test da home.
   - Fluxo de primeiro acesso com cadastro, login e acesso ao dashboard.
