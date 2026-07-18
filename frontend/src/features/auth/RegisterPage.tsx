@@ -5,6 +5,8 @@ import { Link } from 'react-router'
 import { TextField } from '../../shared/components/TextField'
 import { registerUser } from './api'
 
+import { isAxiosError } from 'axios'
+
 type RegisterErrors = {
   email?: string
   name?: string
@@ -41,6 +43,18 @@ function validateRegisterForm(name: string, email: string, password: string) {
   return errors
 }
 
+function getFirstFieldError(value: unknown) {
+  if (Array.isArray(value) && typeof value[0] === 'string') {
+    return value[0]
+  }
+
+  if (typeof value === 'string') {
+    return value
+  }
+
+  return undefined
+}
+
 export function RegisterPage() {
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState<RegisterErrors>({})
@@ -71,7 +85,21 @@ export function RegisterPage() {
         password,
       })
       setSuccessMessage('Cadastro realizado com sucesso.')
-    } catch {
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const details = error.response?.data?.error?.details
+
+        if (details && typeof details === 'object') {
+          setErrors({
+            email: getFirstFieldError(details.email),
+            name: getFirstFieldError(details.name),
+            password: getFirstFieldError(details.password),
+          })
+          setFormError('')
+          return
+        }
+      }
+
       setFormError('Não foi possível criar a conta.')
     } finally {
       setIsSubmitting(false)

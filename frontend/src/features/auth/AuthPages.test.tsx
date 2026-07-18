@@ -203,8 +203,11 @@ describe('Auth pages', () => {
     await user.type(screen.getByLabelText('Senha'), 'securepass123')
     await user.click(screen.getByRole('button', { name: 'Criar conta' }))
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(
-      'Não foi possível criar a conta.',
+    expect(await screen.findByLabelText('E-mail')).toHaveAccessibleDescription(
+      'Este e-mail já está em uso.',
+    )
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Este e-mail já está em uso.',
     )
   })
 })
