@@ -484,7 +484,7 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 - [x] Executar busca, filtros, ordenação e paginação combinados.
 - [x] Criar dois usuários e comprovar isolamento completo.
 - [x] Tentar acessar diretamente um chamado alheio.
-- [ ] Validar renovação, expiração e encerramento da sessão.
+- [x] Validar renovação, expiração e encerramento da sessão.
 - [ ] Validar mensagens e estrutura de erros.
 - [ ] Revisar ausência de senhas, tokens e segredos em respostas e logs.
 - [ ] Revisar CORS, hosts permitidos e variáveis de ambiente.
