@@ -493,7 +493,7 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 - [x] Revisar navegação por teclado, foco, rótulos e semântica.
 - [x] Executar todas as suítes automatizadas.
 - [x] Configurar integração contínua para backend e frontend.
-- [ ] Remover código morto e logs de depuração.
+- [x] Remover código morto e logs de depuração.
 - [ ] Atualizar OpenAPI, README e decisões técnicas.
 
 ### Entrega SHOULD
