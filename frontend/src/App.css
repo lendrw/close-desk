@@ -116,7 +116,8 @@
 .nav-link-button:focus-visible,
 .ticket-pagination-button:focus-visible,
 .ticket-danger-button:focus-visible,
-.ticket-status-button:focus-visible {
+.ticket-status-button:focus-visible,
+.ticket-card-title-link:focus-visible {
   outline: 3px solid #93c5fd;
   outline-offset: 3px;
 }
@@ -317,6 +318,16 @@
   margin: 0;
   color: #0f172a;
   font-size: 1.25rem;
+}
+
+.ticket-card-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ticket-card-title-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
 }
 
 .ticket-card-description {

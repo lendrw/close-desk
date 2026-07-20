@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 import { TextField } from '../../shared/components/TextField'
 import { login } from './api'
-import { saveAuthTokens } from './session'
+import { loadCurrentUser, saveAuthTokens } from './session'
 
 type LoginErrors = {
   email?: string
@@ -33,6 +33,8 @@ export function LoginPage() {
   const [password, setPassword] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
 
+  const navigate = useNavigate()
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const validationErrors = validateLoginForm(email, password)
@@ -52,8 +54,10 @@ export function LoginPage() {
         email: email.trim(),
         password,
       })
+
       saveAuthTokens(tokens)
-      setSuccessMessage('Login realizado com sucesso.')
+      await loadCurrentUser()
+      navigate('/dashboard', { replace: true })
     } catch {
       setFormError('Não foi possível entrar com essas credenciais.')
     } finally {

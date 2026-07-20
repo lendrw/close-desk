@@ -479,26 +479,26 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 
 ### Tarefas
 
-- [ ] Executar o fluxo de primeiro acesso.
-- [ ] Executar o fluxo completo de gestão de chamado.
-- [ ] Executar busca, filtros, ordenação e paginação combinados.
-- [ ] Criar dois usuários e comprovar isolamento completo.
-- [ ] Tentar acessar diretamente um chamado alheio.
-- [ ] Validar renovação, expiração e encerramento da sessão.
-- [ ] Validar mensagens e estrutura de erros.
-- [ ] Revisar ausência de senhas, tokens e segredos em respostas e logs.
-- [ ] Revisar CORS, hosts permitidos e variáveis de ambiente.
-- [ ] Revisar tipagem, lint e formatação.
-- [ ] Revisar responsividade a partir de 360 px.
-- [ ] Revisar navegação por teclado, foco, rótulos e semântica.
-- [ ] Executar todas as suítes automatizadas.
-- [ ] Configurar integração contínua para backend e frontend.
-- [ ] Remover código morto e logs de depuração.
-- [ ] Atualizar OpenAPI, README e decisões técnicas.
+- [x] Executar o fluxo de primeiro acesso.
+- [x] Executar o fluxo completo de gestão de chamado.
+- [x] Executar busca, filtros, ordenação e paginação combinados.
+- [x] Criar dois usuários e comprovar isolamento completo.
+- [x] Tentar acessar diretamente um chamado alheio.
+- [x] Validar renovação, expiração e encerramento da sessão.
+- [x] Validar mensagens e estrutura de erros.
+- [x] Revisar ausência de senhas, tokens e segredos em respostas e logs.
+- [x] Revisar CORS, hosts permitidos e variáveis de ambiente.
+- [x] Revisar tipagem, lint e formatação.
+- [x] Revisar responsividade a partir de 360 px.
+- [x] Revisar navegação por teclado, foco, rótulos e semântica.
+- [x] Executar todas as suítes automatizadas.
+- [x] Configurar integração contínua para backend e frontend.
+- [x] Remover código morto e logs de depuração.
+- [x] Atualizar OpenAPI, README e decisões técnicas.
 
 ### Entrega SHOULD
 
-- [ ] Automatizar ao menos um fluxo crítico de ponta a ponta no navegador.
+- [x] Automatizar ao menos um fluxo crítico de ponta a ponta no navegador.
 
 ### Critério de saída
 

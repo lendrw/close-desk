@@ -126,14 +126,19 @@ describe('App', () => {
     ).toBeInTheDocument()
   })
 
-  it('redirects visitors from dashboard to login', () => {
+  it('redirects visitors from dashboard to login', async () => {
     render(
       <MemoryRouter initialEntries={['/dashboard']}>
         <App />
       </MemoryRouter>,
     )
 
-    expect(screen.getByRole('heading', { name: 'Entrar' })).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Restaurando sessão...',
+    )
+    expect(
+      await screen.findByRole('heading', { name: 'Entrar' }),
+    ).toBeInTheDocument()
   })
 
   it('renders dashboard for authenticated users', () => {

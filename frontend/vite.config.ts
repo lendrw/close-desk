@@ -10,6 +10,7 @@ export default defineConfig({
       VITE_API_BASE_URL: 'http://localhost:8000/api',
     },
     environment: 'jsdom',
+    exclude: ['e2e/**', 'node_modules/**', 'dist/**'],
     globals: true,
     setupFiles: './src/tests/setup.ts',
   },
