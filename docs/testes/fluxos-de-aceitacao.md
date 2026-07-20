@@ -131,7 +131,7 @@ Checklist:
 - [x] Confirmar redirecionamento para login.
 - [x] Entrar com credenciais inválidas.
 - [x] Confirmar mensagem genérica sem enumeração de usuário.
-- [ ] Confirmar que tokens não aparecem na interface.
+- [x] Confirmar que tokens não aparecem na interface.
 - [x] Confirmar que respostas de erro seguem o padrão documentado.
 
 Resultado:
@@ -147,6 +147,9 @@ Observações:
 - Mensagens de erro validadas localmente em login inválido, cadastro duplicado, chamado inválido e recurso indisponível.
 - Cadastro duplicado exibe mensagem específica associada ao campo de e-mail.
 - Estrutura padronizada de erros da API coberta pela suíte automatizada do backend.
+- Tokens não foram exibidos na interface, em mensagens de erro ou no console.
+- `accessToken` não foi persistido em `sessionStorage` ou `localStorage`.
+- Apenas o `refreshToken` foi encontrado em `sessionStorage`, conforme estratégia atual de sessão.
 
 ## Evidências
 
