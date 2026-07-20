@@ -190,3 +190,7 @@ Registre aqui comandos, prints, URLs locais, observações ou problemas encontra
 
   - Revisão de código morto e logs de depuração executada:
   - Não foram encontrados `console.log`, `debugger`, `print`, `TODO`, `FIXME`, `breakpoint` ou `pdb.set_trace` no código versionado revisado.
+
+  - OpenAPI revisado com `python manage.py spectacular --settings=config.settings_test --file /tmp/closedesk-schema.yml --validate`.
+- READMEs da raiz, backend e frontend atualizados para refletir o estado integrado do projeto.
+- Decisões técnicas revisadas sem necessidade de novo ADR nesta etapa.
