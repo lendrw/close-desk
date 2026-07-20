@@ -169,3 +169,10 @@ Registre aqui comandos, prints, URLs locais, observações ou problemas encontra
   - `npm run e2e`
   - Smoke test da home.
   - Fluxo de primeiro acesso com cadastro, login e acesso ao dashboard.
+
+- Revisão de configuração local executada:
+  - `DJANGO_ALLOWED_HOSTS` configurado por variável de ambiente.
+  - `CORS_ALLOWED_ORIGINS` configurado por variável de ambiente.
+  - CORS restrito às rotas `/api/`.
+  - Variáveis obrigatórias do backend falham explicitamente quando ausentes.
+  - `VITE_API_BASE_URL` documentado em `frontend/.env.example`.
