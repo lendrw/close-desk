@@ -107,7 +107,7 @@ jobs:
       POSTGRES_PASSWORD: closedesk
       POSTGRES_HOST: 127.0.0.1
       POSTGRES_PORT: '5432'
-      CORS_ALLOWED_ORIGINS: http://127.0.0.1:5173
+      CORS_ALLOWED_ORIGINS: http://localhost:5173
       VITE_API_BASE_URL: http://127.0.0.1:8000/api
 
     steps:
@@ -164,13 +164,13 @@ jobs:
       - name: Start frontend
         working-directory: frontend
         run: |
-          npm run dev -- --host 127.0.0.1 &
+          npm run dev -- --host localhost &
           echo $! > ../frontend.pid
 
       - name: Wait for frontend
         run: |
           for attempt in {1..30}; do
-            if curl --fail http://127.0.0.1:5173/; then
+            if curl --fail http://localhost:5173/; then
               exit 0
             fi
 
