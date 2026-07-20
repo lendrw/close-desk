@@ -487,7 +487,7 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 - [x] Validar renovação, expiração e encerramento da sessão.
 - [x] Validar mensagens e estrutura de erros.
 - [x] Revisar ausência de senhas, tokens e segredos em respostas e logs.
-- [ ] Revisar CORS, hosts permitidos e variáveis de ambiente.
+- [x] Revisar CORS, hosts permitidos e variáveis de ambiente.
 - [x] Revisar tipagem, lint e formatação.
 - [ ] Revisar responsividade a partir de 360 px.
 - [ ] Revisar navegação por teclado, foco, rótulos e semântica.
