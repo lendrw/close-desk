@@ -27,6 +27,9 @@ test('validates first access flow', async ({ page }) => {
 
   await page.getByRole('link', { name: 'Entrar' }).click()
 
+  await expect(page).toHaveURL(/\/login$/)
+  await expect(page.getByRole('heading', { name: 'Entrar' })).toBeVisible()
+
   await page.getByLabel('E-mail').fill(user.email)
   await page.getByLabel('Senha').fill(user.password)
   await page.getByRole('button', { name: 'Entrar' }).click()
