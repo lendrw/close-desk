@@ -490,7 +490,7 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 - [x] Revisar CORS, hosts permitidos e variáveis de ambiente.
 - [x] Revisar tipagem, lint e formatação.
 - [x] Revisar responsividade a partir de 360 px.
-- [ ] Revisar navegação por teclado, foco, rótulos e semântica.
+- [x] Revisar navegação por teclado, foco, rótulos e semântica.
 - [x] Executar todas as suítes automatizadas.
 - [ ] Configurar integração contínua para backend e frontend.
 - [ ] Remover código morto e logs de depuração.
