@@ -494,7 +494,7 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 - [x] Executar todas as suítes automatizadas.
 - [x] Configurar integração contínua para backend e frontend.
 - [x] Remover código morto e logs de depuração.
-- [ ] Atualizar OpenAPI, README e decisões técnicas.
+- [x] Atualizar OpenAPI, README e decisões técnicas.
 
 ### Entrega SHOULD
 
