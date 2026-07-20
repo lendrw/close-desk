@@ -492,7 +492,7 @@ Requisitos relacionados: todos os requisitos MUST e os fluxos de aceitação 1 a
 - [x] Revisar responsividade a partir de 360 px.
 - [x] Revisar navegação por teclado, foco, rótulos e semântica.
 - [x] Executar todas as suítes automatizadas.
-- [ ] Configurar integração contínua para backend e frontend.
+- [x] Configurar integração contínua para backend e frontend.
 - [ ] Remover código morto e logs de depuração.
 - [ ] Atualizar OpenAPI, README e decisões técnicas.
 
