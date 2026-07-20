@@ -129,14 +129,14 @@ Checklist:
 - [x] Confirmar remoção da sessão local.
 - [x] Tentar acessar rota protegida sem sessão.
 - [x] Confirmar redirecionamento para login.
-- [ ] Entrar com credenciais inválidas.
-- [ ] Confirmar mensagem genérica sem enumeração de usuário.
+- [x] Entrar com credenciais inválidas.
+- [x] Confirmar mensagem genérica sem enumeração de usuário.
 - [ ] Confirmar que tokens não aparecem na interface.
-- [ ] Confirmar que respostas de erro seguem o padrão documentado.
+- [x] Confirmar que respostas de erro seguem o padrão documentado.
 
 Resultado:
 
-- [ ] Aprovado
+- [x] Aprovado
 - [ ] Reprovado
 
 Observações:
@@ -144,6 +144,9 @@ Observações:
 - Encerramento de sessão validado localmente pela interface.
 - Restauração de sessão validada após recarregar rota protegida.
 - Falha de renovação/expiração coberta pela suíte automatizada de sessão.
+- Mensagens de erro validadas localmente em login inválido, cadastro duplicado, chamado inválido e recurso indisponível.
+- Cadastro duplicado exibe mensagem específica associada ao campo de e-mail.
+- Estrutura padronizada de erros da API coberta pela suíte automatizada do backend.
 
 ## Evidências
 
