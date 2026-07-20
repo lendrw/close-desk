@@ -176,3 +176,8 @@ Registre aqui comandos, prints, URLs locais, observações ou problemas encontra
   - CORS restrito às rotas `/api/`.
   - Variáveis obrigatórias do backend falham explicitamente quando ausentes.
   - `VITE_API_BASE_URL` documentado em `frontend/.env.example`.
+
+  - Responsividade revisada manualmente a partir de 360 px:
+  - Home, autenticação, dashboard, lista, criação, detalhes, edição e exclusão permaneceram utilizáveis.
+  - Não foi identificado scroll horizontal indevido.
+  - Formulários, filtros, paginação e ações principais permaneceram acessíveis.
