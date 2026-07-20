@@ -5,7 +5,9 @@ Aplicação full stack para gestão individual de chamados de clientes.
 ## Status atual
 
 - Backend concluído com API REST, autenticação JWT, CRUD de chamados, dashboard, documentação OpenAPI e testes automatizados.
-- Frontend será desenvolvido com React, TypeScript e Vite na próxima etapa.
+- Frontend integrado com React, TypeScript, Vite, autenticação, dashboard e gestão completa de chamados.
+- Fluxos críticos validados manualmente e com cobertura automatizada, incluindo testes E2E com Playwright.
+- Integração contínua configurada para verificações de backend, frontend e E2E.
 
 ## Problema
 
@@ -35,3 +37,5 @@ Profissionais autônomos e pequenos prestadores de serviço que precisam gerenci
 - [Requisitos](docs/requisitos.md)
 - [Roadmap](docs/roadmap.md)
 - [Backend](backend/README.md)
+- [Frontend](frontend/README.md)
+- [Fluxos de aceitação](docs/testes/fluxos-de-aceitacao.md)

@@ -145,4 +145,4 @@ O projeto possui:
 - CRUD de chamados com isolamento por usuário.
 - Endpoint de dashboard com indicadores consolidados por usuário.
 
-Ainda não possui frontend integrado.
+O backend está integrado ao frontend React localizado em `frontend/`.
