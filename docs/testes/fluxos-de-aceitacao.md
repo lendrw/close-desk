@@ -181,3 +181,9 @@ Registre aqui comandos, prints, URLs locais, observações ou problemas encontra
   - Home, autenticação, dashboard, lista, criação, detalhes, edição e exclusão permaneceram utilizáveis.
   - Não foi identificado scroll horizontal indevido.
   - Formulários, filtros, paginação e ações principais permaneceram acessíveis.
+
+  - Navegação por teclado e semântica revisadas manualmente:
+  - Foco visível e ordem de navegação lógica nas telas principais.
+  - Campos de formulário mantêm rótulos associados.
+  - Mensagens de validação ficam associadas aos respectivos campos.
+  - Links, botões, filtros, paginação e confirmação de exclusão funcionam por teclado.
