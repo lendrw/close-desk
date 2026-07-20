@@ -187,3 +187,6 @@ Registre aqui comandos, prints, URLs locais, observações ou problemas encontra
   - Campos de formulário mantêm rótulos associados.
   - Mensagens de validação ficam associadas aos respectivos campos.
   - Links, botões, filtros, paginação e confirmação de exclusão funcionam por teclado.
+
+  - Revisão de código morto e logs de depuração executada:
+  - Não foram encontrados `console.log`, `debugger`, `print`, `TODO`, `FIXME`, `breakpoint` ou `pdb.set_trace` no código versionado revisado.
