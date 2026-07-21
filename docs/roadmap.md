@@ -512,7 +512,7 @@ Requisitos relacionados: RNF-07 a RNF-10.
 
 ### Tarefas
 
-- [ ] Escolher serviços de hospedagem compatíveis com React, Django e PostgreSQL.
+- [x] Escolher serviços de hospedagem compatíveis com React, Django e PostgreSQL.
 - [ ] Configurar variáveis e segredos de produção.
 - [ ] Configurar banco e migrações de produção.
 - [ ] Configurar origens, hosts e transporte seguro.

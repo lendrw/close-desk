@@ -39,3 +39,4 @@ Profissionais autônomos e pequenos prestadores de serviço que precisam gerenci
 - [Backend](backend/README.md)
 - [Frontend](frontend/README.md)
 - [Fluxos de aceitação](docs/testes/fluxos-de-aceitacao.md)
+- [Plano de deploy](docs/deploy.md)
