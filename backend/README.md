@@ -92,6 +92,26 @@ python -m ruff format .
 
 A suíte usa SQLite em memória e não depende do PostgreSQL local.
 
+## Produção
+
+O backend está preparado para rodar como serviço WSGI com Gunicorn e servir
+arquivos estáticos via WhiteNoise.
+
+Em um serviço com raiz configurada para `backend`, use:
+
+```bash
+./build.sh
+```
+
+Como comando de inicialização:
+
+```bash
+python -m gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+```
+
+Antes de publicar, configure as variáveis obrigatórias e mantenha
+`DJANGO_DEBUG=False`.
+
 ### Listagem de chamados
 
 O endpoint `GET /api/tickets/` aceita os seguintes parâmetros de consulta:
