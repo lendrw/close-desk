@@ -57,12 +57,12 @@ O frontend está preparado para deploy como aplicação estática Vite.
 
 Configuração recomendada na Vercel:
 
-| Campo | Valor |
-| --- | --- |
-| Framework Preset | Vite |
-| Root Directory | `frontend` |
-| Build Command | `npm run build` |
-| Output Directory | `dist` |
+| Campo            | Valor           |
+| ---------------- | --------------- |
+| Framework Preset | Vite            |
+| Root Directory   | `frontend`      |
+| Build Command    | `npm run build` |
+| Output Directory | `dist`          |
 
 Configure a variável de ambiente:
 
