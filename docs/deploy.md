@@ -74,6 +74,20 @@ VITE_API_BASE_URL=<url-publica-do-backend>/api
 12. Validar a documentação da API em produção.
 13. Executar os fluxos de aceitação no ambiente publicado.
 
+## Dados de demonstração
+
+Depois de aplicar as migrações em produção, é possível preparar dados fictícios
+sem versionar credenciais reais:
+
+```bash
+CLOSEDESK_DEMO_PASSWORD='<senha-temporaria-segura>' \
+python manage.py seed_demo_data
+```
+
+O comando cria ou atualiza o usuário `demo@closedesk.local` e chamados
+fictícios para apresentação. A senha deve ser temporária e definida somente no
+ambiente em que o comando será executado.
+
 ## Cuidados
 
 - Não versionar arquivos `.env` reais.

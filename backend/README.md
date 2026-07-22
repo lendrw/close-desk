@@ -112,6 +112,20 @@ python -m gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
 Antes de publicar, configure as variáveis obrigatórias e mantenha
 `DJANGO_DEBUG=False`.
 
+### Dados de demonstração
+
+Para criar dados fictícios de demonstração sem versionar credenciais reais,
+defina uma senha temporária em variável de ambiente e execute:
+
+```bash
+CLOSEDESK_DEMO_PASSWORD='senha-temporaria-segura' \
+python manage.py seed_demo_data
+```
+
+O comando cria ou atualiza o usuário `demo@closedesk.local` e cinco chamados
+fictícios. Use somente senhas temporárias e troque/remova os dados quando a
+demonstração não for mais necessária.
+
 ### Listagem de chamados
 
 O endpoint `GET /api/tickets/` aceita os seguintes parâmetros de consulta:
