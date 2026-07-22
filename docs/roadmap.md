@@ -513,9 +513,9 @@ Requisitos relacionados: RNF-07 a RNF-10.
 ### Tarefas
 
 - [x] Escolher serviços de hospedagem compatíveis com React, Django e PostgreSQL.
-- [ ] Configurar variáveis e segredos de produção.
-- [ ] Configurar banco e migrações de produção.
-- [ ] Configurar origens, hosts e transporte seguro.
+- [x] Configurar variáveis e segredos de produção.
+- [x] Configurar banco e migrações de produção.
+- [x] Configurar origens, hosts e transporte seguro.
 - [ ] Publicar backend e frontend.
 - [ ] Validar health check e documentação da API em produção.
 - [ ] Executar os cinco fluxos de aceitação no ambiente publicado.
