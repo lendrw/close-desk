@@ -12,6 +12,12 @@ from config.settings import *  # noqa: E402,F403
 
 DEBUG = False
 
+MIDDLEWARE = [
+    middleware
+    for middleware in globals()["MIDDLEWARE"]
+    if middleware != "whitenoise.middleware.WhiteNoiseMiddleware"
+]
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",

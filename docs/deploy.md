@@ -50,13 +50,20 @@ VITE_API_BASE_URL=<url-publica-do-backend>/api
 1. Criar o banco PostgreSQL gerenciado.
 2. Criar o serviço web do backend.
 3. Configurar as variáveis de ambiente do backend.
-4. Rodar migrações no ambiente de produção.
-5. Validar `GET /api/health/`.
-6. Publicar o frontend apontando para a API de produção.
-7. Atualizar `CORS_ALLOWED_ORIGINS` com a URL pública do frontend.
-8. Atualizar `DJANGO_ALLOWED_HOSTS` com o host público do backend.
-9. Validar a documentação da API em produção.
-10. Executar os fluxos de aceitação no ambiente publicado.
+4. Configurar o backend com:
+
+   ```bash
+   Build Command: ./build.sh
+   Start Command: python -m gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+   ```
+
+5. Rodar migrações no ambiente de produção.
+6. Validar `GET /api/health/`.
+7. Publicar o frontend apontando para a API de produção.
+8. Atualizar `CORS_ALLOWED_ORIGINS` com a URL pública do frontend.
+9. Atualizar `DJANGO_ALLOWED_HOSTS` com o host público do backend.
+10. Validar a documentação da API em produção.
+11. Executar os fluxos de aceitação no ambiente publicado.
 
 ## Cuidados
 
