@@ -51,6 +51,28 @@ npm run format:check
 npm run e2e
 ```
 
+## Produção
+
+O frontend está preparado para deploy como aplicação estática Vite.
+
+Configuração recomendada na Vercel:
+
+| Campo | Valor |
+| --- | --- |
+| Framework Preset | Vite |
+| Root Directory | `frontend` |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+
+Configure a variável de ambiente:
+
+```dotenv
+VITE_API_BASE_URL=https://<dominio-do-backend>/api
+```
+
+O arquivo `vercel.json` mantém as rotas do React Router funcionando em
+acessos diretos, como `/dashboard` e `/tickets/1`.
+
 ## Testes E2E
 
 Os testes de ponta a ponta usam Playwright e ficam em `e2e/`.

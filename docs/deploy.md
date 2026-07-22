@@ -59,11 +59,20 @@ VITE_API_BASE_URL=<url-publica-do-backend>/api
 
 5. Rodar migrações no ambiente de produção.
 6. Validar `GET /api/health/`.
-7. Publicar o frontend apontando para a API de produção.
-8. Atualizar `CORS_ALLOWED_ORIGINS` com a URL pública do frontend.
-9. Atualizar `DJANGO_ALLOWED_HOSTS` com o host público do backend.
-10. Validar a documentação da API em produção.
-11. Executar os fluxos de aceitação no ambiente publicado.
+7. Configurar o frontend na Vercel com:
+
+   ```bash
+   Root Directory: frontend
+   Build Command: npm run build
+   Output Directory: dist
+   ```
+
+8. Configurar `VITE_API_BASE_URL` com a URL pública da API.
+9. Publicar o frontend apontando para a API de produção.
+10. Atualizar `CORS_ALLOWED_ORIGINS` com a URL pública do frontend.
+11. Atualizar `DJANGO_ALLOWED_HOSTS` com o host público do backend.
+12. Validar a documentação da API em produção.
+13. Executar os fluxos de aceitação no ambiente publicado.
 
 ## Cuidados
 
