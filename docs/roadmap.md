@@ -518,7 +518,7 @@ Requisitos relacionados: RNF-07 a RNF-10.
 - [x] Configurar origens, hosts e transporte seguro.
 - [x] Publicar backend e frontend.
 - [x] Validar health check e documentação da API em produção.
-- [ ] Executar os cinco fluxos de aceitação no ambiente publicado.
+- [x] Executar os cinco fluxos de aceitação no ambiente publicado.
 - [x] Preparar dados de demonstração sem expor credenciais reais.
 - [ ] Finalizar o README com:
   - problema e solução;
