@@ -533,8 +533,8 @@ Requisitos relacionados: RNF-07 a RNF-10.
   - screenshots;
   - limitações e evoluções futuras.
 - [ ] Adicionar diagrama da arquitetura.
-- [ ] Adicionar screenshots e uma demonstração curta em vídeo ou GIF.
-- [ ] Escrever um roteiro de apresentação de dois a quatro minutos.
+- [ ] Adicionar screenshots.
+- [x] Decidir não produzir vídeo/GIF nesta versão.
 - [ ] Preparar descrição para currículo, LinkedIn e portfólio.
 
 ### Critério de saída
