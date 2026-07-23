@@ -520,7 +520,7 @@ Requisitos relacionados: RNF-07 a RNF-10.
 - [x] Validar health check e documentação da API em produção.
 - [x] Executar os cinco fluxos de aceitação no ambiente publicado.
 - [x] Preparar dados de demonstração sem expor credenciais reais.
-- [ ] Finalizar o README com:
+- [x] Finalizar o README com:
   - problema e solução;
   - funcionalidades;
   - stack;
@@ -532,8 +532,8 @@ Requisitos relacionados: RNF-07 a RNF-10.
   - endpoints;
   - screenshots;
   - limitações e evoluções futuras.
-- [ ] Adicionar diagrama da arquitetura.
-- [ ] Adicionar screenshots.
+- [x] Adicionar diagrama da arquitetura.
+- [x] Adicionar screenshots.
 - [x] Decidir não produzir vídeo/GIF nesta versão.
 - [x] Preparar descrição para currículo, LinkedIn e portfólio.
 

@@ -12,6 +12,16 @@ Aplicação web full stack para gestão individual de chamados de clientes.
 > O backend está hospedado em plano gratuito. A primeira requisição pode levar
 > alguns segundos enquanto o serviço desperta.
 
+## Screenshots
+
+| Home                                                           | Login                                                            |
+| -------------------------------------------------------------- | ---------------------------------------------------------------- |
+| ![Tela inicial do CloseDesk](docs/assets/screenshots/home.png) | ![Tela de login do CloseDesk](docs/assets/screenshots/login.png) |
+
+| Lista de chamados                                                       | Novo chamado                                                                         |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| ![Lista de chamados do CloseDesk](docs/assets/screenshots/chamados.png) | ![Formulário de novo chamado do CloseDesk](docs/assets/screenshots/novo-chamado.png) |
+
 ## Sobre o projeto
 
 O CloseDesk centraliza chamados, prioridades, status e prazos em uma aplicação
