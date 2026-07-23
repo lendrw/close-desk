@@ -4,12 +4,12 @@ Este documento registra a validação manual dos fluxos principais do CloseDesk 
 
 ## Ambiente de validação
 
-- Backend:
-- Frontend:
-- Banco de dados:
-- Navegador:
-- Data:
-- Responsável:
+- Backend: <https://close-desk.onrender.com>
+- Frontend: <https://close-deskk.vercel.app>
+- Banco de dados: Render PostgreSQL
+- Navegador: Brave
+- Data: 23 de julho de 2026
+- Responsável: Leandro
 
 ## 1. Primeiro acesso
 
@@ -35,6 +35,7 @@ Observações:
 - Fluxo validado localmente com backend Django em `127.0.0.1:8000` e frontend Vite em `localhost:5173`.
 - Criado `frontend/.env` local com `VITE_API_BASE_URL=http://localhost:8000/api` para integração com a API.
 - Durante a validação, foi corrigido o redirecionamento após login bem-sucedido.
+- Fluxo revalidado com sucesso no ambiente publicado.
 
 ## 2. Gestão completa de chamado
 
@@ -62,7 +63,7 @@ Resultado:
 
 Observações:
 
--
+- Fluxo validado com sucesso no ambiente publicado.
 
 ## 3. Consulta avançada
 
@@ -90,6 +91,7 @@ Observações:
 
 - Fluxo validado localmente com massa de chamados suficiente para paginação.
 - Busca, filtros, ordenação, paginação e estado vazio funcionaram conforme esperado.
+- Fluxo revalidado com sucesso no ambiente publicado.
 
 ## 4. Isolamento entre usuários
 
@@ -115,7 +117,7 @@ Resultado:
 
 Observações:
 
--
+- Fluxo validado com sucesso no ambiente publicado.
 
 ## 5. Sessão e segurança
 
@@ -150,10 +152,18 @@ Observações:
 - Tokens não foram exibidos na interface, em mensagens de erro ou no console.
 - `accessToken` não foi persistido em `sessionStorage` ou `localStorage`.
 - Apenas o `refreshToken` foi encontrado em `sessionStorage`, conforme estratégia atual de sessão.
+- Fluxo revalidado com sucesso no ambiente publicado.
 
 ## Evidências
 
 Registre aqui comandos, prints, URLs locais, observações ou problemas encontrados durante a validação.
+
+- Validação manual em produção executada com sucesso em 23 de julho de 2026:
+  - Frontend: <https://close-deskk.vercel.app>
+  - Backend: <https://close-desk.onrender.com>
+  - Health check: <https://close-desk.onrender.com/api/health/>
+  - Documentação da API: <https://close-desk.onrender.com/api/docs/>
+  - Fluxos 1 a 5 aprovados no ambiente publicado.
 
 - Validação automatizada local executada com sucesso:
   - Backend: `python -m ruff check .`

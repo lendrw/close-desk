@@ -45,6 +45,15 @@ CORS_ALLOWED_ORIGINS=<url-publica-do-frontend>
 VITE_API_BASE_URL=<url-publica-do-backend>/api
 ```
 
+## Ambiente publicado
+
+| Camada | URL |
+| --- | --- |
+| Frontend | <https://close-deskk.vercel.app> |
+| Backend | <https://close-desk.onrender.com> |
+| Health check | <https://close-desk.onrender.com/api/health/> |
+| Documentação da API | <https://close-desk.onrender.com/api/docs/> |
+
 ## Checklist de publicação
 
 1. Criar o banco PostgreSQL gerenciado.
