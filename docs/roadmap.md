@@ -535,7 +535,7 @@ Requisitos relacionados: RNF-07 a RNF-10.
 - [ ] Adicionar diagrama da arquitetura.
 - [ ] Adicionar screenshots.
 - [x] Decidir não produzir vídeo/GIF nesta versão.
-- [ ] Preparar descrição para currículo, LinkedIn e portfólio.
+- [x] Preparar descrição para currículo, LinkedIn e portfólio.
 
 ### Critério de saída
 
