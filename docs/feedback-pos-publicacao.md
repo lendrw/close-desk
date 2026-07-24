@@ -246,18 +246,19 @@ Impacto:
 Decisão proposta:
 
 - Exibir notificações globais para erros de ação, especialmente em mobile.
-- Avaliar uso de toast, snackbar ou alerta fixo temporário.
+- Usar popup/toast fechável para não prender a mensagem na tela.
 - Manter mensagens associadas aos campos quando o erro for de validação.
 - Garantir acessibilidade com `role="alert"` ou região `aria-live`.
 
 Status:
 
-- Registrado.
-- Pendente de implementação.
+- Corrigido no código.
+- Pendente de deploy e revalidação no ambiente publicado.
 
 Evidências esperadas:
 
 - Teste de frontend cobrindo erro ao criar chamado.
+- Teste de frontend cobrindo fechamento da notificação.
 - Validação manual em mobile confirmando que o erro é visível sem rolagem.
 - Revisão de acessibilidade da notificação.
 

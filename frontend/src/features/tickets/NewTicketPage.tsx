@@ -32,9 +32,18 @@ export function NewTicketPage() {
       </p>
 
       {errorMessage ? (
-        <p className="auth-feedback form-error" role="alert">
-          {errorMessage}
-        </p>
+        <div className="ticket-action-popup" aria-live="assertive">
+          <p className="ticket-action-popup-message form-error" role="alert">
+            {errorMessage}
+          </p>
+          <button
+            className="ticket-action-popup-close"
+            type="button"
+            onClick={() => setErrorMessage('')}
+          >
+            Fechar
+          </button>
+        </div>
       ) : null}
 
       <TicketForm

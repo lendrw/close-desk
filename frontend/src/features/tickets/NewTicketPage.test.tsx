@@ -94,10 +94,16 @@ describe('NewTicketPage', () => {
     await fillValidTicketForm(user)
     await user.click(screen.getByRole('button', { name: 'Criar chamado' }))
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(
-      'Não foi possível criar o chamado.',
-    )
+    const alert = await screen.findByRole('alert')
+    const popup = alert.closest('.ticket-action-popup')
+
+    expect(popup).toBeInTheDocument()
+    expect(alert).toHaveTextContent('Não foi possível criar o chamado.')
     expect(screen.getByLabelText('Título')).toHaveValue('Problema no login')
     expect(screen.getByLabelText('Cliente')).toHaveValue('Cliente Exemplo')
+
+    await user.click(screen.getByRole('button', { name: 'Fechar' }))
+
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 })
