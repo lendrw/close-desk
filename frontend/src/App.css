@@ -361,6 +361,11 @@
   font-weight: 700;
 }
 
+.ticket-card-details-link {
+  justify-self: center;
+  margin-top: 0;
+}
+
 .ticket-list-empty {
   margin: 0;
   border: 1px dashed #cbd5e1;
@@ -598,5 +603,9 @@
 
   .ticket-detail-actions .app-link {
     width: 100%;
+  }
+
+  .ticket-card-details-link {
+    justify-self: center;
   }
 }

@@ -98,6 +98,24 @@ describe('TicketListPage', () => {
     ).toBeInTheDocument()
   })
 
+  it('navigates to ticket details from the visible details action', async () => {
+    const user = userEvent.setup()
+
+    mockTicketsResponse()
+
+    renderTicketListPage()
+
+    await user.click(
+      await screen.findByRole('link', {
+        name: 'Ver detalhes do chamado Problema no login',
+      }),
+    )
+
+    expect(
+      await screen.findByRole('heading', { name: 'Detalhes do chamado' }),
+    ).toBeInTheDocument()
+  })
+
   it('searches tickets using the search query parameter', async () => {
     const user = userEvent.setup()
     const requestedSearches: Array<string | null> = []

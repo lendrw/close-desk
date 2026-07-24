@@ -300,6 +300,14 @@ export function TicketListPage() {
                       <dd>{formatDate(ticket.updated_at)}</dd>
                     </div>
                   </dl>
+
+                  <Link
+                    aria-label={`Ver detalhes do chamado ${ticket.title}`}
+                    className="app-link ticket-card-details-link"
+                    to={`/tickets/${ticket.id}`}
+                  >
+                    Ver detalhes
+                  </Link>
                 </li>
               ))}
             </ul>

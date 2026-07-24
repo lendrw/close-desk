@@ -125,8 +125,8 @@ Decisão proposta:
 
 Status:
 
-- Registrado.
-- Pendente de priorização e implementação.
+- Corrigido no código.
+- Pendente de deploy e revalidação no ambiente publicado.
 
 Evidências esperadas:
 
