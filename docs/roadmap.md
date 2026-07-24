@@ -552,7 +552,7 @@ Registro detalhado: [Feedback pós-publicação](./feedback-pos-publicacao.md).
 ### Tarefas
 
 - [x] Após cadastro válido, autenticar automaticamente e direcionar ao dashboard.
-- [ ] Implementar recuperação de senha por e-mail.
+- [x] Implementar recuperação de senha por e-mail.
 - [ ] Implementar verificação de e-mail não bloqueante após cadastro.
 - [ ] Exibir estado de e-mail pendente ou verificado na interface.
 - [ ] Atualizar OpenAPI, README e fluxos de aceitação afetados.

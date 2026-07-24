@@ -27,6 +27,16 @@ export type PasswordResetRequestResponse = {
   message: string
 }
 
+export type PasswordResetConfirmPayload = {
+  uid: string
+  token: string
+  password: string
+}
+
+export type PasswordResetConfirmResponse = {
+  message: string
+}
+
 export async function login(credentials: LoginCredentials) {
   const response = await apiClient.post<TokenPair>('/auth/token/', credentials)
 
@@ -59,6 +69,17 @@ export async function requestPasswordReset(
 ) {
   const response = await apiClient.post<PasswordResetRequestResponse>(
     '/auth/password-reset/',
+    payload,
+  )
+
+  return response.data
+}
+
+export async function confirmPasswordReset(
+  payload: PasswordResetConfirmPayload,
+) {
+  const response = await apiClient.post<PasswordResetConfirmResponse>(
+    '/auth/password-reset/confirm/',
     payload,
   )
 

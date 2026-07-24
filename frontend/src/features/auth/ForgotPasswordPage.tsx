@@ -61,6 +61,7 @@ export function ForgotPasswordPage() {
     <main className="app-shell">
       <section className="app-card">
         <p className="app-eyebrow">Recuperação de acesso</p>
+        <h1 className="app-title">Esqueci minha senha</h1>
         <p className="app-description">
           Informe seu e-mail para receber as instruções de redefinição de senha.
         </p>

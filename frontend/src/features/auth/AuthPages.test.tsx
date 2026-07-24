@@ -202,6 +202,103 @@ describe('Auth pages', () => {
     )
   })
 
+  it('renders the reset password form without exposing token values', () => {
+    renderRoute('/reset-password/user-uid/reset-token')
+
+    expect(
+      screen.getByRole('heading', { name: 'Criar nova senha' }),
+    ).toBeInTheDocument()
+    expect(screen.getByLabelText('Nova senha')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Salvar nova senha' }),
+    ).toBeInTheDocument()
+    expect(screen.queryByText('user-uid')).not.toBeInTheDocument()
+    expect(screen.queryByText('reset-token')).not.toBeInTheDocument()
+  })
+
+  it('shows reset password validation errors associated with fields', async () => {
+    const user = userEvent.setup()
+    renderRoute('/reset-password/user-uid/reset-token')
+
+    await user.type(screen.getByLabelText('Nova senha'), 'short')
+    await user.click(screen.getByRole('button', { name: 'Salvar nova senha' }))
+
+    expect(screen.getByLabelText('Nova senha')).toHaveAccessibleDescription(
+      'A senha deve ter no mínimo 8 caracteres.',
+    )
+  })
+
+  it('confirms password reset with token values from the route', async () => {
+    const user = userEvent.setup()
+    let requestBody: Record<string, unknown> | null = null
+
+    server.use(
+      http.post(
+        'http://localhost:8000/api/auth/password-reset/confirm/',
+        async ({ request }) => {
+          requestBody = (await request.json()) as Record<string, unknown>
+
+          return HttpResponse.json({
+            message: 'Senha redefinida com sucesso.',
+          })
+        },
+      ),
+    )
+
+    renderRoute('/reset-password/user-uid/reset-token')
+
+    await user.type(screen.getByLabelText('Nova senha'), 'newpass123')
+    await user.click(screen.getByRole('button', { name: 'Salvar nova senha' }))
+
+    expect(requestBody).toEqual({
+      password: 'newpass123',
+      token: 'reset-token',
+      uid: 'user-uid',
+    })
+    expect(await screen.findByRole('status')).toHaveTextContent(
+      'Senha redefinida com sucesso.',
+    )
+    expect(screen.queryByLabelText('Nova senha')).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Entrar' })).toHaveAttribute(
+      'href',
+      '/login',
+    )
+  })
+
+  it('shows an error when password reset confirmation fails', async () => {
+    const user = userEvent.setup()
+
+    server.use(
+      http.post(
+        'http://localhost:8000/api/auth/password-reset/confirm/',
+        () => {
+          return HttpResponse.json(
+            {
+              error: {
+                code: 'validation_error',
+                details: {
+                  token: ['Link de redefinição inválido ou expirado.'],
+                },
+                message: 'Os dados enviados são inválidos.',
+              },
+            },
+            { status: 400 },
+          )
+        },
+      ),
+    )
+
+    renderRoute('/reset-password/user-uid/invalid-token')
+
+    await user.type(screen.getByLabelText('Nova senha'), 'newpass123')
+    await user.click(screen.getByRole('button', { name: 'Salvar nova senha' }))
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível redefinir a senha. Solicite um novo link e tente novamente.',
+    )
+    expect(screen.getByLabelText('Nova senha')).toHaveValue('newpass123')
+  })
+
   it('renders the register form', () => {
     renderRoute('/register')
 

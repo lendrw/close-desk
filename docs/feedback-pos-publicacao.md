@@ -69,7 +69,8 @@ Status:
 - Solicitação de recuperação por e-mail implementada no backend.
 - Confirmação de nova senha implementada no backend.
 - Tela de solicitação de recuperação implementada no frontend.
-- Tela de nova senha pendente.
+- Tela de nova senha implementada no frontend.
+- Pendente de deploy e revalidação no ambiente publicado.
 
 Evidências esperadas:
 
