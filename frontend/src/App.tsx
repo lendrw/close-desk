@@ -1,6 +1,7 @@
 import { Link, Route, Routes } from 'react-router'
 
 import { AuthenticatedLayout } from './app/AuthenticatedLayout'
+import { ForgotPasswordPage } from './features/auth/ForgotPasswordPage'
 import { LoginPage } from './features/auth/LoginPage'
 import { ProtectedRoute } from './features/auth/ProtectedRoute'
 import { RegisterPage } from './features/auth/RegisterPage'
@@ -52,6 +53,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<AuthenticatedLayout />}>

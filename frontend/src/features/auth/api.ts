@@ -19,6 +19,14 @@ export type RefreshTokenResponse = {
   access: string
 }
 
+export type PasswordResetRequestPayload = {
+  email: string
+}
+
+export type PasswordResetRequestResponse = {
+  message: string
+}
+
 export async function login(credentials: LoginCredentials) {
   const response = await apiClient.post<TokenPair>('/auth/token/', credentials)
 
@@ -42,6 +50,17 @@ export async function refreshAccessToken(refresh: string) {
 
 export async function registerUser(payload: RegisterPayload) {
   const response = await apiClient.post<User>('/auth/register/', payload)
+
+  return response.data
+}
+
+export async function requestPasswordReset(
+  payload: PasswordResetRequestPayload,
+) {
+  const response = await apiClient.post<PasswordResetRequestResponse>(
+    '/auth/password-reset/',
+    payload,
+  )
 
   return response.data
 }

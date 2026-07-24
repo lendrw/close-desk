@@ -27,6 +27,9 @@ describe('Auth pages', () => {
     expect(screen.getByRole('heading', { name: 'Entrar' })).toBeInTheDocument()
     expect(screen.getByLabelText('E-mail')).toBeInTheDocument()
     expect(screen.getByLabelText('Senha')).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Recuperar acesso' }),
+    ).toHaveAttribute('href', '/forgot-password')
   })
 
   it('shows login validation errors associated with fields', async () => {
@@ -115,6 +118,87 @@ describe('Auth pages', () => {
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Não foi possível entrar com essas credenciais.',
+    )
+  })
+
+  it('renders the forgot password form', () => {
+    renderRoute('/forgot-password')
+
+    expect(
+      screen.getByRole('heading', { name: 'Esqueci minha senha' }),
+    ).toBeInTheDocument()
+    expect(screen.getByLabelText('E-mail')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Enviar instruções' }),
+    ).toBeInTheDocument()
+  })
+
+  it('shows forgot password validation errors associated with fields', async () => {
+    const user = userEvent.setup()
+    renderRoute('/forgot-password')
+
+    await user.click(screen.getByRole('button', { name: 'Enviar instruções' }))
+
+    expect(screen.getByLabelText('E-mail')).toHaveAccessibleDescription(
+      'Informe seu e-mail.',
+    )
+  })
+
+  it('requests password reset instructions', async () => {
+    const user = userEvent.setup()
+    let requestBody: Record<string, unknown> | null = null
+
+    server.use(
+      http.post(
+        'http://localhost:8000/api/auth/password-reset/',
+        async ({ request }) => {
+          requestBody = (await request.json()) as Record<string, unknown>
+
+          return HttpResponse.json({
+            message:
+              'Se o e-mail estiver cadastrado, enviaremos instruções para redefinir a senha.',
+          })
+        },
+      ),
+    )
+
+    renderRoute('/forgot-password')
+
+    await user.type(screen.getByLabelText('E-mail'), 'ADA@Example.COM')
+    await user.click(screen.getByRole('button', { name: 'Enviar instruções' }))
+
+    expect(requestBody).toEqual({ email: 'ADA@Example.COM' })
+    expect(await screen.findByRole('status')).toHaveTextContent(
+      'Se o e-mail estiver cadastrado, enviaremos instruções para redefinir a senha.',
+    )
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+  })
+
+  it('shows an error when password reset request fails', async () => {
+    const user = userEvent.setup()
+
+    server.use(
+      http.post('http://localhost:8000/api/auth/password-reset/', () => {
+        return HttpResponse.json(
+          {
+            error: {
+              code: 'internal_error',
+              details: {},
+              message: 'Erro interno do servidor.',
+            },
+          },
+          { status: 500 },
+        )
+      }),
+    )
+
+    renderRoute('/forgot-password')
+
+    await user.type(screen.getByLabelText('E-mail'), 'ada@example.com')
+    await user.click(screen.getByRole('button', { name: 'Enviar instruções' }))
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível solicitar a redefinição agora. Tente novamente em instantes.',
     )
   })
 

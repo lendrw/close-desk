@@ -112,6 +112,11 @@ export function LoginPage() {
         ) : null}
 
         <p className="auth-helper">
+          Esqueceu sua senha?{' '}
+          <Link to="/forgot-password">Recuperar acesso</Link>
+        </p>
+
+        <p className="auth-helper">
           Ainda não tem conta? <Link to="/register">Criar conta</Link>
         </p>
       </section>
