@@ -1,11 +1,10 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import send_mail
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework import serializers
 
+from accounts.emails import build_frontend_url, send_account_email
 from accounts.tokens import email_verification_token_generator
 
 PASSWORD_RESET_REQUEST_MESSAGE = (
@@ -62,19 +61,17 @@ class PasswordResetRequestSerializer(serializers.Serializer):
 
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
-        reset_url = (
-            f"{settings.FRONTEND_BASE_URL.rstrip('/')}/reset-password/{uid}/{token}"
-        )
+        reset_url = build_frontend_url(f"reset-password/{uid}/{token}")
 
-        send_mail(
+        send_account_email(
+            flow="password_reset",
             subject="Redefinição de senha do CloseDesk",
             message=(
                 "Recebemos uma solicitação para redefinir sua senha no CloseDesk.\n\n"
                 f"Acesse o link abaixo para criar uma nova senha:\n{reset_url}\n\n"
                 "Se você não solicitou essa alteração, ignore este e-mail."
             ),
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[user.email],
+            recipient=user.email,
         )
 
         return user

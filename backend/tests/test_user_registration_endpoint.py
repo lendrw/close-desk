@@ -1,3 +1,5 @@
+import logging
+
 import pytest
 from django.contrib.auth import get_user_model
 from django.core import mail
@@ -38,6 +40,34 @@ def test_register_endpoint_creates_user_without_exposing_password():
     assert mail.outbox[0].subject == "Verificação de e-mail do CloseDesk"
     assert "http://localhost:5173/verify-email/" in mail.outbox[0].body
     assert "securepass123" not in mail.outbox[0].body
+
+
+def test_register_endpoint_logs_email_verification_failure_without_sensitive_data(
+    caplog, monkeypatch
+):
+    def fail_send_mail(**kwargs):
+        raise RuntimeError("smtp failure")
+
+    monkeypatch.setattr("accounts.emails.send_mail", fail_send_mail)
+
+    with caplog.at_level(logging.ERROR, logger="accounts.emails"):
+        response = APIClient().post(
+            "/api/auth/register/",
+            {
+                "name": "Ada Lovelace",
+                "email": "ada@example.com",
+                "password": "securepass123",
+            },
+            format="json",
+        )
+
+    assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+    assert "Falha ao enviar e-mail de conta." in caplog.text
+    assert "flow=email_verification" in caplog.text
+    assert "recipient_domain=example.com" in caplog.text
+    assert "verify-email" not in caplog.text
+    assert "ada@example.com" not in caplog.text
+    assert "securepass123" not in caplog.text
 
 
 def test_register_endpoint_returns_standard_error_for_missing_fields():

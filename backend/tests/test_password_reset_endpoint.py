@@ -1,3 +1,5 @@
+import logging
+
 import pytest
 from accounts.serializers import (
     PASSWORD_RESET_CONFIRM_MESSAGE,
@@ -60,6 +62,32 @@ def test_password_reset_request_returns_same_response_for_unknown_email():
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == {"message": PASSWORD_RESET_REQUEST_MESSAGE}
     assert len(mail.outbox) == 0
+
+
+def test_password_reset_request_logs_email_send_failure_without_sensitive_data(
+    caplog, monkeypatch
+):
+    create_user()
+
+    def fail_send_mail(**kwargs):
+        raise RuntimeError("smtp failure")
+
+    monkeypatch.setattr("accounts.emails.send_mail", fail_send_mail)
+
+    with caplog.at_level(logging.ERROR, logger="accounts.emails"):
+        response = APIClient().post(
+            "/api/auth/password-reset/",
+            {"email": "ada@example.com"},
+            format="json",
+        )
+
+    assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+    assert "Falha ao enviar e-mail de conta." in caplog.text
+    assert "flow=password_reset" in caplog.text
+    assert "recipient_domain=example.com" in caplog.text
+    assert "reset-password" not in caplog.text
+    assert "ada@example.com" not in caplog.text
+    assert "securepass123" not in caplog.text
 
 
 def test_password_reset_request_returns_standard_error_for_invalid_email():
