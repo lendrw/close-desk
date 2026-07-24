@@ -47,6 +47,7 @@ def test_create_ticket_endpoint_creates_ticket_for_authenticated_user():
             "title": "Problema no login",
             "description": "Cliente não consegue acessar o sistema.",
             "customer_name": "Cliente Exemplo",
+            "category": "Acesso",
             "priority": "urgent",
             "due_date": None,
         },
@@ -61,12 +62,14 @@ def test_create_ticket_endpoint_creates_ticket_for_authenticated_user():
     assert ticket.title == "Problema no login"
     assert ticket.description == "Cliente não consegue acessar o sistema."
     assert ticket.customer_name == "Cliente Exemplo"
+    assert ticket.category == "Acesso"
     assert ticket.status == Ticket.Status.OPEN
     assert ticket.priority == Ticket.Priority.URGENT
     assert ticket.due_date is None
 
     assert response.json()["id"] == ticket.id
     assert response.json()["created_by"] == user.id
+    assert response.json()["category"] == "Acesso"
     assert response.json()["status"] == Ticket.Status.OPEN
 
 
@@ -177,6 +180,7 @@ def test_list_tickets_endpoint_returns_only_authenticated_user_tickets():
             "title": "Chamado do dono",
             "description": "Descrição do chamado do dono.",
             "customer_name": "Cliente Dono",
+            "category": "",
             "status": Ticket.Status.OPEN,
             "priority": Ticket.Priority.MEDIUM,
             "due_date": None,

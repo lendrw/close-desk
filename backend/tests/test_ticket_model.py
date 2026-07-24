@@ -42,6 +42,7 @@ def test_ticket_model_creates_ticket_with_required_fields_and_defaults():
     assert ticket.title == "Problema no login"
     assert ticket.description == "Cliente não consegue acessar o sistema."
     assert ticket.customer_name == "Cliente Exemplo"
+    assert ticket.category == ""
     assert ticket.created_by == user
     assert ticket.status == Ticket.Status.OPEN
     assert ticket.priority == Ticket.Priority.MEDIUM
@@ -66,6 +67,21 @@ def test_ticket_model_accepts_allowed_status_and_priority():
 
     assert ticket.status == Ticket.Status.IN_PROGRESS
     assert ticket.priority == Ticket.Priority.URGENT
+
+
+def test_ticket_model_accepts_optional_category():
+    ticket = make_ticket(category="Financeiro")
+
+    ticket.full_clean()
+
+    assert ticket.category == "Financeiro"
+
+
+def test_ticket_model_rejects_long_category():
+    ticket = make_ticket(category="A" * 81)
+
+    with pytest.raises(ValidationError):
+        ticket.full_clean()
 
 
 def test_ticket_model_rejects_invalid_status():

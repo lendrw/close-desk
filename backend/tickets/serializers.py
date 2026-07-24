@@ -11,6 +11,7 @@ class TicketSerializer(serializers.ModelSerializer):
             "title",
             "description",
             "customer_name",
+            "category",
             "status",
             "priority",
             "due_date",

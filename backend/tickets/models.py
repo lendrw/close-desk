@@ -33,6 +33,10 @@ class Ticket(models.Model):
         max_length=120,
         validators=[MinLengthValidator(2)],
     )
+    category = models.CharField(
+        max_length=80,
+        blank=True,
+    )
 
     status = models.CharField(
         max_length=20,
