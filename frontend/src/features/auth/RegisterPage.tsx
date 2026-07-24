@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 import { TextField } from '../../shared/components/TextField'
-import { registerUser } from './api'
+import { login, registerUser } from './api'
+import { clearAuthTokens, loadCurrentUser, saveAuthTokens } from './session'
 
 import { isAxiosError } from 'axios'
 
@@ -62,7 +63,8 @@ export function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
+
+  const navigate = useNavigate()
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -70,22 +72,41 @@ export function RegisterPage() {
 
     setErrors(validationErrors)
     setFormError('')
-    setSuccessMessage('')
 
     if (Object.keys(validationErrors).length > 0) {
       return
     }
 
     setIsSubmitting(true)
+    let isAccountCreated = false
 
     try {
+      const trimmedEmail = email.trim()
+
       await registerUser({
-        email: email.trim(),
+        email: trimmedEmail,
         name: name.trim(),
         password,
       })
-      setSuccessMessage('Cadastro realizado com sucesso.')
+      isAccountCreated = true
+
+      const tokens = await login({
+        email: trimmedEmail,
+        password,
+      })
+
+      saveAuthTokens(tokens)
+      await loadCurrentUser()
+      navigate('/dashboard', { replace: true })
     } catch (error) {
+      if (isAccountCreated) {
+        clearAuthTokens()
+        setFormError(
+          'Conta criada, mas não foi possível entrar automaticamente. Use seu e-mail e senha na página de login.',
+        )
+        return
+      }
+
       if (isAxiosError(error)) {
         const details = error.response?.data?.error?.details
 
@@ -147,12 +168,6 @@ export function RegisterPage() {
             {isSubmitting ? 'Criando conta...' : 'Criar conta'}
           </button>
         </form>
-
-        {successMessage ? (
-          <p className="form-success" role="status">
-            {successMessage}
-          </p>
-        ) : null}
 
         {formError ? (
           <p className="form-error auth-feedback" role="alert">

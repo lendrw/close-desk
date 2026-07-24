@@ -541,7 +541,34 @@ Requisitos relacionados: RNF-07 a RNF-10.
 
 O projeto está acessível, documentado e pode ser demonstrado do cadastro ao logout sem intervenção manual no banco.
 
-## 18. Matriz de rastreabilidade
+## 18. Fase 14 — Melhorias pós-feedback de uso
+
+**Objetivo:** corrigir pontos observados após a publicação e aumentar a confiança do fluxo de conta.
+
+Origem: feedback externo após teste do site publicado.
+
+### Tarefas
+
+- [x] Após cadastro válido, autenticar automaticamente e direcionar ao dashboard.
+- [ ] Implementar recuperação de senha por e-mail.
+- [ ] Implementar verificação de e-mail não bloqueante após cadastro.
+- [ ] Exibir estado de e-mail pendente ou verificado na interface.
+- [ ] Atualizar OpenAPI, README e fluxos de aceitação afetados.
+
+### Testes mínimos
+
+- [x] Cadastro válido leva o usuário autenticado ao dashboard.
+- [ ] Solicitação de recuperação de senha retorna resposta genérica.
+- [ ] Redefinição de senha aceita token válido e rejeita token inválido.
+- [ ] Cadastro dispara instrução de verificação de e-mail.
+- [ ] Confirmação de e-mail aceita token válido e rejeita token inválido.
+- [ ] A interface orienta o usuário sem expor tokens, senhas ou segredos.
+
+### Critério de saída
+
+O usuário consegue criar conta, entrar, recuperar acesso e confirmar e-mail com mensagens claras e sem intervenção manual.
+
+## 19. Matriz de rastreabilidade
 
 | Grupo de requisitos | Fases principais |
 |---|---|
@@ -558,8 +585,9 @@ O projeto está acessível, documentado e pode ser demonstrado do cadastro ao lo
 | RNF-04 a RNF-06 | 7 a 12 |
 | RNF-07 a RNF-10 | 12 e 13 |
 | Fluxos de aceitação 1 a 5 | 12 e 13 |
+| Melhorias pós-feedback | 14 |
 
-## 19. Marcos do projeto
+## 20. Marcos do projeto
 
 ### Marco A — API confiável
 
@@ -573,12 +601,12 @@ Fases 7 a 11 concluídas. O usuário executa todos os fluxos do MVP pela interfa
 
 Fases 12 e 13 concluídas. Qualidade, integração, deploy e material de apresentação estão prontos.
 
-## 20. Regra para evoluções
+## 21. Regra para evoluções
 
 Nenhuma funcionalidade futura deve ser iniciada antes do Marco C.
 
 Depois da publicação do MVP, a primeira evolução recomendada é o histórico de alterações de status. Organizações e múltiplos papéis devem permanecer para uma etapa posterior, pois mudam profundamente o modelo de autorização e o isolamento de dados.
 
-## 21. Descrição recomendada para o portfólio
+## 22. Descrição recomendada para o portfólio
 
 > CloseDesk é uma aplicação full stack de gestão individual de chamados, construída com React, Python, Django, Django REST Framework e PostgreSQL. O projeto possui autenticação JWT, isolamento de dados por usuário, API REST documentada, dashboard, busca, filtros, paginação, testes automatizados e pipeline de qualidade.

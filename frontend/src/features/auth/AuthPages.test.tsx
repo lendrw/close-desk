@@ -162,6 +162,39 @@ describe('Auth pages', () => {
           { status: 201 },
         )
       }),
+      http.post(
+        'http://localhost:8000/api/auth/token/',
+        async ({ request }) => {
+          expect(await request.json()).toEqual({
+            email: 'ada@example.com',
+            password: 'securepass123',
+          })
+
+          return HttpResponse.json({
+            access: 'access-token',
+            refresh: 'refresh-token',
+          })
+        },
+      ),
+      http.get('http://localhost:8000/api/auth/me/', () => {
+        return HttpResponse.json({
+          email: 'ada@example.com',
+          id: 1,
+          name: 'Ada Lovelace',
+        })
+      }),
+      http.get('http://localhost:8000/api/dashboard/summary/', () => {
+        return HttpResponse.json({
+          by_status: {
+            closed: 0,
+            in_progress: 0,
+            open: 0,
+            resolved: 0,
+          },
+          total: 0,
+          urgent: 0,
+        })
+      }),
     )
 
     renderRoute('/register')
@@ -171,9 +204,13 @@ describe('Auth pages', () => {
     await user.type(screen.getByLabelText('Senha'), 'securepass123')
     await user.click(screen.getByRole('button', { name: 'Criar conta' }))
 
-    expect(await screen.findByRole('status')).toHaveTextContent(
-      'Cadastro realizado com sucesso.',
-    )
+    expect(
+      await screen.findByRole('heading', { name: 'Dashboard' }),
+    ).toBeInTheDocument()
+    expect(screen.getByText('Ada Lovelace')).toBeInTheDocument()
+    expect(getAccessToken()).toBe('access-token')
+    expect(getRefreshToken()).toBe('refresh-token')
+    expect(sessionStorage.getItem('closedesk.accessToken')).toBeNull()
   })
 
   it('shows an error when register fails', async () => {
