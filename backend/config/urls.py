@@ -15,7 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from accounts.views import current_user, register_user, request_password_reset
+from accounts.views import (
+    confirm_password_reset,
+    current_user,
+    register_user,
+    request_password_reset,
+)
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
@@ -40,6 +45,11 @@ urlpatterns = [
         "api/auth/password-reset/",
         request_password_reset,
         name="request-password-reset",
+    ),
+    path(
+        "api/auth/password-reset/confirm/",
+        confirm_password_reset,
+        name="confirm-password-reset",
     ),
     path("api/auth/me/", current_user, name="current-user"),
     path("api/tickets/", include("tickets.urls")),

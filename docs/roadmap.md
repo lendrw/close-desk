@@ -561,7 +561,7 @@ Registro detalhado: [Feedback pós-publicação](./feedback-pos-publicacao.md).
 
 - [x] Cadastro válido leva o usuário autenticado ao dashboard.
 - [x] Solicitação de recuperação de senha retorna resposta genérica.
-- [ ] Redefinição de senha aceita token válido e rejeita token inválido.
+- [x] Redefinição de senha aceita token válido e rejeita token inválido.
 - [ ] Cadastro dispara instrução de verificação de e-mail.
 - [ ] Confirmação de e-mail aceita token válido e rejeita token inválido.
 - [ ] A interface orienta o usuário sem expor tokens, senhas ou segredos.

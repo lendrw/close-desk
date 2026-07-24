@@ -66,8 +66,9 @@ Decisão proposta:
 Status:
 
 - Em implementação.
-- Solicitação de recuperação por e-mail implementada.
-- Confirmação de nova senha pendente.
+- Solicitação de recuperação por e-mail implementada no backend.
+- Confirmação de nova senha implementada no backend.
+- Telas do frontend pendentes.
 
 Evidências esperadas:
 

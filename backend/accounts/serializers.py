@@ -2,13 +2,15 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework import serializers
 
 PASSWORD_RESET_REQUEST_MESSAGE = (
     "Se o e-mail estiver cadastrado, enviaremos instruções para redefinir a senha."
 )
+PASSWORD_RESET_CONFIRM_MESSAGE = "Senha redefinida com sucesso."
+PASSWORD_RESET_INVALID_LINK_MESSAGE = "Link de redefinição inválido ou expirado."
 
 
 class UserRegistrationSerializer(serializers.Serializer):
@@ -73,4 +75,48 @@ class PasswordResetRequestSerializer(serializers.Serializer):
 
 
 class PasswordResetRequestResponseSerializer(serializers.Serializer):
+    message = serializers.CharField(read_only=True)
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    uid = serializers.CharField(write_only=True)
+    token = serializers.CharField(write_only=True)
+    password = serializers.CharField(min_length=8, write_only=True)
+
+    def validate(self, attrs):
+        user = self.get_user(attrs["uid"])
+
+        if user is None or not default_token_generator.check_token(
+            user, attrs["token"]
+        ):
+            raise serializers.ValidationError(
+                {"token": [PASSWORD_RESET_INVALID_LINK_MESSAGE]}
+            )
+
+        attrs["user"] = user
+
+        return attrs
+
+    def get_user(self, uid):
+        try:
+            user_id = force_str(urlsafe_base64_decode(uid))
+            return get_user_model().objects.get(pk=user_id, is_active=True)
+        except (
+            TypeError,
+            ValueError,
+            OverflowError,
+            UnicodeDecodeError,
+            get_user_model().DoesNotExist,
+        ):
+            return None
+
+    def save(self, **kwargs):
+        user = self.validated_data["user"]
+        user.set_password(self.validated_data["password"])
+        user.save(update_fields=["password"])
+
+        return user
+
+
+class PasswordResetConfirmResponseSerializer(serializers.Serializer):
     message = serializers.CharField(read_only=True)

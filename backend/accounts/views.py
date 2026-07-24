@@ -5,8 +5,11 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from accounts.serializers import (
+    PASSWORD_RESET_CONFIRM_MESSAGE,
     PASSWORD_RESET_REQUEST_MESSAGE,
     CurrentUserSerializer,
+    PasswordResetConfirmResponseSerializer,
+    PasswordResetConfirmSerializer,
     PasswordResetRequestResponseSerializer,
     PasswordResetRequestSerializer,
     UserRegistrationSerializer,
@@ -57,5 +60,24 @@ def request_password_reset(request):
 
     return Response(
         {"message": PASSWORD_RESET_REQUEST_MESSAGE},
+        status=status.HTTP_200_OK,
+    )
+
+
+@extend_schema(
+    request=PasswordResetConfirmSerializer,
+    responses={status.HTTP_200_OK: PasswordResetConfirmResponseSerializer},
+    summary="Confirmar redefinição de senha",
+    tags=["Authentication"],
+)
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def confirm_password_reset(request):
+    serializer = PasswordResetConfirmSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+
+    return Response(
+        {"message": PASSWORD_RESET_CONFIRM_MESSAGE},
         status=status.HTTP_200_OK,
     )
