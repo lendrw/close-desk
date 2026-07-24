@@ -154,6 +154,39 @@ Observações:
 - Apenas o `refreshToken` foi encontrado em `sessionStorage`, conforme estratégia atual de sessão.
 - Fluxo revalidado com sucesso no ambiente publicado.
 
+## 6. Recuperação de senha e verificação de e-mail
+
+Objetivo: validar que a pessoa usuária consegue recuperar acesso e confirmar
+posse do e-mail sem exposição de tokens, senhas ou segredos.
+
+Checklist:
+
+- [ ] Criar uma conta nova.
+- [ ] Confirmar que o cadastro envia instrução de verificação de e-mail.
+- [ ] Confirmar que o usuário entra após cadastro mesmo com e-mail pendente.
+- [ ] Confirmar que a interface exibe o estado de e-mail pendente.
+- [ ] Acessar o link de verificação recebido por e-mail.
+- [ ] Confirmar que o e-mail passa a aparecer como verificado na interface.
+- [ ] Solicitar recuperação de senha por e-mail.
+- [ ] Confirmar que a solicitação retorna mensagem genérica.
+- [ ] Acessar o link de redefinição recebido por e-mail.
+- [ ] Definir nova senha válida.
+- [ ] Entrar com a nova senha.
+- [ ] Confirmar que a senha antiga não autentica mais.
+- [ ] Confirmar que tokens de verificação e recuperação não aparecem na interface.
+
+Resultado:
+
+- [ ] Aprovado
+- [ ] Reprovado
+
+Observações:
+
+- Fluxo pendente de validação manual no ambiente publicado após deploy das
+  melhorias de conta.
+- Em ambiente local, usar `EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend`
+  para copiar os links exibidos no terminal do backend.
+
 ## Evidências
 
 Registre aqui comandos, prints, URLs locais, observações ou problemas encontrados durante a validação.

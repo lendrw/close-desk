@@ -65,11 +65,7 @@ Decisão proposta:
 
 Status:
 
-- Em implementação.
-- Solicitação de recuperação por e-mail implementada no backend.
-- Confirmação de nova senha implementada no backend.
-- Tela de solicitação de recuperação implementada no frontend.
-- Tela de nova senha implementada no frontend.
+- Corrigido no código.
 - Pendente de deploy e revalidação no ambiente publicado.
 
 Evidências esperadas:
@@ -100,11 +96,7 @@ Decisão proposta:
 
 Status:
 
-- Em implementação.
-- Envio de verificação após cadastro implementado no backend.
-- Confirmação de e-mail implementada no backend.
-- Indicação visual de e-mail pendente/verificado implementada no frontend.
-- Tela de confirmação de e-mail implementada no frontend.
+- Corrigido no código.
 - Pendente de deploy e revalidação no ambiente publicado.
 
 Evidências esperadas:

@@ -71,9 +71,14 @@ A documentação e o schema são públicos.
 
 ## E-mail
 
-O fluxo de recuperação de senha envia instruções por e-mail quando a conta
-existe, mas sempre retorna a mesma mensagem pública para evitar enumeração de
-usuários.
+Os fluxos de recuperação de senha e verificação de e-mail enviam instruções por
+e-mail. A recuperação de senha sempre retorna a mesma mensagem pública para
+evitar enumeração de usuários.
+
+Links enviados por e-mail usam `FRONTEND_BASE_URL` como origem:
+
+- recuperação de senha: `/reset-password/<uid>/<token>`;
+- verificação de e-mail: `/verify-email/<uid>/<token>`.
 
 Em ambiente local, use o backend de console:
 
@@ -198,6 +203,8 @@ A resposta considera somente os chamados do usuário autenticado.
 O projeto possui:
 
 - App `accounts` com usuário customizado e autenticação por e-mail.
+- Recuperação de senha por e-mail com token temporário.
+- Verificação de e-mail não bloqueante após cadastro.
 - App `tickets` com modelo, CRUD, consultas avançadas e dashboard.
 - Django REST Framework configurado com autenticação obrigatória por padrão.
 - Health check público em `GET /api/health/`.

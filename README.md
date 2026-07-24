@@ -43,6 +43,8 @@ O projeto cobre o ciclo completo de uma aplicação full stack:
 ## Funcionalidades
 
 - Cadastro e login por e-mail e senha.
+- Recuperação de senha por e-mail.
+- Verificação de e-mail não bloqueante após cadastro.
 - Sessão com JWT, refresh token e restauração de sessão.
 - Rotas protegidas no frontend e endpoints protegidos no backend.
 - CRUD completo de chamados.
@@ -101,19 +103,22 @@ Veja mais em [docs/arquitetura.md](docs/arquitetura.md).
 
 ## Principais endpoints
 
-| Método   | Rota                       | Descrição                         |
-| -------- | -------------------------- | --------------------------------- |
-| `GET`    | `/api/health/`             | Verifica se a API está online.    |
-| `POST`   | `/api/auth/register/`      | Cadastra usuário.                 |
-| `POST`   | `/api/auth/token/`         | Autentica e retorna tokens JWT.   |
-| `POST`   | `/api/auth/token/refresh/` | Renova o access token.            |
-| `GET`    | `/api/auth/me/`            | Retorna o usuário autenticado.    |
-| `GET`    | `/api/tickets/`            | Lista chamados paginados.         |
-| `POST`   | `/api/tickets/`            | Cria chamado.                     |
-| `GET`    | `/api/tickets/:id/`        | Exibe detalhes de um chamado.     |
-| `PATCH`  | `/api/tickets/:id/`        | Atualiza parcialmente um chamado. |
-| `DELETE` | `/api/tickets/:id/`        | Exclui chamado.                   |
-| `GET`    | `/api/dashboard/summary/`  | Retorna indicadores do dashboard. |
+| Método   | Rota                                     | Descrição                         |
+| -------- | ---------------------------------------- | --------------------------------- |
+| `GET`    | `/api/health/`                           | Verifica se a API está online.    |
+| `POST`   | `/api/auth/register/`                    | Cadastra usuário.                 |
+| `POST`   | `/api/auth/token/`                       | Autentica e retorna tokens JWT.   |
+| `POST`   | `/api/auth/token/refresh/`               | Renova o access token.            |
+| `GET`    | `/api/auth/me/`                          | Retorna o usuário autenticado.    |
+| `POST`   | `/api/auth/password-reset/`              | Solicita recuperação de senha.    |
+| `POST`   | `/api/auth/password-reset/confirm/`      | Confirma nova senha.              |
+| `POST`   | `/api/auth/email-verification/confirm/`  | Confirma verificação de e-mail.   |
+| `GET`    | `/api/tickets/`                          | Lista chamados paginados.         |
+| `POST`   | `/api/tickets/`                          | Cria chamado.                     |
+| `GET`    | `/api/tickets/:id/`                      | Exibe detalhes de um chamado.     |
+| `PATCH`  | `/api/tickets/:id/`                      | Atualiza parcialmente um chamado. |
+| `DELETE` | `/api/tickets/:id/`                      | Exclui chamado.                   |
+| `GET`    | `/api/dashboard/summary/`                | Retorna indicadores do dashboard. |
 
 A listagem aceita `search`, `status`, `priority`, `ordering` e `page`.
 
@@ -182,6 +187,16 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 
 CORS_ALLOWED_ORIGINS=http://localhost:5173
+FRONTEND_BASE_URL=http://localhost:5173
+
+EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+EMAIL_HOST=localhost
+EMAIL_PORT=25
+EMAIL_HOST_USER=
+EMAIL_HOST_PASSWORD=
+EMAIL_USE_TLS=False
+EMAIL_USE_SSL=False
+DEFAULT_FROM_EMAIL='CloseDesk <no-reply@closedesk.local>'
 ```
 
 ### Frontend

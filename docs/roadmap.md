@@ -555,7 +555,7 @@ Registro detalhado: [Feedback pós-publicação](./feedback-pos-publicacao.md).
 - [x] Implementar recuperação de senha por e-mail.
 - [x] Implementar verificação de e-mail não bloqueante após cadastro.
 - [x] Exibir estado de e-mail pendente ou verificado na interface.
-- [ ] Atualizar OpenAPI, README e fluxos de aceitação afetados.
+- [x] Atualizar OpenAPI, README e fluxos de aceitação afetados.
 
 ### Testes mínimos
 

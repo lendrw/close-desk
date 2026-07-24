@@ -71,7 +71,8 @@ VITE_API_BASE_URL=https://<dominio-do-backend>/api
 ```
 
 O arquivo `vercel.json` mantém as rotas do React Router funcionando em
-acessos diretos, como `/dashboard` e `/tickets/1`.
+acessos diretos, como `/dashboard`, `/tickets/1`,
+`/reset-password/<uid>/<token>` e `/verify-email/<uid>/<token>`.
 
 ## Testes E2E
 
@@ -89,9 +90,10 @@ Os testes E2E assumem backend e frontend em execução localmente.
 
 O frontend possui:
 
-- Rotas públicas de login e cadastro.
+- Rotas públicas de login, cadastro, recuperação de senha e verificação de e-mail.
 - Rotas protegidas com restauração de sessão.
 - Layout autenticado com navegação principal.
+- Indicação de e-mail pendente ou verificado no layout autenticado.
 - Dashboard com indicadores.
 - Listagem de chamados com busca, filtros, ordenação e paginação.
 - Criação, detalhes, edição, alteração de status e exclusão de chamados.
