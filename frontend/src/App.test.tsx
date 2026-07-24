@@ -84,6 +84,16 @@ function authenticateUser() {
   setCurrentUser({
     email: 'ada@example.com',
     id: 1,
+    is_email_verified: false,
+    name: 'Ada Lovelace',
+  })
+}
+
+function authenticateVerifiedUser() {
+  setCurrentUser({
+    email: 'ada@example.com',
+    id: 1,
+    is_email_verified: true,
     name: 'Ada Lovelace',
   })
 }
@@ -151,6 +161,10 @@ describe('App', () => {
       screen.getByRole('heading', { name: 'Dashboard' }),
     ).toBeInTheDocument()
     expect(screen.getByText('Ada Lovelace')).toBeInTheDocument()
+    expect(screen.getByText('E-mail pendente')).toBeInTheDocument()
+    expect(
+      screen.getByLabelText('Verificação de e-mail pendente'),
+    ).toHaveTextContent('ada@example.com')
     expect(screen.getByRole('link', { name: 'Dashboard' })).toHaveAttribute(
       'href',
       '/dashboard',
@@ -174,6 +188,18 @@ describe('App', () => {
     ).toBeInTheDocument()
     expect(
       within(navigation).queryByRole('button', { name: 'Sair' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('shows verified email status without pending notice', () => {
+    mockDashboardSummary()
+    authenticateVerifiedUser()
+
+    renderDashboard()
+
+    expect(screen.getByText('E-mail verificado')).toBeInTheDocument()
+    expect(
+      screen.queryByLabelText('Verificação de e-mail pendente'),
     ).not.toBeInTheDocument()
   })
 

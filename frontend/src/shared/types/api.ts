@@ -2,6 +2,7 @@ export type User = {
   id: number
   name: string
   email: string
+  is_email_verified: boolean
 }
 
 export type TicketStatus = 'open' | 'in_progress' | 'resolved' | 'closed'

@@ -6,6 +6,7 @@ import { LoginPage } from './features/auth/LoginPage'
 import { ProtectedRoute } from './features/auth/ProtectedRoute'
 import { RegisterPage } from './features/auth/RegisterPage'
 import { ResetPasswordPage } from './features/auth/ResetPasswordPage'
+import { VerifyEmailPage } from './features/auth/VerifyEmailPage'
 import { DashboardPage } from './features/dashboard/DashboardPage'
 import { TicketListPage } from './features/tickets/TicketListPage'
 import './App.css'
@@ -59,6 +60,7 @@ function App() {
         path="/reset-password/:uid/:token"
         element={<ResetPasswordPage />}
       />
+      <Route path="/verify-email/:uid/:token" element={<VerifyEmailPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<AuthenticatedLayout />}>

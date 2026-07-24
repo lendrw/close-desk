@@ -103,7 +103,9 @@ Status:
 - Em implementação.
 - Envio de verificação após cadastro implementado no backend.
 - Confirmação de e-mail implementada no backend.
-- Indicação visual no frontend pendente.
+- Indicação visual de e-mail pendente/verificado implementada no frontend.
+- Tela de confirmação de e-mail implementada no frontend.
+- Pendente de deploy e revalidação no ambiente publicado.
 
 Evidências esperadas:
 

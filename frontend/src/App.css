@@ -203,6 +203,39 @@
   text-transform: uppercase;
 }
 
+.email-verification-badge {
+  justify-self: end;
+  width: fit-content;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+}
+
+.email-verification-badge-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.email-verification-badge-verified {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.email-verification-notice {
+  margin-bottom: 20px;
+  border: 1px solid #fde68a;
+  border-radius: 16px;
+  background: #fffbeb;
+  color: #78350f;
+  padding: 14px 16px;
+}
+
+.email-verification-notice p {
+  margin: 0;
+  line-height: 1.6;
+}
+
 .authenticated-logout-button {
   margin-top: 0;
   cursor: pointer;
@@ -638,6 +671,10 @@
   .authenticated-user {
     grid-column: 1 / -1;
     text-align: left;
+  }
+
+  .email-verification-badge {
+    justify-self: start;
   }
 
   .authenticated-logout-button {

@@ -61,6 +61,7 @@ describe('auth session', () => {
         return HttpResponse.json({
           email: 'ada@example.com',
           id: 1,
+          is_email_verified: false,
           name: 'Ada Lovelace',
         })
       }),
@@ -71,6 +72,7 @@ describe('auth session', () => {
     expect(getCurrentUser()).toEqual({
       email: 'ada@example.com',
       id: 1,
+      is_email_verified: false,
       name: 'Ada Lovelace',
     })
     expect(getRefreshToken()).toBe('refresh-token')
@@ -170,6 +172,7 @@ describe('auth session', () => {
         return HttpResponse.json({
           email: 'ada@example.com',
           id: 1,
+          is_email_verified: false,
           name: 'Ada Lovelace',
         })
       }),
@@ -178,11 +181,13 @@ describe('auth session', () => {
     await expect(loadCurrentUser()).resolves.toEqual({
       email: 'ada@example.com',
       id: 1,
+      is_email_verified: false,
       name: 'Ada Lovelace',
     })
     expect(getCurrentUser()).toEqual({
       email: 'ada@example.com',
       id: 1,
+      is_email_verified: false,
       name: 'Ada Lovelace',
     })
   })

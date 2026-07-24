@@ -60,6 +60,7 @@ describe('Auth pages', () => {
         return HttpResponse.json({
           email: 'ada@example.com',
           id: 1,
+          is_email_verified: false,
           name: 'Ada Lovelace',
         })
       }),
@@ -299,6 +300,70 @@ describe('Auth pages', () => {
     expect(screen.getByLabelText('Nova senha')).toHaveValue('newpass123')
   })
 
+  it('confirms email verification with token values from the route', async () => {
+    let requestBody: Record<string, unknown> | null = null
+
+    server.use(
+      http.post(
+        'http://localhost:8000/api/auth/email-verification/confirm/',
+        async ({ request }) => {
+          requestBody = (await request.json()) as Record<string, unknown>
+
+          return HttpResponse.json({
+            message: 'E-mail verificado com sucesso.',
+          })
+        },
+      ),
+    )
+
+    renderRoute('/verify-email/user-uid/verification-token')
+
+    expect(
+      await screen.findByText('E-mail verificado com sucesso.'),
+    ).toHaveAttribute('role', 'status')
+    expect(requestBody).toEqual({
+      token: 'verification-token',
+      uid: 'user-uid',
+    })
+    expect(screen.queryByText('verification-token')).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Entrar' })).toHaveAttribute(
+      'href',
+      '/login',
+    )
+  })
+
+  it('shows an error when email verification fails', async () => {
+    server.use(
+      http.post(
+        'http://localhost:8000/api/auth/email-verification/confirm/',
+        () => {
+          return HttpResponse.json(
+            {
+              error: {
+                code: 'validation_error',
+                details: {
+                  token: ['Link de verificação inválido ou expirado.'],
+                },
+                message: 'Os dados enviados são inválidos.',
+              },
+            },
+            { status: 400 },
+          )
+        },
+      ),
+    )
+
+    renderRoute('/verify-email/user-uid/invalid-token')
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível verificar o e-mail. Solicite um novo link.',
+    )
+    expect(screen.queryByText('invalid-token')).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Voltar ao dashboard' }),
+    ).toHaveAttribute('href', '/dashboard')
+  })
+
   it('renders the register form', () => {
     renderRoute('/register')
 
@@ -338,6 +403,7 @@ describe('Auth pages', () => {
           {
             email: 'ada@example.com',
             id: 1,
+            is_email_verified: false,
             name: 'Ada Lovelace',
           },
           { status: 201 },
@@ -361,6 +427,7 @@ describe('Auth pages', () => {
         return HttpResponse.json({
           email: 'ada@example.com',
           id: 1,
+          is_email_verified: false,
           name: 'Ada Lovelace',
         })
       }),
