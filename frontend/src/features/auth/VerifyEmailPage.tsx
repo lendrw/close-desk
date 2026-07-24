@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 
 import { confirmEmailVerification } from './api'
+import { getAccessToken, loadCurrentUser } from './session'
 
 type VerificationStatus = 'loading' | 'success' | 'error'
 
@@ -24,6 +25,10 @@ export function VerifyEmailPage() {
         const response = await confirmEmailVerification({ token, uid })
 
         if (!ignore) {
+          if (getAccessToken()) {
+            await loadCurrentUser()
+          }
+
           setMessage(response.message)
           setStatus('success')
         }
@@ -74,7 +79,9 @@ export function VerifyEmailPage() {
 
         <p className="auth-helper">
           {status === 'success' ? (
-            <Link to="/login">Entrar</Link>
+            <Link to={getAccessToken() ? '/dashboard' : '/login'}>
+              {getAccessToken() ? 'Ir para o dashboard' : 'Entrar'}
+            </Link>
           ) : (
             <Link to="/dashboard">Voltar ao dashboard</Link>
           )}

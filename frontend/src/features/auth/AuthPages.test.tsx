@@ -6,7 +6,13 @@ import { afterEach, describe, expect, it } from 'vitest'
 
 import App from '../../App'
 import { server } from '../../tests/msw/server'
-import { clearAuthTokens, getAccessToken, getRefreshToken } from './session'
+import {
+  clearAuthTokens,
+  getAccessToken,
+  getCurrentUser,
+  getRefreshToken,
+  saveAuthTokens,
+} from './session'
 
 function renderRoute(route: string) {
   return render(
@@ -330,6 +336,42 @@ describe('Auth pages', () => {
       'href',
       '/login',
     )
+  })
+
+  it('refreshes the current user when confirming email verification while authenticated', async () => {
+    saveAuthTokens({
+      access: 'access-token',
+      refresh: 'refresh-token',
+    })
+
+    server.use(
+      http.post(
+        'http://localhost:8000/api/auth/email-verification/confirm/',
+        () => {
+          return HttpResponse.json({
+            message: 'E-mail verificado com sucesso.',
+          })
+        },
+      ),
+      http.get('http://localhost:8000/api/auth/me/', () => {
+        return HttpResponse.json({
+          email: 'ada@example.com',
+          id: 1,
+          is_email_verified: true,
+          name: 'Ada Lovelace',
+        })
+      }),
+    )
+
+    renderRoute('/verify-email/user-uid/verification-token')
+
+    expect(
+      await screen.findByText('E-mail verificado com sucesso.'),
+    ).toHaveAttribute('role', 'status')
+    expect(getCurrentUser()?.is_email_verified).toBe(true)
+    expect(
+      screen.getByRole('link', { name: 'Ir para o dashboard' }),
+    ).toHaveAttribute('href', '/dashboard')
   })
 
   it('shows an error when email verification fails', async () => {
