@@ -30,13 +30,22 @@ def send_account_email(*, flow, subject, message, recipient):
             recipient_list=[recipient],
             fail_silently=False,
         )
-    except Exception:
+    except Exception as error:
+        print(
+            "Falha ao enviar e-mail de conta. "
+            f"flow={flow} "
+            f"recipient_domain={get_recipient_domain(recipient)} "
+            f"error_type={type(error).__name__}",
+            flush=True,
+        )
         logger.exception(
             "Falha ao enviar e-mail de conta. flow=%s recipient_domain=%s",
             flow,
             get_recipient_domain(recipient),
         )
-        raise
+        return False
+
+    return True
 
 
 def send_email_verification(user):

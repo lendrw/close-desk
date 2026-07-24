@@ -81,7 +81,8 @@ def test_password_reset_request_logs_email_send_failure_without_sensitive_data(
             format="json",
         )
 
-    assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json() == {"message": PASSWORD_RESET_REQUEST_MESSAGE}
     assert "Falha ao enviar e-mail de conta." in caplog.text
     assert "flow=password_reset" in caplog.text
     assert "recipient_domain=example.com" in caplog.text

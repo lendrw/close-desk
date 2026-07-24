@@ -61,7 +61,9 @@ def test_register_endpoint_logs_email_verification_failure_without_sensitive_dat
             format="json",
         )
 
-    assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.json()["email"] == "ada@example.com"
+    assert get_user_model().objects.filter(email="ada@example.com").exists()
     assert "Falha ao enviar e-mail de conta." in caplog.text
     assert "flow=email_verification" in caplog.text
     assert "recipient_domain=example.com" in caplog.text
