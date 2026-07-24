@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { http, HttpResponse, delay } from 'msw'
 import { MemoryRouter } from 'react-router'
@@ -198,6 +198,24 @@ describe('App', () => {
     expect(screen.getByRole('status')).toHaveTextContent(
       'Carregando indicadores...',
     )
+
+    const navigation = screen.getByRole('navigation', {
+      name: 'Navegação principal',
+    })
+
+    expect(
+      within(navigation).getByRole('link', { name: 'Dashboard' }),
+    ).toBeInTheDocument()
+    expect(
+      within(navigation).getByRole('link', { name: 'Chamados' }),
+    ).toBeInTheDocument()
+    expect(
+      within(navigation).getByRole('link', { name: 'Novo chamado' }),
+    ).toBeInTheDocument()
+    expect(
+      within(navigation).getByRole('button', { name: 'Sair' }),
+    ).toBeInTheDocument()
+
     expect(await screen.findByLabelText('Total de chamados')).toHaveTextContent(
       '6',
     )

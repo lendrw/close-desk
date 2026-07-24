@@ -219,13 +219,13 @@ Decisão proposta:
 
 Status:
 
-- Registrado.
-- Pendente de implementação.
+- Corrigido no código.
+- Pendente de deploy e revalidação no ambiente publicado.
 
 Evidências esperadas:
 
-- Teste ou validação manual de dashboard, lista de chamados e novo chamado em
-  mobile.
+- Teste automatizado confirmando navegação disponível durante loading.
+- Validação manual de dashboard, lista de chamados e novo chamado em mobile.
 - Confirmação de que a navegação mantém altura consistente em loading, erro e
   sucesso.
 - Revisão visual em navegador mobile real ou viewport equivalente.
