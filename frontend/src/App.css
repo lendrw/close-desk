@@ -162,9 +162,9 @@
 }
 
 .authenticated-header {
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: space-between;
+  grid-template-columns: 1fr auto auto;
   gap: 16px;
   min-height: 72px;
   border-bottom: 1px solid #dbe1ea;
@@ -189,6 +189,12 @@
   color: #64748b;
   font-size: 0.75rem;
   text-transform: uppercase;
+}
+
+.authenticated-logout-button {
+  margin-top: 0;
+  cursor: pointer;
+  font: inherit;
 }
 
 .authenticated-body {
@@ -559,12 +565,18 @@
   }
 
   .authenticated-header {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: start;
+    grid-template-columns: 1fr auto;
   }
 
   .authenticated-user {
+    grid-column: 1 / -1;
     text-align: left;
+  }
+
+  .authenticated-logout-button {
+    grid-column: 2;
+    grid-row: 1;
   }
 
   .authenticated-body {

@@ -163,6 +163,18 @@ describe('App', () => {
       'href',
       '/tickets/new',
     )
+
+    const header = screen.getByRole('banner')
+    const navigation = screen.getByRole('navigation', {
+      name: 'Navegação principal',
+    })
+
+    expect(
+      within(header).getByRole('button', { name: 'Sair' }),
+    ).toBeInTheDocument()
+    expect(
+      within(navigation).queryByRole('button', { name: 'Sair' }),
+    ).not.toBeInTheDocument()
   })
 
   it('renders dashboard indicators from the API', async () => {
@@ -202,6 +214,7 @@ describe('App', () => {
     const navigation = screen.getByRole('navigation', {
       name: 'Navegação principal',
     })
+    const header = screen.getByRole('banner')
 
     expect(
       within(navigation).getByRole('link', { name: 'Dashboard' }),
@@ -213,7 +226,10 @@ describe('App', () => {
       within(navigation).getByRole('link', { name: 'Novo chamado' }),
     ).toBeInTheDocument()
     expect(
-      within(navigation).getByRole('button', { name: 'Sair' }),
+      within(navigation).queryByRole('button', { name: 'Sair' }),
+    ).not.toBeInTheDocument()
+    expect(
+      within(header).getByRole('button', { name: 'Sair' }),
     ).toBeInTheDocument()
 
     expect(await screen.findByLabelText('Total de chamados')).toHaveTextContent(

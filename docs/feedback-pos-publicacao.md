@@ -280,13 +280,13 @@ Decisão proposta:
 
 Status:
 
-- Registrado.
-- Pendente de implementação.
+- Corrigido no código.
+- Pendente de deploy e revalidação no ambiente publicado.
 
 Evidências esperadas:
 
 - Validação manual do layout autenticado em mobile.
-- Teste de logout garantindo que a ação continua funcional.
+- Teste de logout garantindo que a ação continua funcional no cabeçalho.
 - Revisão visual confirmando separação entre ações de navegação e sessão.
 
 ## Priorização

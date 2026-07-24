@@ -28,6 +28,14 @@ export function AuthenticatedLayout() {
           <span className="authenticated-user-label">Usuário</span>
           <strong>{currentUser?.name}</strong>
         </div>
+
+        <button
+          className="app-link app-link-secondary authenticated-logout-button"
+          onClick={handleLogout}
+          type="button"
+        >
+          Sair
+        </button>
       </header>
 
       <div className="authenticated-body">
@@ -43,10 +51,6 @@ export function AuthenticatedLayout() {
               {item.label}
             </NavLink>
           ))}
-
-          <button className="nav-link nav-link-button" onClick={handleLogout}>
-            Sair
-          </button>
         </nav>
 
         <main className="authenticated-content">
