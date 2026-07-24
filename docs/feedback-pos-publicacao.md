@@ -189,14 +189,15 @@ Decisão proposta:
 
 Status:
 
-- Registrado.
-- Pendente de implementação.
+- Corrigido no código.
+- Pendente de deploy e revalidação no ambiente publicado.
 
 Evidências esperadas:
 
 - Validação manual em viewport estreita.
 - Revisão responsiva a partir de 360 px ou menor quando aplicável.
-- Teste visual/manual garantindo ausência de corte e centralização adequada.
+- Teste E2E em viewport pequena garantindo que o card não estica a altura
+  inteira e não gera rolagem horizontal ou vertical indevida.
 
 ### P07 — Itens da navegação aumentam de altura durante loading ou erro
 

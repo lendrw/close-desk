@@ -13,8 +13,8 @@ import { EditTicketPage } from './features/tickets/EditTicketPage'
 
 function HomePage() {
   return (
-    <main className="app-shell">
-      <section className="app-card">
+    <main className="app-shell home-shell">
+      <section className="app-card home-card">
         <p className="app-eyebrow">CloseDesk</p>
         <h1 className="app-title">CloseDesk</h1>
         <p className="app-description">
