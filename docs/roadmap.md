@@ -555,6 +555,7 @@ Registro detalhado: [Feedback pós-publicação](./feedback-pos-publicacao.md).
 - [x] Implementar recuperação de senha por e-mail.
 - [x] Implementar verificação de e-mail não bloqueante após cadastro.
 - [x] Exibir estado de e-mail pendente ou verificado na interface.
+- [x] Permitir reenvio da verificação para contas com e-mail pendente.
 - [x] Atualizar OpenAPI, README e fluxos de aceitação afetados.
 
 ### Testes mínimos
@@ -564,6 +565,7 @@ Registro detalhado: [Feedback pós-publicação](./feedback-pos-publicacao.md).
 - [x] Redefinição de senha aceita token válido e rejeita token inválido.
 - [x] Cadastro dispara instrução de verificação de e-mail.
 - [x] Confirmação de e-mail aceita token válido e rejeita token inválido.
+- [x] Usuário autenticado consegue solicitar novo link de verificação.
 - [x] A interface orienta o usuário sem expor tokens, senhas ou segredos.
 
 ### Critério de saída

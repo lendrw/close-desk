@@ -35,7 +35,7 @@ Decisão:
 Status:
 
 - Corrigido no código.
-- Pendente de deploy e revalidação no ambiente publicado.
+- Publicado e revalidado no ambiente de produção.
 
 Evidências esperadas:
 
@@ -66,7 +66,7 @@ Decisão proposta:
 Status:
 
 - Corrigido no código.
-- Pendente de deploy e revalidação no ambiente publicado.
+- Publicado e revalidado no ambiente de produção.
 
 Evidências esperadas:
 
@@ -93,16 +93,19 @@ Decisão proposta:
 - A interface deve indicar quando o e-mail ainda não foi verificado.
 - O link de verificação deve usar token temporário e seguro.
 - Confirmar o e-mail deve atualizar o estado da conta.
+- Permitir reenvio do link para contas que já existiam antes da verificação ou
+  que ainda estejam com e-mail pendente.
 
 Status:
 
 - Corrigido no código.
-- Pendente de deploy e revalidação no ambiente publicado.
+- Publicado e revalidado no ambiente de produção.
 
 Evidências esperadas:
 
 - Testes de API para envio e confirmação da verificação.
 - Testes de frontend para indicação de e-mail pendente/verificado.
+- Testes de API e frontend para reenvio do link de verificação.
 - Validação manual do fluxo em ambiente local e publicado.
 
 ### P04 — A abertura dos detalhes do chamado não era intuitiva
@@ -293,6 +296,40 @@ Evidências esperadas:
 - Teste de logout garantindo que a ação continua funcional no cabeçalho.
 - Revisão visual confirmando separação entre ações de navegação e sessão.
 
+### P10 — Conta com e-mail pendente não tinha ação de reenvio
+
+Contas criadas antes da verificação de e-mail ou contas que não receberam a
+primeira mensagem ficavam com o estado de e-mail pendente sem uma ação clara
+para solicitar novo link.
+
+Impacto:
+
+- Usuário podia permanecer com a conta marcada como pendente mesmo tendo acesso
+  ao e-mail.
+- A mensagem de e-mail pendente gerava dúvida, porque não oferecia próximo
+  passo.
+- A validação manual em produção ficava dependente de criar uma conta nova.
+
+Decisão:
+
+- Adicionar endpoint autenticado para solicitar novo link de verificação.
+- Exibir botão de reenvio dentro do aviso de e-mail pendente.
+- Mostrar feedback de sucesso ou erro na própria interface.
+- Manter a resposta genérica para evitar exposição desnecessária de estado
+  interno da conta.
+
+Status:
+
+- Corrigido no código.
+- Publicado e revalidado no ambiente de produção.
+
+Evidências esperadas:
+
+- Testes de API para usuário pendente, usuário já verificado e requisição sem
+  autenticação.
+- Testes de frontend para sucesso e falha ao solicitar novo link.
+- Validação manual em conta existente com e-mail pendente.
+
 ## Priorização
 
 | Prioridade | Problema | Motivo |
@@ -301,6 +338,7 @@ Evidências esperadas:
 | Alta | P02 — Não havia recuperação de senha | Pode impedir o usuário de voltar a acessar a própria conta. |
 | Alta | P04 — A abertura dos detalhes do chamado não era intuitiva | Afeta a descoberta da ação principal na lista de chamados. |
 | Média | P03 — Não havia verificação de e-mail | Aumenta confiança e prepara fluxos futuros, mas não deve bloquear o uso inicial. |
+| Média | P10 — Conta com e-mail pendente não tinha ação de reenvio | Evita bloqueio de contas já existentes ou e-mails não recebidos. |
 | Média | P05 — Chamados poderiam ter categorias | Melhora organização e filtros, mas muda o domínio e precisa de refinamento. |
 | Média | P06 — Card inicial não se adapta bem a viewports pequenas | Afeta a primeira impressão em mobile e viewports reduzidas. |
 | Média | P07 — Itens da navegação aumentam de altura durante loading ou erro | Afeta navegação e leitura em mobile nos estados transitórios. |
@@ -313,8 +351,9 @@ Evidências esperadas:
 2. Tornar explícita a abertura dos detalhes na lista de chamados.
 3. Implementar recuperação de senha por e-mail.
 4. Implementar verificação de e-mail não bloqueante.
-5. Atualizar documentação da API, README, roadmap e fluxos de aceitação.
-6. Revalidar os fluxos em ambiente publicado.
+5. Implementar reenvio de verificação para contas com e-mail pendente.
+6. Atualizar documentação da API, README, roadmap e fluxos de aceitação.
+7. Revalidar os fluxos em ambiente publicado.
 
 ## Critérios gerais de qualidade
 
