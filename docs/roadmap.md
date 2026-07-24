@@ -560,7 +560,7 @@ Registro detalhado: [Feedback pós-publicação](./feedback-pos-publicacao.md).
 ### Testes mínimos
 
 - [x] Cadastro válido leva o usuário autenticado ao dashboard.
-- [ ] Solicitação de recuperação de senha retorna resposta genérica.
+- [x] Solicitação de recuperação de senha retorna resposta genérica.
 - [ ] Redefinição de senha aceita token válido e rejeita token inválido.
 - [ ] Cadastro dispara instrução de verificação de e-mail.
 - [ ] Confirmação de e-mail aceita token válido e rejeita token inválido.

@@ -16,6 +16,7 @@ def test_openapi_schema_is_public():
     assert schema["info"]["version"] == "0.1.0"
     assert "/api/health/" in schema["paths"]
     assert "/api/auth/register/" in schema["paths"]
+    assert "/api/auth/password-reset/" in schema["paths"]
     assert "/api/auth/token/" in schema["paths"]
     assert "/api/auth/token/refresh/" in schema["paths"]
     assert "/api/auth/me/" in schema["paths"]

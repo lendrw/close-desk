@@ -65,7 +65,9 @@ Decisão proposta:
 
 Status:
 
-- Planejado.
+- Em implementação.
+- Solicitação de recuperação por e-mail implementada.
+- Confirmação de nova senha pendente.
 
 Evidências esperadas:
 

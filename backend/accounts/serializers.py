@@ -1,5 +1,14 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from rest_framework import serializers
+
+PASSWORD_RESET_REQUEST_MESSAGE = (
+    "Se o e-mail estiver cadastrado, enviaremos instruções para redefinir a senha."
+)
 
 
 class UserRegistrationSerializer(serializers.Serializer):
@@ -28,3 +37,40 @@ class CurrentUserSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(read_only=True)
     email = serializers.EmailField(read_only=True)
+
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        return get_user_model().objects.normalize_email(value.strip()).lower()
+
+    def save(self, **kwargs):
+        email = self.validated_data["email"]
+        user = get_user_model().objects.filter(email=email, is_active=True).first()
+
+        if user is None:
+            return None
+
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+        reset_url = (
+            f"{settings.FRONTEND_BASE_URL.rstrip('/')}/reset-password/{uid}/{token}"
+        )
+
+        send_mail(
+            subject="Redefinição de senha do CloseDesk",
+            message=(
+                "Recebemos uma solicitação para redefinir sua senha no CloseDesk.\n\n"
+                f"Acesse o link abaixo para criar uma nova senha:\n{reset_url}\n\n"
+                "Se você não solicitou essa alteração, ignore este e-mail."
+            ),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+        )
+
+        return user
+
+
+class PasswordResetRequestResponseSerializer(serializers.Serializer):
+    message = serializers.CharField(read_only=True)

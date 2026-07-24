@@ -41,6 +41,9 @@ Configurações de execução:
 - `CORS_ALLOWED_ORIGINS` recebe origens completas separadas por vírgula.
 - Os cabeçalhos CORS são adicionados somente às rotas iniciadas por `/api/`.
 - Origens não listadas não recebem permissão de acesso pelo navegador.
+- `FRONTEND_BASE_URL` define a origem usada em links enviados por e-mail.
+- Em desenvolvimento, o backend usa e-mail no console por padrão.
+- Em produção, configure `EMAIL_BACKEND`, SMTP e `DEFAULT_FROM_EMAIL`.
 
 Carregue as variáveis:
 
@@ -65,6 +68,31 @@ Com o servidor em execução:
 - Schema OpenAPI: `http://localhost:8000/api/schema/`
 
 A documentação e o schema são públicos.
+
+## E-mail
+
+O fluxo de recuperação de senha envia instruções por e-mail quando a conta
+existe, mas sempre retorna a mesma mensagem pública para evitar enumeração de
+usuários.
+
+Em ambiente local, use o backend de console:
+
+```dotenv
+EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+FRONTEND_BASE_URL=http://localhost:5173
+```
+
+Em produção, configure as variáveis SMTP:
+
+```dotenv
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST=<host-smtp>
+EMAIL_PORT=587
+EMAIL_HOST_USER=<usuario-smtp>
+EMAIL_HOST_PASSWORD=<senha-smtp>
+EMAIL_USE_TLS=True
+DEFAULT_FROM_EMAIL='CloseDesk <no-reply@seudominio.com>'
+```
 
 ## Testes
 

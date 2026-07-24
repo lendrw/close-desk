@@ -4,7 +4,13 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from accounts.serializers import CurrentUserSerializer, UserRegistrationSerializer
+from accounts.serializers import (
+    PASSWORD_RESET_REQUEST_MESSAGE,
+    CurrentUserSerializer,
+    PasswordResetRequestResponseSerializer,
+    PasswordResetRequestSerializer,
+    UserRegistrationSerializer,
+)
 
 
 @extend_schema(
@@ -34,3 +40,22 @@ def register_user(request):
 @api_view(["GET"])
 def current_user(request):
     return Response(CurrentUserSerializer(request.user).data)
+
+
+@extend_schema(
+    request=PasswordResetRequestSerializer,
+    responses={status.HTTP_200_OK: PasswordResetRequestResponseSerializer},
+    summary="Solicitar redefinição de senha",
+    tags=["Authentication"],
+)
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def request_password_reset(request):
+    serializer = PasswordResetRequestSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+
+    return Response(
+        {"message": PASSWORD_RESET_REQUEST_MESSAGE},
+        status=status.HTTP_200_OK,
+    )
