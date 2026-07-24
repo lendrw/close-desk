@@ -25,6 +25,7 @@ def test_current_user_endpoint_returns_authenticated_user():
         "id": user.id,
         "name": "Ada Lovelace",
         "email": "ada@example.com",
+        "is_email_verified": False,
     }
 
 

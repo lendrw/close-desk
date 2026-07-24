@@ -553,7 +553,7 @@ Registro detalhado: [Feedback pós-publicação](./feedback-pos-publicacao.md).
 
 - [x] Após cadastro válido, autenticar automaticamente e direcionar ao dashboard.
 - [x] Implementar recuperação de senha por e-mail.
-- [ ] Implementar verificação de e-mail não bloqueante após cadastro.
+- [x] Implementar verificação de e-mail não bloqueante após cadastro.
 - [ ] Exibir estado de e-mail pendente ou verificado na interface.
 - [ ] Atualizar OpenAPI, README e fluxos de aceitação afetados.
 
@@ -562,8 +562,8 @@ Registro detalhado: [Feedback pós-publicação](./feedback-pos-publicacao.md).
 - [x] Cadastro válido leva o usuário autenticado ao dashboard.
 - [x] Solicitação de recuperação de senha retorna resposta genérica.
 - [x] Redefinição de senha aceita token válido e rejeita token inválido.
-- [ ] Cadastro dispara instrução de verificação de e-mail.
-- [ ] Confirmação de e-mail aceita token válido e rejeita token inválido.
+- [x] Cadastro dispara instrução de verificação de e-mail.
+- [x] Confirmação de e-mail aceita token válido e rejeita token inválido.
 - [ ] A interface orienta o usuário sem expor tokens, senhas ou segredos.
 
 ### Critério de saída

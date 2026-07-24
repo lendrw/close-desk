@@ -100,7 +100,10 @@ Decisão proposta:
 
 Status:
 
-- Planejado.
+- Em implementação.
+- Envio de verificação após cadastro implementado no backend.
+- Confirmação de e-mail implementada no backend.
+- Indicação visual no frontend pendente.
 
 Evidências esperadas:
 

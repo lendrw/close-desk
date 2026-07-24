@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
+from django.core import mail
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -22,13 +23,21 @@ def test_register_endpoint_creates_user_without_exposing_password():
         "id": response.json()["id"],
         "name": "Ada Lovelace",
         "email": "ada@example.com",
+        "is_email_verified": False,
     }
 
     assert "password" not in response.json()
+    assert "token" not in response.content.decode().lower()
 
     user = get_user_model().objects.get(email="ada@example.com")
     assert user.name == "Ada Lovelace"
+    assert user.is_email_verified is False
     assert user.check_password("securepass123")
+    assert len(mail.outbox) == 1
+    assert mail.outbox[0].to == ["ada@example.com"]
+    assert mail.outbox[0].subject == "Verificação de e-mail do CloseDesk"
+    assert "http://localhost:5173/verify-email/" in mail.outbox[0].body
+    assert "securepass123" not in mail.outbox[0].body
 
 
 def test_register_endpoint_returns_standard_error_for_missing_fields():

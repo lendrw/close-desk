@@ -6,17 +6,22 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework import serializers
 
+from accounts.tokens import email_verification_token_generator
+
 PASSWORD_RESET_REQUEST_MESSAGE = (
     "Se o e-mail estiver cadastrado, enviaremos instruções para redefinir a senha."
 )
 PASSWORD_RESET_CONFIRM_MESSAGE = "Senha redefinida com sucesso."
 PASSWORD_RESET_INVALID_LINK_MESSAGE = "Link de redefinição inválido ou expirado."
+EMAIL_VERIFICATION_CONFIRM_MESSAGE = "E-mail verificado com sucesso."
+EMAIL_VERIFICATION_INVALID_LINK_MESSAGE = "Link de verificação inválido ou expirado."
 
 
 class UserRegistrationSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(min_length=2, max_length=100)
     email = serializers.EmailField()
+    is_email_verified = serializers.BooleanField(read_only=True)
     password = serializers.CharField(min_length=8, write_only=True)
 
     def validate_email(self, value):
@@ -39,6 +44,7 @@ class CurrentUserSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(read_only=True)
     email = serializers.EmailField(read_only=True)
+    is_email_verified = serializers.BooleanField(read_only=True)
 
 
 class PasswordResetRequestSerializer(serializers.Serializer):
@@ -119,4 +125,47 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
 
 
 class PasswordResetConfirmResponseSerializer(serializers.Serializer):
+    message = serializers.CharField(read_only=True)
+
+
+class EmailVerificationConfirmSerializer(serializers.Serializer):
+    uid = serializers.CharField(write_only=True)
+    token = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        user = self.get_user(attrs["uid"])
+
+        if user is None or not email_verification_token_generator.check_token(
+            user, attrs["token"]
+        ):
+            raise serializers.ValidationError(
+                {"token": [EMAIL_VERIFICATION_INVALID_LINK_MESSAGE]}
+            )
+
+        attrs["user"] = user
+
+        return attrs
+
+    def get_user(self, uid):
+        try:
+            user_id = force_str(urlsafe_base64_decode(uid))
+            return get_user_model().objects.get(pk=user_id, is_active=True)
+        except (
+            TypeError,
+            ValueError,
+            OverflowError,
+            UnicodeDecodeError,
+            get_user_model().DoesNotExist,
+        ):
+            return None
+
+    def save(self, **kwargs):
+        user = self.validated_data["user"]
+        user.is_email_verified = True
+        user.save(update_fields=["is_email_verified"])
+
+        return user
+
+
+class EmailVerificationConfirmResponseSerializer(serializers.Serializer):
     message = serializers.CharField(read_only=True)

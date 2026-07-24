@@ -16,6 +16,7 @@ Including another URLconf
 """
 
 from accounts.views import (
+    confirm_email_verification,
     confirm_password_reset,
     current_user,
     register_user,
@@ -50,6 +51,11 @@ urlpatterns = [
         "api/auth/password-reset/confirm/",
         confirm_password_reset,
         name="confirm-password-reset",
+    ),
+    path(
+        "api/auth/email-verification/confirm/",
+        confirm_email_verification,
+        name="confirm-email-verification",
     ),
     path("api/auth/me/", current_user, name="current-user"),
     path("api/tickets/", include("tickets.urls")),
