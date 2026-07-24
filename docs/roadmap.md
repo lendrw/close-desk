@@ -547,6 +547,8 @@ O projeto está acessível, documentado e pode ser demonstrado do cadastro ao lo
 
 Origem: feedback externo após teste do site publicado.
 
+Registro detalhado: [Feedback pós-publicação](./feedback-pos-publicacao.md).
+
 ### Tarefas
 
 - [x] Após cadastro válido, autenticar automaticamente e direcionar ao dashboard.

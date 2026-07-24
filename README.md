@@ -269,7 +269,8 @@ Trade-offs do MVP:
 - Histórico de alterações.
 - Comentários e anexos.
 - Notificações.
-- Recuperação de senha.
+- Recuperação de senha, priorizada após feedback pós-publicação.
+- Verificação de e-mail, priorizada após feedback pós-publicação.
 - Auditoria e métricas operacionais.
 
 ## Documentação
@@ -278,6 +279,7 @@ Trade-offs do MVP:
 - [Roadmap](docs/roadmap.md)
 - [Arquitetura](docs/arquitetura.md)
 - [Rastreabilidade](docs/rastreabilidade.md)
+- [Feedback pós-publicação](docs/feedback-pos-publicacao.md)
 - [Backend](backend/README.md)
 - [Frontend](frontend/README.md)
 - [Fluxos de aceitação](docs/testes/fluxos-de-aceitacao.md)
