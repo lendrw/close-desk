@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router'
 
+import { requestEmailVerification } from '../features/auth/api'
 import { getCurrentUser, logout } from '../features/auth/session'
 
 const navigationItems = [
@@ -11,10 +13,31 @@ const navigationItems = [
 export function AuthenticatedLayout() {
   const currentUser = getCurrentUser()
   const navigate = useNavigate()
+  const [emailVerificationMessage, setEmailVerificationMessage] = useState('')
+  const [emailVerificationError, setEmailVerificationError] = useState('')
+  const [isRequestingEmailVerification, setIsRequestingEmailVerification] =
+    useState(false)
 
   function handleLogout() {
     logout()
     navigate('/login', { replace: true })
+  }
+
+  async function handleRequestEmailVerification() {
+    setEmailVerificationMessage('')
+    setEmailVerificationError('')
+    setIsRequestingEmailVerification(true)
+
+    try {
+      const response = await requestEmailVerification()
+      setEmailVerificationMessage(response.message)
+    } catch {
+      setEmailVerificationError(
+        'Não foi possível reenviar a verificação agora. Tente novamente em instantes.',
+      )
+    } finally {
+      setIsRequestingEmailVerification(false)
+    }
   }
 
   return (
@@ -74,6 +97,35 @@ export function AuthenticatedLayout() {
                 Confirme seu e-mail para aumentar a segurança da conta. Enviamos
                 um link de verificação para {currentUser?.email}.
               </p>
+
+              <button
+                className="app-link email-verification-action"
+                disabled={isRequestingEmailVerification}
+                onClick={handleRequestEmailVerification}
+                type="button"
+              >
+                {isRequestingEmailVerification
+                  ? 'Reenviando...'
+                  : 'Reenviar verificação'}
+              </button>
+
+              {emailVerificationMessage ? (
+                <p
+                  className="form-success email-verification-feedback"
+                  role="status"
+                >
+                  {emailVerificationMessage}
+                </p>
+              ) : null}
+
+              {emailVerificationError ? (
+                <p
+                  className="form-error email-verification-feedback"
+                  role="alert"
+                >
+                  {emailVerificationError}
+                </p>
+              ) : null}
             </section>
           )}
 

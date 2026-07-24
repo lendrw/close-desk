@@ -236,6 +236,23 @@
   line-height: 1.6;
 }
 
+.email-verification-action {
+  margin-top: 12px;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.email-verification-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+.email-verification-feedback {
+  margin-top: 12px;
+}
+
 .authenticated-logout-button {
   margin-top: 0;
   cursor: pointer;

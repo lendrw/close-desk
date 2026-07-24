@@ -203,6 +203,70 @@ describe('App', () => {
     ).not.toBeInTheDocument()
   })
 
+  it('requests a new email verification from the pending notice', async () => {
+    const user = userEvent.setup()
+    let requests = 0
+
+    mockDashboardSummary()
+    authenticateUser()
+    server.use(
+      http.post('http://localhost:8000/api/auth/email-verification/', () => {
+        requests += 1
+
+        return HttpResponse.json({
+          message:
+            'Se o e-mail ainda estiver pendente, enviaremos um novo link de verificação.',
+        })
+      }),
+    )
+
+    renderDashboard()
+
+    const notice = screen.getByLabelText('Verificação de e-mail pendente')
+
+    await user.click(
+      within(notice).getByRole('button', { name: 'Reenviar verificação' }),
+    )
+
+    expect(await within(notice).findByRole('status')).toHaveTextContent(
+      'Se o e-mail ainda estiver pendente, enviaremos um novo link de verificação.',
+    )
+    expect(requests).toBe(1)
+  })
+
+  it('shows an error when requesting a new email verification fails', async () => {
+    const user = userEvent.setup()
+
+    mockDashboardSummary()
+    authenticateUser()
+    server.use(
+      http.post('http://localhost:8000/api/auth/email-verification/', () => {
+        return HttpResponse.json(
+          {
+            error: {
+              code: 'internal_error',
+              details: {},
+              message: 'Erro interno do servidor.',
+            },
+          },
+          { status: 500 },
+        )
+      }),
+    )
+
+    renderDashboard()
+
+    const notice = screen.getByLabelText('Verificação de e-mail pendente')
+
+    await user.click(
+      within(notice).getByRole('button', { name: 'Reenviar verificação' }),
+    )
+
+    expect(await within(notice).findByRole('alert')).toHaveTextContent(
+      'Não foi possível reenviar a verificação agora. Tente novamente em instantes.',
+    )
+  })
+
   it('renders dashboard indicators from the API', async () => {
     mockDashboardSummary()
     authenticateUser()

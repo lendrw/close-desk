@@ -46,6 +46,10 @@ export type EmailVerificationConfirmResponse = {
   message: string
 }
 
+export type EmailVerificationRequestResponse = {
+  message: string
+}
+
 export async function login(credentials: LoginCredentials) {
   const response = await apiClient.post<TokenPair>('/auth/token/', credentials)
 
@@ -101,6 +105,15 @@ export async function confirmEmailVerification(
   const response = await apiClient.post<EmailVerificationConfirmResponse>(
     '/auth/email-verification/confirm/',
     payload,
+  )
+
+  return response.data
+}
+
+export async function requestEmailVerification() {
+  const response = await apiClient.post<EmailVerificationRequestResponse>(
+    '/auth/email-verification/',
+    {},
   )
 
   return response.data
