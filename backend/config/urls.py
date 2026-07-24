@@ -20,6 +20,7 @@ from accounts.views import (
     confirm_password_reset,
     current_user,
     register_user,
+    request_email_verification,
     request_password_reset,
 )
 from django.contrib import admin
@@ -51,6 +52,11 @@ urlpatterns = [
         "api/auth/password-reset/confirm/",
         confirm_password_reset,
         name="confirm-password-reset",
+    ),
+    path(
+        "api/auth/email-verification/",
+        request_email_verification,
+        name="request-email-verification",
     ),
     path(
         "api/auth/email-verification/confirm/",

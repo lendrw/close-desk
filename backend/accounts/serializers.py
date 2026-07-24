@@ -14,6 +14,9 @@ PASSWORD_RESET_CONFIRM_MESSAGE = "Senha redefinida com sucesso."
 PASSWORD_RESET_INVALID_LINK_MESSAGE = "Link de redefinição inválido ou expirado."
 EMAIL_VERIFICATION_CONFIRM_MESSAGE = "E-mail verificado com sucesso."
 EMAIL_VERIFICATION_INVALID_LINK_MESSAGE = "Link de verificação inválido ou expirado."
+EMAIL_VERIFICATION_REQUEST_MESSAGE = (
+    "Se o e-mail ainda estiver pendente, enviaremos um novo link de verificação."
+)
 
 
 class UserRegistrationSerializer(serializers.Serializer):
@@ -165,4 +168,8 @@ class EmailVerificationConfirmSerializer(serializers.Serializer):
 
 
 class EmailVerificationConfirmResponseSerializer(serializers.Serializer):
+    message = serializers.CharField(read_only=True)
+
+
+class EmailVerificationRequestResponseSerializer(serializers.Serializer):
     message = serializers.CharField(read_only=True)

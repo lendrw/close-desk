@@ -7,11 +7,13 @@ from rest_framework.response import Response
 from accounts.emails import send_email_verification
 from accounts.serializers import (
     EMAIL_VERIFICATION_CONFIRM_MESSAGE,
+    EMAIL_VERIFICATION_REQUEST_MESSAGE,
     PASSWORD_RESET_CONFIRM_MESSAGE,
     PASSWORD_RESET_REQUEST_MESSAGE,
     CurrentUserSerializer,
     EmailVerificationConfirmResponseSerializer,
     EmailVerificationConfirmSerializer,
+    EmailVerificationRequestResponseSerializer,
     PasswordResetConfirmResponseSerializer,
     PasswordResetConfirmSerializer,
     PasswordResetRequestResponseSerializer,
@@ -48,6 +50,22 @@ def register_user(request):
 @api_view(["GET"])
 def current_user(request):
     return Response(CurrentUserSerializer(request.user).data)
+
+
+@extend_schema(
+    responses={status.HTTP_200_OK: EmailVerificationRequestResponseSerializer},
+    summary="Reenviar verificação de e-mail",
+    tags=["Authentication"],
+)
+@api_view(["POST"])
+def request_email_verification(request):
+    if not request.user.is_email_verified:
+        send_email_verification(request.user)
+
+    return Response(
+        {"message": EMAIL_VERIFICATION_REQUEST_MESSAGE},
+        status=status.HTTP_200_OK,
+    )
 
 
 @extend_schema(

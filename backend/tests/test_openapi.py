@@ -18,6 +18,7 @@ def test_openapi_schema_is_public():
     assert "/api/auth/register/" in schema["paths"]
     assert "/api/auth/password-reset/" in schema["paths"]
     assert "/api/auth/password-reset/confirm/" in schema["paths"]
+    assert "/api/auth/email-verification/" in schema["paths"]
     assert "/api/auth/email-verification/confirm/" in schema["paths"]
     assert "/api/auth/token/" in schema["paths"]
     assert "/api/auth/token/refresh/" in schema["paths"]
