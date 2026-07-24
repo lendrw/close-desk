@@ -96,6 +96,8 @@ EMAIL_PORT=587
 EMAIL_HOST_USER=<usuario-smtp>
 EMAIL_HOST_PASSWORD=<senha-smtp>
 EMAIL_USE_TLS=True
+EMAIL_USE_SSL=False
+EMAIL_TIMEOUT=10
 DEFAULT_FROM_EMAIL='CloseDesk <no-reply@seudominio.com>'
 ```
 

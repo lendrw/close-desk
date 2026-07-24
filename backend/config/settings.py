@@ -52,6 +52,18 @@ def get_list_env(name, default=None):
     return [item.strip() for item in value.split(",") if item.strip()]
 
 
+def get_integer_env(name, default):
+    value = os.environ.get(name)
+
+    if value is None:
+        return default
+
+    try:
+        return int(value)
+    except ValueError as error:
+        raise ValueError(f"{name} deve ser um número inteiro válido.") from error
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -213,11 +225,12 @@ EMAIL_BACKEND = os.environ.get(
     ),
 )
 EMAIL_HOST = os.environ.get("EMAIL_HOST", "localhost")
-EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "25"))
+EMAIL_PORT = get_integer_env("EMAIL_PORT", 25)
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = get_boolean_env("EMAIL_USE_TLS")
 EMAIL_USE_SSL = get_boolean_env("EMAIL_USE_SSL")
+EMAIL_TIMEOUT = get_integer_env("EMAIL_TIMEOUT", 10)
 DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL",
     "CloseDesk <no-reply@closedesk.local>",
